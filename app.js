@@ -33,7 +33,7 @@ const db = mysql.createConnection({
   host: DB_HOST,
   user: DB_USER,
   password: DB_PASSWORD,
-  database: DB_NAME
+  database: DB_NAME,
 });
 
 // Conexión a la base de datos
@@ -258,6 +258,54 @@ app.post("/inicio-sesion", (req, res) => {
 
   // Redirigir al usuario a la página principal después de iniciar sesión
   res.redirect("/vehiculo");
+});
+
+app.get("/registrar-cita", (req, res) => {
+  res.render("registrar-cita");
+});
+
+// Ruta para manejar la solicitud POST desde el formulario
+app.post("/registrar-cita", (req, res) => {
+  const { nombre, celular, motivo, fecha, hora } = req.body;
+
+  // Query para verificar si la hora está ocupada
+  const checkQuery =
+    "SELECT COUNT(*) AS count FROM citas WHERE fecha = ? AND hora = ?";
+  db.query(checkQuery, [fecha, hora], (checkError, checkResults) => {
+    if (checkError) {
+      console.error("Error al verificar la hora:", checkError);
+      res.status(500).send("Error interno del servidor.");
+      return;
+    }
+
+    if (checkResults[0].count > 0) {
+      // Si la hora está ocupada, mostrar un alert
+      res.send(
+        '<script>alert("Esta hora ya está ocupada."); window.location.href = "/registrar-cita";</script>'
+      );
+      return;
+    }
+
+    // Si la hora no está ocupada, proceder a insertar la cita en la base de datos
+    const insertQuery =
+      "INSERT INTO citas (nombre, celular, motivo, fecha, hora) VALUES (?, ?, ?, ?, ?)";
+    db.query(
+      insertQuery,
+      [nombre, celular, motivo, fecha, hora],
+      (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error al registrar la cita:", insertError);
+          res.status(500).send("Error interno del servidor.");
+          return;
+        }
+
+        // Si la inserción es exitosa, mostrar un alert y redirigir al usuario al índice
+        res.send(
+          '<script>alert("Cita registrada exitosamente."); window.location.href = "/";</script>'
+        );
+      }
+    );
+  });
 });
 
 app.post("/agregar-vehiculo", (req, res) => {

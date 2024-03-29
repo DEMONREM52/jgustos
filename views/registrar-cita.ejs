@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Citas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Formulario de Citas</h1>
+        <form action="/registrar-cita" method="POST" id="citaForm">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="celular" class="form-label">Número de celular:</label>
+                <input type="tel" class="form-control" id="celular" name="celular" required pattern="[0-9]{10}"
+                    title="Por favor ingrese un número de celular de 10 dígitos">
+            </div>
+            <div class="mb-3">
+                <label for="motivo">Motivo (Cotización, Visualizacion del vehiculo, otro)</label>
+                <textarea class="form-control" id="motivo" name="motivo" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="date" class="form-control" id="fecha" name="fecha" required>
+            </div>
+            <div class="mb-3">
+                <label for="hora" class="form-label">Hora:</label>
+                <input type="time" class="form-control" id="hora" name="hora" required min="09:00" max="17:00"
+                    step="3600" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar Cita</button>
+        </form>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const citaForm = document.getElementById('citaForm');
+            const fechaInput = document.getElementById('fecha');
+            const horaInput = document.getElementById('hora');
+
+            citaForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const fechaSeleccionada = new Date(fechaInput.value);
+                const horaSeleccionada = horaInput.value.split(':');
+                fechaSeleccionada.setHours(horaSeleccionada[0]);
+                fechaSeleccionada.setMinutes(horaSeleccionada[1]);
+                const fechaActual = new Date();
+
+                console.log("Fecha seleccionada:", fechaSeleccionada);
+                console.log("Fecha actual:", fechaActual);
+
+                if (fechaSeleccionada < fechaActual && fechaSeleccionada.getHours() <= fechaActual.getHours()) {
+                    alert('La fecha y hora seleccionadas deben ser posteriores a la fecha y hora actual.');
+                    return;
+                }
+
+                // Si la hora seleccionada es mayor a la hora actual, permitir el registro de la cita
+                if (fechaSeleccionada.getHours() > fechaActual.getHours()) {
+                    citaForm.submit();
+                    return;
+                }
+
+                // Si la fecha y hora son válidas, puedes enviar el formulario
+                citaForm.submit();
+            });
+        });
+    </script>
+
+
+
+
+    <!-- Bootstrap JS (opcional, solo si lo necesitas) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome JS (opcional, solo si lo necesitas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <!-- Tu archivo app.js -->
+    <script src="app.js"></script>
+</body>
+
+</html>
