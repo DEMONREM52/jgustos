@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <title>Editar Vehículo</title>
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/vector-gratis/fondo-oscuro-abstracto-fibra-carbono_1017-23630.jpg?size=626&ext=jpg');
+            /* Agrega la ruta de tu imagen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* Para que la imagen de fondo no se desplace */
+        }
+
+        .card {
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            /* Margen inferior añadido */
+        }
+
+        .card-header {
+            background-color: #000000;
+            color: #fff;
+            border-bottom: none;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 0;
+            border-color: #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: #000000;
+            border-color: #000000;
+            border: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .custom-select {
+            border: none;
+            border-radius: 0;
+            padding: 10px 0;
+            height: auto;
+        }
+
+        .custom-select:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">EDITAR VEHÍCULO</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/editar-vehiculo/<%= vehiculo.id %>" method="POST">
+                            <!-- Agregar campo oculto para el nombre de usuario -->
+                            <input type="hidden" id="nombreUsuario" name="nombreUsuario"
+                                value="<%= usuario ? usuario.nombre : '' %>">
+
+                            <div class="mb-3">
+                                <label for="marca" class="form-label">Marca</label>
+                                <select class="custom-select" id="marca" name="marca" required>
+                                    <option value="" selected>Selecciona una marca</option>
+                                    <option value="Toyota" <%=vehiculo.marca==='Toyota' ? 'selected' : '' %>>Toyota
+                                    </option>
+                                    <option value="BMW" <%=vehiculo.marca==='BMW' ? 'selected' : '' %>>BMW</option>
+                                    <option value="Mercedez-Benz" <%=vehiculo.marca==='Mercedez-Benz' ? 'selected' : ''
+                                        %>>Mercedez-Benz</option>
+                                    <option value="Chevrolet" <%=vehiculo.marca==='Chevrolet' ? 'selected' : '' %>
+                                        >Chevrolet</option>
+                                    <option value="Renault" <%=vehiculo.marca==='Renault' ? 'selected' : '' %>>Renault
+                                    </option>
+                                    <option value="Nissan" <%=vehiculo.marca==='Nissan' ? 'selected' : '' %>>Nissan
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                    value="<%= vehiculo.nombre %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                                    required><%= vehiculo.descripcion %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="certificacion" class="form-label">Certificación</label>
+                                <select class="custom-select" id="certificacion" name="certificacion" required>
+                                    <% if (usuario && usuario.rol==='admin' ) { %>
+                                        <option value="nuevo" <%=vehiculo.certificacion==='nuevo' ? 'selected' : '' %>
+                                            >Nuevo</option>
+                                        <option value="usado" <%=vehiculo.certificacion==='usado' ? 'selected' : '' %>
+                                            >Usado</option>
+                                        <% } else { %>
+                                            <option value="usado" <%=vehiculo.certificacion==='usado' ? 'selected' : ''
+                                                %>>Usado</option>
+                                            <% } %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="precio" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="precio" name="precio"
+                                    value="<%= vehiculo.precio %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imagen" class="form-label">Dirección de la Imagen</label>
+                                <input type="text" class="form-control" id="imagen" name="imagen" value="<%= vehiculo.imagen %>" required>
+                                <img id="preview" src="<%= vehiculo.imagen %>" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+    // Obtener el campo de entrada y la imagen de previsualización
+    const inputImagen = document.getElementById('imagen');
+    const imagenPreview = document.getElementById('preview');
+
+    // Agregar un evento de cambio al campo de entrada
+    inputImagen.addEventListener('input', () => {
+        // Obtener el valor del campo de entrada
+        const imageUrl = inputImagen.value;
+
+        // Actualizar la fuente de la imagen de previsualización con la URL ingresada
+        imagenPreview.src = imageUrl;
+    });
+</script>
+
+
+</html>
