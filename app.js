@@ -582,7 +582,7 @@ app.get("/nissan-nuevo", (req, res) => {
         res.status(500).send("Error interno del servidor");
       } else {
         // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/Nissan-nuevo", { vehiculos });
+        res.render("marcas/nissan-nuevo", { vehiculos });
       }
     }
   );
@@ -601,7 +601,7 @@ app.get("/nissan-usado", (req, res) => {
         res.status(500).send("Error interno del servidor");
       } else {
         // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/Nissan-usado", { vehiculos });
+        res.render("marcas/nissan-usado", { vehiculos });
       }
     }
   );
