@@ -101,17 +101,28 @@ app.post("/registro", async (req, res) => {
     email,
     contraseña,
     rol,
-    passwordAdmin,
+    passwordAdmin, // Clave del administrador
+    passwordSuperAdmin, // Nueva clave para el SuperAdmin
     montoVendedorInput,
     aceptarTerminos,
   } = req.body;
 
   if (rol === "admin") {
-    const contraseñaAdminCorrecta = "12345"; // Aquí debes colocar la contraseña de administrador correcta
+    const contraseñaAdminCorrecta = "12345"; // Contraseña del administrador correcta
     if (passwordAdmin !== contraseñaAdminCorrecta) {
       return res.status(400).send(`
       <script>
         alert("Contraseña de administrador incorrecta");
+        window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+      </script>
+    `);
+    }
+  } else if (rol === "superadmin") {
+    const contraseñaSuperAdminCorrecta = "tu_superclave"; // Contraseña del SuperAdmin correcta
+    if (passwordSuperAdmin !== contraseñaSuperAdminCorrecta) {
+      return res.status(400).send(`
+      <script>
+        alert("Contraseña de SuperAdmin incorrecta");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
     `);

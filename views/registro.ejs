@@ -42,6 +42,7 @@
                 <select class="form-control" id="rol" name="rol" required>
                     <option value="default" hidden>Seleccione un rol</option>
                     <option value="admin">Administrador</option>
+                    <option value="superadmin">SuperAdmin</option>
                     <option value="vendedor">Vendedor</option>
                 </select>
             </div>
@@ -49,6 +50,11 @@
                 <label for="passwordAdmin">Contraseña de Administrador</label>
                 <input type="password" class="form-control" id="passwordAdmin" name="passwordAdmin"
                     placeholder="Ingrese la contraseña de administrador">
+            </div>
+            <div id="contraseñaSuperAdmin" class="form-group" style="display: none;">
+                <label for="passwordSuperAdmin">Contraseña de SuperAdmin</label>
+                <input type="password" class="form-control" id="passwordSuperAdmin" name="passwordSuperAdmin"
+                    placeholder="Ingrese la contraseña de SuperAdmin">
             </div>
             <div id="montoVendedor" class="form-group" style="display: none;">
                 <label for="montoVendedorInput">Monto a pagar para ser vendedor $500000</label>
@@ -64,39 +70,42 @@
             <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
 
-
-
         <p class="mt-3">¿Ya tienes una cuenta? <a href="/inicio-sesion">Iniciar Sesión</a></p>
     </div>
+
+    <script>
+        document.getElementById('rol').addEventListener('change', function () {
+            var rolSeleccionado = this.value;
+            if (rolSeleccionado === 'admin') {
+                document.getElementById('contraseñaAdmin').style.display = 'block';
+                document.getElementById('contraseñaSuperAdmin').style.display = 'none';
+                document.getElementById('montoVendedor').style.display = 'none';
+            } else if (rolSeleccionado === 'superadmin') {
+                document.getElementById('contraseñaAdmin').style.display = 'none';
+                document.getElementById('contraseñaSuperAdmin').style.display = 'block';
+                document.getElementById('montoVendedor').style.display = 'none';
+            } else if (rolSeleccionado === 'vendedor') {
+                document.getElementById('contraseñaAdmin').style.display = 'none';
+                document.getElementById('contraseñaSuperAdmin').style.display = 'none';
+                document.getElementById('montoVendedor').style.display = 'block';
+            } else {
+                document.getElementById('contraseñaAdmin').style.display = 'none';
+                document.getElementById('contraseñaSuperAdmin').style.display = 'none';
+                document.getElementById('montoVendedor').style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const contraseñaInput = document.getElementById('contraseña');
+            const tipo = contraseñaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            contraseñaInput.setAttribute('type', tipo);
+            // Cambiar el icono del botón
+            this.querySelector('i').classList.toggle('bi-eye');
+            this.querySelector('i').classList.toggle('bi-eye-slash');
+        });
+    </script>
 </body>
-
-
-
-<script>
-    document.getElementById('rol').addEventListener('change', function () {
-        var rolSeleccionado = this.value;
-        if (rolSeleccionado === 'admin') {
-            document.getElementById('contraseñaAdmin').style.display = 'block';
-            document.getElementById('montoVendedor').style.display = 'none';
-        } else if (rolSeleccionado === 'vendedor') {
-            document.getElementById('contraseñaAdmin').style.display = 'none';
-            document.getElementById('montoVendedor').style.display = 'block';
-        }
-    });
-</script>
-
-
-<script>
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const contraseñaInput = document.getElementById('contraseña');
-        const tipo = contraseñaInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        contraseñaInput.setAttribute('type', tipo);
-        // Cambiar el icono del botón
-        this.querySelector('i').classList.toggle('bi-eye');
-        this.querySelector('i').classList.toggle('bi-eye-slash');
-    });
-</script>
-
-
 
 </html>
