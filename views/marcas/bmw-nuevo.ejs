@@ -65,7 +65,7 @@
         <div class="row mt-3" id="vehiculos">
             <% vehiculos.forEach((vehiculo, index)=> { %>
                 <% if (vehiculo.marca==='BMW' && vehiculo.certificacion==='nuevo' ) { %>
-                    <div class="col-md-4 mb-4 contenedor-autos" data-marca="<%= vehiculo.marca %>">
+                    <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= vehiculo.nombre %>">
                         <div class="card">
                             <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="<%= vehiculo.marca %>">
                             <div class="card-body">
@@ -119,7 +119,7 @@
         });
     </script>
 
-    
+
 
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
