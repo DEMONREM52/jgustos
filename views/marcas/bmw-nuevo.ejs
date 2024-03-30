@@ -102,15 +102,15 @@
     <script>
         // Obtener el input de búsqueda
         var inputBusqueda = document.getElementById('buscador');
-
+    
         // Manejar el evento de entrada en el input de búsqueda
-        inputBusqueda.addEventListener('input', function () {
+        inputBusqueda.addEventListener('input', function() {
             var valorBusqueda = inputBusqueda.value.toLowerCase();
-
-            // Mostrar/ocultar los vehículos según la marca ingresada en el buscador
-            document.querySelectorAll('.contenedor-autos').forEach(function (vehiculo) {
-                var marca = vehiculo.getAttribute('data-marca').toLowerCase();
-                if (marca.includes(valorBusqueda)) {
+            
+            // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
+            document.querySelectorAll('.contenedor-autos').forEach(function(vehiculo) {
+                var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
+                if (nombre.includes(valorBusqueda)) {
                     vehiculo.style.display = 'block';
                 } else {
                     vehiculo.style.display = 'none';
@@ -118,6 +118,8 @@
             });
         });
     </script>
+
+    
 
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
