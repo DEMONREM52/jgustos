@@ -201,7 +201,9 @@
                                     <p class="card-text descripcion">
                                         <%= vehiculo.descripcion %>
                                     </p>
-                                    <p class="card-text">Precio: <%= vehiculo.precio %> USD</p>
+                                    <p class="card-text"
+                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
+                                    Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
                                     <div class="d-flex align-items-center">
                                         <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver Detalles</a>
                                         <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
