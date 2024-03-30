@@ -120,25 +120,6 @@
     </script>
 
 
-
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const searchTerm = document.querySelector('input[type="text"]').value.trim();
-
-            fetch(`/search?term=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Renderiza los resultados de la búsqueda en el bloque 'searchResults'
-                    // Puedes usar un bucle de JavaScript para crear elementos HTML dinámicamente
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
-    </script>
-
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const botonesVerDetalles = document.querySelectorAll('.ver-detalles');

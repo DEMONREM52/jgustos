@@ -58,11 +58,18 @@
     <div class="container mt-5">
         <h1>Bienvenido al Concesionario</h1>
         
-
+        
         <div class="row mt-3">
+            <div class="col-md-12">
+                <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
+            </div>
+        </div>
+        
+
+        <div class="row mt-3" id="vehiculos">
             <% vehiculos.forEach((vehiculo, index)=> { %>
                 <% if (vehiculo.marca==='Renault' && vehiculo.certificacion==='nuevo' ) { %>
-                    <div class="col-md-4 mb-4 contenedor-autos">
+                    <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= vehiculo.nombre %>">
                         <div class="card">
                             <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="<%= vehiculo.marca %>">
                             <div class="card-body">
@@ -95,19 +102,23 @@
     </footer>
 
     <script>
-        document.getElementById('searchForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const searchTerm = document.querySelector('input[type="text"]').value.trim();
-
-            fetch(`/search?term=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Renderiza los resultados de la búsqueda en el bloque 'searchResults'
-                    // Puedes usar un bucle de JavaScript para crear elementos HTML dinámicamente
-                })
-                .catch(error => console.error('Error:', error));
+        // Obtener el input de búsqueda
+        var inputBusqueda = document.getElementById('buscador');
+    
+        // Manejar el evento de entrada en el input de búsqueda
+        inputBusqueda.addEventListener('input', function() {
+            var valorBusqueda = inputBusqueda.value.toLowerCase();
+            
+            // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
+            document.querySelectorAll('.contenedor-autos').forEach(function(vehiculo) {
+                var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
+                if (nombre.includes(valorBusqueda)) {
+                    vehiculo.style.display = 'block';
+                } else {
+                    vehiculo.style.display = 'none';
+                }
+            });
         });
-
     </script>
 
     
