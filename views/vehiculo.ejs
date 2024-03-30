@@ -164,8 +164,8 @@
                             <p class="card-text descripcion">
                                 <%= vehiculo.descripcion %>
                             </p>
-                            <p class="card-text">
-                                Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p> 
+                            <b><p class="card-text">
+                                Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b> 
                                 <div class="d-flex align-items-center">
                                 <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
                                 <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
@@ -197,8 +197,8 @@
                                     </h5>
                                     <p class="card-text descripcion">
                                         <%= vehiculo.descripcion %>
-                                        <p class="card-text">
-                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
+                                        <b><p class="card-text">
+                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
                                         <div class="d-flex align-items-center">
                                         <a href="/editar-vehiculo/<%= vehiculo.id %>"
                                             class="btn btn-primary mr-3">Editar</a>
