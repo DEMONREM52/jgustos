@@ -10,16 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-
-<style>
-    .descripcion {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-    }
-</style>
-
-
 <body>
 
 
@@ -88,7 +78,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="precio">Precio (SIN CARACTERES ESPECIALES)</label>
+                <label for="precio">Precio (SIN CARACTERES)</label>
                 <input type="number" class="form-control" id="precio" name="precio" required>
             </div>
 
@@ -174,12 +164,8 @@
                             <p class="card-text descripcion">
                                 <%= vehiculo.descripcion %>
                             </p>
-                            <p class="card-text"
-                            style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
-                            Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
+                            <p class="card-text">Precio: <%= vehiculo.precio %> USD</p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver Detalles</a>
-                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
                                 <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
                                 <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
                                     <button type="submit" class="btn btn-danger">Borrar</button>
@@ -210,15 +196,14 @@
                                     </h5>
                                     <p class="card-text descripcion">
                                         <%= vehiculo.descripcion %>
-                                    </p>
-                                    <p class="card-text"
-                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
-                                    Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver Detalles</a>
-                                        <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
-                                        <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
-                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
+                                        <p class="card-text"
+                                        style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
+                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
+                                        <div class="d-flex align-items-center">
+                                        <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                            class="btn btn-primary mr-3">Editar</a>
+                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST"
+                                            class="d-inline">
                                             <button type="submit" class="btn btn-danger">Borrar</button>
                                         </form>
                                     </div>
@@ -234,39 +219,6 @@
     </div>
     </div>
 </body>
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
-        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
-
-        botonesVerDetalles.forEach((boton, index) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
-
-                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
-                botonMostrarMenos.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-
-        botonesMostrarMenos.forEach((boton) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
-
-                descripcion.style.maxHeight = '0';
-                botonVerDetalles.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-    });
-</script>
 
 
 
@@ -320,8 +272,6 @@
     });
 </script>
 
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
 </html>
