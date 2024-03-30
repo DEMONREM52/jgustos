@@ -186,7 +186,7 @@
         <h1 class="mt-5 text-center">VEHICULOS USADOS</h1>
         <div class="row mt-3" id="vehiculosNuevos">
             <% if (usuario) { %>
-                <% vehiculos.forEach((vehiculo, index)=> { %>
+                <% vehiculos.forEach((vehiculo)=> { %>
                     <% if (vehiculo.UsuarioAgrego===usuario.nombre && vehiculo.certificacion==="usado" ) { %>
                         <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>">
                             <div class="card">
@@ -197,24 +197,24 @@
                                     </h5>
                                     <p class="card-text descripcion">
                                         <%= vehiculo.descripcion %>
-                                        <b><p class="card-text">Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
-                                    </p>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver Detalles</a>
-                                        <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
-                                        <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
-                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
+                                        <b><p class="card-text">
+                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
+                                        <div class="d-flex align-items-center">
+                                        <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                            class="btn btn-primary mr-3">Editar</a>
+                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST"
+                                            class="d-inline">
                                             <button type="submit" class="btn btn-danger">Borrar</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <% } %>
-                <% }); %>
-            <% } else { %>
-                <p>No se ha iniciado sesión.</p>
-            <% } %>
+                        <% } %>
+                            <% }); %>
+                                <% } else { %>
+                                    <p>No se ha iniciado sesión.</p>
+                                    <% } %>
         </div>
     </div>
     </div>
@@ -272,43 +272,7 @@
     });
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
-        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
 
-        botonesVerDetalles.forEach((boton, index) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
-
-                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
-                botonMostrarMenos.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-
-        botonesMostrarMenos.forEach((boton) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
-
-                descripcion.style.maxHeight = '0';
-                botonVerDetalles.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-    });
-</script>
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
 </html>
