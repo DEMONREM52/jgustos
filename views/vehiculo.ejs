@@ -264,20 +264,37 @@
 
 
 <script>
-// Manejar el cambio en los checkboxes
-document.getElementById('filtroCertificacion').addEventListener('change', function() {
-    var certificacionSeleccionada = this.value;
+// Manejar el cambio en los checkboxes de las marcas
+document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+    checkbox.addEventListener('change', actualizarFiltro);
+});
+
+// Manejar el cambio en el select de certificación
+document.getElementById('filtroCertificacion').addEventListener('change', actualizarFiltro);
+
+// Función para actualizar el filtro
+function actualizarFiltro() {
+    var marcasSeleccionadas = [];
+    document.querySelectorAll('.form-check-input:checked').forEach(function(checkbox) {
+        marcasSeleccionadas.push(checkbox.value);
+    });
+
+    var certificacionSeleccionada = document.getElementById('filtroCertificacion').value;
     
-    // Mostrar/ocultar los divs de los vehículos según la certificación seleccionada
+    // Mostrar/ocultar los divs de los vehículos según las marcas y certificación seleccionadas
     document.querySelectorAll('.vehiculo').forEach(function(vehiculo) {
+        var marca = vehiculo.getAttribute('data-marca');
         var certificacion = vehiculo.getAttribute('data-certificacion');
-        if (certificacionSeleccionada === 'todos' || certificacion === certificacionSeleccionada) {
+        
+        if ((marcasSeleccionadas.length === 0 || marcasSeleccionadas.includes(marca)) &&
+            (certificacionSeleccionada === 'todos' || certificacion === certificacionSeleccionada)) {
             vehiculo.style.display = 'block';
         } else {
             vehiculo.style.display = 'none';
         }
     });
-});
+}
+
 </script>
 
 <script>
