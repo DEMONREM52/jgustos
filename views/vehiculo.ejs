@@ -186,7 +186,7 @@
         <h1 class="mt-5 text-center">VEHICULOS USADOS</h1>
         <div class="row mt-3" id="vehiculosNuevos">
             <% if (usuario) { %>
-                <% vehiculos.forEach((vehiculo)=> { %>
+                <% vehiculos.forEach((vehiculo, index)=> { %>
                     <% if (vehiculo.UsuarioAgrego===usuario.nombre && vehiculo.certificacion==="usado" ) { %>
                         <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>">
                             <div class="card">
@@ -197,28 +197,24 @@
                                     </h5>
                                     <p class="card-text descripcion">
                                         <%= vehiculo.descripcion %>
-                                        <b><p class="card-text">
-                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
-                                        <div class="d-flex align-items-center">
-                                            <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver
-                                                Detalles</a>
-                                            <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar
-                                                Menos</a>
-                                        <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                            class="btn btn-primary mr-3">Editar</a>
-                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST"
-                                            class="d-inline">
+                                        <b><p class="card-text">Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
+                                    </p>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver Detalles</a>
+                                        <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
+                                        <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
+                                        <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
                                             <button type="submit" class="btn btn-danger">Borrar</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <% } %>
-                            <% }); %>
-                                <% } else { %>
-                                    <p>No se ha iniciado sesión.</p>
-                                    <% } %>
+                    <% } %>
+                <% }); %>
+            <% } else { %>
+                <p>No se ha iniciado sesión.</p>
+            <% } %>
         </div>
     </div>
     </div>
