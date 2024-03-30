@@ -49,18 +49,23 @@
     </nav>
 
 
-    
+
+
 
 
 
     <div class="container mt-5">
-        <h1>Bienvenido al Concesionario</h1>
-        
 
         <div class="row mt-3">
+            <div class="col-md-12">
+                <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
+            </div>
+        </div>
+
+        <div class="row mt-3" id="vehiculos">
             <% vehiculos.forEach((vehiculo, index)=> { %>
                 <% if (vehiculo.marca==='BMW' && vehiculo.certificacion==='nuevo' ) { %>
-                    <div class="col-md-4 mb-4 contenedor-autos">
+                    <div class="col-md-4 mb-4 contenedor-autos" data-marca="<%= vehiculo.marca %>">
                         <div class="card">
                             <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="<%= vehiculo.marca %>">
                             <div class="card-body">
@@ -78,7 +83,8 @@
                                     Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
                                 <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver
                                     Detalles</a>
-                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
+                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar
+                                    Menos</a>
                             </div>
                         </div>
                     </div>
@@ -90,6 +96,28 @@
     <footer class="mt-5">
         <!-- Aquí puedes agregar el footer con información sobre la empresa y redes sociales -->
     </footer>
+
+
+
+    <script>
+        // Obtener el input de búsqueda
+        var inputBusqueda = document.getElementById('buscador');
+
+        // Manejar el evento de entrada en el input de búsqueda
+        inputBusqueda.addEventListener('input', function () {
+            var valorBusqueda = inputBusqueda.value.toLowerCase();
+
+            // Mostrar/ocultar los vehículos según la marca ingresada en el buscador
+            document.querySelectorAll('.contenedor-autos').forEach(function (vehiculo) {
+                var marca = vehiculo.getAttribute('data-marca').toLowerCase();
+                if (marca.includes(valorBusqueda)) {
+                    vehiculo.style.display = 'block';
+                } else {
+                    vehiculo.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
@@ -109,36 +137,36 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
-        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
+            const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
 
-        botonesVerDetalles.forEach((boton, index) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
+            botonesVerDetalles.forEach((boton, index) => {
+                boton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const descripcion = this.parentElement.querySelector('.descripcion');
+                    const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
 
-                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
-                botonMostrarMenos.style.display = 'inline-block';
-                this.style.display = 'none';
+                    descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
+                    botonMostrarMenos.style.display = 'inline-block';
+                    this.style.display = 'none';
+                });
+            });
+
+            botonesMostrarMenos.forEach((boton) => {
+                boton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const descripcion = this.parentElement.querySelector('.descripcion');
+                    const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
+
+                    descripcion.style.maxHeight = '0';
+                    botonVerDetalles.style.display = 'inline-block';
+                    this.style.display = 'none';
+                });
             });
         });
-
-        botonesMostrarMenos.forEach((boton) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
-
-                descripcion.style.maxHeight = '0';
-                botonVerDetalles.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-    });
-</script>
+    </script>
 
 
 
