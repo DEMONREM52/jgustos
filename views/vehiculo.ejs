@@ -144,7 +144,16 @@
             <input class="form-check-input" type="checkbox" id="Nissan" value="Nissan">
             <label class="form-check-label" for="Nissan">Nissan</label>
           </div>
-
+          <% if (usuario && usuario.rol === 'superadmin') { %>
+            <div class="form-group">
+                <label for="filtroCertificacion">Filtrar por Certificación:</label>
+                <select class="form-control" id="filtroCertificacion">
+                    <option value="todos">Todos</option>
+                    <option value="nuevo">Nuevo</option>
+                    <option value="usado">Usado</option>
+                </select>
+            </div>
+        <% } %>
 
 
 
@@ -155,7 +164,7 @@
 <div class="row mt-3" id="vehiculosNuevos">
     <% if (usuario && usuario.rol === 'superadmin') { %>
         <% vehiculos.forEach((vehiculo) => { %>
-            <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>">
+            <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>" data-certificacion="<%= vehiculo.certificacion %>">
                 <div class="card">
                     <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -168,6 +177,7 @@
                         <b><p class="card-text">
                             Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p></b>
                             <p class="card-text">Agregado por: <b><%= vehiculo.UsuarioAgrego %></b></p>
+                            <p class="card-text">Certificación: <b><%= vehiculo.certificacion %></b></p>
                             <div class="d-flex align-items-center">
                             <a href="/editar-vehiculo/<%= vehiculo.id %>" class="btn btn-primary mr-3">Editar</a>
                             <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST" class="d-inline">
@@ -253,6 +263,22 @@
 </body>
 
 
+<script>
+// Manejar el cambio en los checkboxes
+document.getElementById('filtroCertificacion').addEventListener('change', function() {
+    var certificacionSeleccionada = this.value;
+    
+    // Mostrar/ocultar los divs de los vehículos según la certificación seleccionada
+    document.querySelectorAll('.vehiculo').forEach(function(vehiculo) {
+        var certificacion = vehiculo.getAttribute('data-certificacion');
+        if (certificacionSeleccionada === 'todos' || certificacion === certificacionSeleccionada) {
+            vehiculo.style.display = 'block';
+        } else {
+            vehiculo.style.display = 'none';
+        }
+    });
+});
+</script>
 
 <script>
     // Manejar el cambio en los checkboxes

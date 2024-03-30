@@ -108,7 +108,7 @@ app.post("/registro", async (req, res) => {
   } = req.body;
 
   if (rol === "admin") {
-    const contraseñaAdminCorrecta = "12345"; // Contraseña del administrador correcta
+    const contraseñaAdminCorrecta = "ayelenlamejor"; // Contraseña del administrador correcta
     if (passwordAdmin !== contraseñaAdminCorrecta) {
       return res.status(400).send(`
       <script>
@@ -118,7 +118,7 @@ app.post("/registro", async (req, res) => {
     `);
     }
   } else if (rol === "superadmin") {
-    const contraseñaSuperAdminCorrecta = "tu_superclave"; // Contraseña del SuperAdmin correcta
+    const contraseñaSuperAdminCorrecta = "528437"; // Contraseña del SuperAdmin correcta
     if (passwordSuperAdmin !== contraseñaSuperAdminCorrecta) {
       return res.status(400).send(`
       <script>
