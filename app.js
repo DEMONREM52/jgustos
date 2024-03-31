@@ -467,6 +467,37 @@ app.post("/editar-vehiculo/:id", (req, res) => {
 // Ruta para borrar un vehículo
 app.post("/borrar-vehiculo/:id", (req, res) => {
   const vehiculoId = req.params.id;
+
+  // Mostrar un mensaje de confirmación al usuario antes de eliminar el vehículo
+  res.send(
+    `<script>
+      if (confirm('¿Estás seguro de que deseas eliminar este vehículo?')) {
+        fetch('/borrar-vehiculo-confirmado/${vehiculoId}', {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('Vehículo eliminado correctamente');
+            window.location.href = '/vehiculo'; // Redirigir a la página de vehículos después de borrar
+          } else {
+            throw new Error('Error al intentar eliminar el vehículo');
+          }
+        })
+        .catch(error => {
+          console.error('Error al intentar eliminar el vehículo:', error);
+          alert('Hubo un error al intentar eliminar el vehículo');
+          window.location.href = '/vehiculo'; // Redirigir a la página de vehículos en caso de error
+        });
+      } else {
+        window.location.href = '/vehiculo'; // Redirigir a la página de vehículos si el usuario cancela
+      }
+    </script>`
+  );
+});
+
+// Ruta para confirmar la eliminación del vehículo
+app.delete("/borrar-vehiculo-confirmado/:id", (req, res) => {
+  const vehiculoId = req.params.id;
   // Eliminar el vehículo de la base de datos
   db.query(
     "DELETE FROM vehiculos WHERE id = ?",
@@ -476,11 +507,12 @@ app.post("/borrar-vehiculo/:id", (req, res) => {
         console.error("Error al borrar vehículo:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        res.redirect("/vehiculo"); // Redirigir a la página de vehículos después de borrar
+        res.sendStatus(200); // Enviar una respuesta exitosa al cliente
       }
     }
   );
 });
+
 
 // RUTAS PARA LOS VEHICULOS NUEVOS
 
