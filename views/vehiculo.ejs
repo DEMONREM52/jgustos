@@ -11,17 +11,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
 </head>
 
 <style>
     body {
         padding: 0 150px 150px 150px;
         font-family: "EB Garamond", serif;
-  font-optical-sizing: auto;
-  font-weight: weight;
-  font-style: normal;
+        font-optical-sizing: auto;
+        font-weight: 800;
+        font-style: normal;
     }
 
     .container-agregar {
@@ -203,28 +202,29 @@
             <!-- Agregar campo oculto para el nombre de usuario -->
             <input type="hidden" id="nombreUsuario" name="nombreUsuario" value="<%= usuario.nombre %>">
             <div class="form-group">
-                <label for="marca">Marca</label>
-                <select class="form-control" id="marca" name="marca" required>
-                    <option value="">Selecciona una marca</option>
-                    <option value="Toyota">Toyota</option>
-                    <option value="BMW">BMW</option>
-                    <option value="Mercedez-Benz">Mercedez-Benz</option>
-                    <option value="Chevrolet">Chevrolet</option>
-                    <option value="Renault">Renault</option>
-                    <option value="Nissan">Nissan</option>
+                <b><label for="marca">Marca</label></b>
+                <b><select class="form-control" id="marca" name="marca" style="font-size: 25px;" required></b>
+                <option value="">Selecciona una marca</option>
+                <option value="Toyota">Toyota</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedez-Benz">Mercedez-Benz</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="Renault">Renault</option>
+                <option value="Nissan">Nissan</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="modelo">Nombre</label>
-                <input type="text" class="form-control" id="modelo" name="modelo" required>
+                <input type="text" class="form-control" id="modelo" name="modelo" style="font-size: 25px;" required>
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" style="font-size: 25px;"
+                    required></textarea>
             </div>
             <div class="form-group">
                 <label for="certificacion">Certificación</label>
-                <select class="form-control" id="certificacion" name="certificacion" required>
+                <select class="form-control" id="certificacion" name="certificacion" style="font-size: 25px;" required>
                     <% if (usuario && usuario.rol==='admin' || usuario.rol==='superadmin' ) { %>
                         <option value="nuevo">Nuevo</option>
                         <option value="usado">Usado</option>
@@ -235,14 +235,15 @@
             </div>
             <div class="form-group">
                 <label for="precio">Precio (SIN COMAS NI PUNTOS)</label>
-                <input type="number" class="form-control" id="precio" name="precio" required pattern="[0-9]*"
-                    title="Ingrese solo números">
+                <input type="number" class="form-control" id="precio" name="precio" style="font-size: 25px;" required
+                    pattern="[0-9]*" title="Ingrese solo números">
             </div>
 
             <div class="mb-3">
                 <label for="imagen" class="form-label">DIRECCIÓN DE LA IMAGEN</label>
-                <input type="text" class="form-control" id="imagen" name="imagen" required>
-                <img id="preview" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;">
+                <input type="text" class="form-control" id="imagen" name="imagen" style="font-size: 25px;" required>
+                <img id="preview" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;"
+                    style="font-size: 25px;">
             </div>
             <button type="submit" class="btn btn-default">
                 Agregar vehículo
