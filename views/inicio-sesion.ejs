@@ -13,14 +13,16 @@
 <style>
     body,
     html {
+        background-color: #140314;
         background-image: url('https://i.ibb.co/tDpmFFB/inicio-sesion-image.jpg');
         background-size: cover;
-        /* Ajusta el tamaño de la imagen para cubrir todo el fondo */
         background-position: center;
         background-repeat: no-repeat;
+        width: 100%;
+        max-width: 800px;
+        padding: 20px;
         height: 100%;
         margin: 0;
-        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -35,6 +37,11 @@
         box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         margin-right: 560px;
     }
+    @media (max-width: 800px) {
+    .form-container {
+        margin-right: 0; /* Elimina el margen derecho cuando el ancho de la ventana sea menor que 800px */
+    }
+}
 
     .form-container .form-icon {
         color: #ac40ab;
