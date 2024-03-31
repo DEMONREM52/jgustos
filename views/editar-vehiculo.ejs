@@ -115,7 +115,7 @@
                             <div class="mb-3">
                                 <label for="certificacion" class="form-label">Certificación</label>
                                 <select class="custom-select" id="certificacion" name="certificacion" required>
-                                    <% if (usuario && usuario.rol==='admin' ) { %>
+                                    <% if (usuario && usuario.rol==='admin' || usuario.rol==='superadmin' ) { %>
                                         <option value="nuevo" <%=vehiculo.certificacion==='nuevo' ? 'selected' : '' %>
                                             >Nuevo</option>
                                         <option value="usado" <%=vehiculo.certificacion==='usado' ? 'selected' : '' %>
