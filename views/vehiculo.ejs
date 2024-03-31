@@ -8,11 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Vehículos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
+        rel="stylesheet">
 </head>
 
 <style>
     body {
         padding: 0 150px 150px 150px;
+        font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
     }
 
     .container-agregar {
@@ -105,6 +114,33 @@
         margin-top: 100px;
     }
 
+    .btn {
+        color: #ffffff;
+        background-color: #160115;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        padding: 12px 15px 11px;
+        border-radius: 20px;
+        box-shadow: 1px 1px 1px #cbced1, -1px -1px 1px #fff;
+        border: none;
+        transition: all 0.5s ease 0s;
+        margin-top: 19px;
+    }
+
+    .btn-danger {
+        background-color: red;
+    }
+
+    .btn:hover,
+    .btn:focus {
+        color: #fff;
+        letter-spacing: 3px;
+        box-shadow: none;
+        outline: none;
+    }
+
     @media (max-width: 800px) {
         body {
             padding: 0 20px 20px 20px;
@@ -114,6 +150,10 @@
         .form-container select,
         .form-container textarea {
             width: 100%;
+        }
+
+        .tutorial-direccion-image {
+            font-size: 20px;
         }
 
     }
@@ -138,12 +178,12 @@
 
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a style="padding-left: 20px;" class="navbar-brand" href="#">
                 <img src="https://i.ibb.co/nQ0JprM/logo-Photoroom-png-Photoroom.png" alt="Logo" width="100" height="60">
             </a>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Inicio</a>
+                    <b><a class="nav-link" style="color: #160115; padding-right: 40px;" href="/">Inicio</a></b>
                 </li>
             </ul>
         </div>
@@ -204,12 +244,14 @@
                 <input type="text" class="form-control" id="imagen" name="imagen" required>
                 <img id="preview" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;">
             </div>
-            <button type="submit" class="btn btn-primary">Agregar Vehículo</button>
+            <button type="submit" class="btn btn-default">
+                Agregar vehículo
+            </button>
         </form>
     </div>
     <!-- Aquí se agregará el contenido ocultable -->
     <div class="mt-5" id="contentToShow">
-        <h1>No sabes cómo sacar la dirección de la imagen?</h1>
+        <h1 class="tutorial-direccion-image">No sabes cómo obtener la dirección de la imagen?</h1>
         <h6>Te enseñamos cómo hacerlo
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 style="fill: rgba(0, 0, 0, 1);transform: msFilter">
@@ -223,7 +265,9 @@
                 <path d="M15.5 10c-2 0-2.5 2-2.5 2h5s-.501-2-2.5-2z"></path>
             </svg>
             <!-- Botón para ocultar el contenido -->
-            <button id="showContentButton" class="btn btn-primary">Ya sé cómo usarlo</button>
+            <button id="showContentButton" class="btn btn-default">
+                Ya sé cómo usarlo
+            </button>
             <a href="https://imgbb.com/login" class="btn btn-success" target="_blank">Subir Imagen</a>
         </h6>
     </div>
@@ -272,132 +316,148 @@
         <% } %>
 
 
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
+                </div>
+            </div>
 
             <% if (usuario && (usuario.rol==='admin' || usuario.rol==='vendedor' )) { %>
                 <h1 class="mt-5 text-center">VEHÍCULOS NUEVOS</h1>
                 <% } %>
 
-                    <div class="row mt-3" id="vehiculosNuevos">
-                        <% if (usuario && usuario.rol==='superadmin' ) { %>
-                            <% vehiculos.forEach((vehiculo)=> { %>
-                                <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>"
-                                    data-certificacion="<%= vehiculo.certificacion %>">
-                                    <div class="card">
-                                        <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <%= vehiculo.marca %> - <%= vehiculo.nombre %>
-                                            </h5>
-                                            <p class="card-text descripcion">
-                                                <%= vehiculo.descripcion %>
-                                            </p>
-                                            <b>
-                                                <p class="card-text">
-                                                    Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
-                                            </b>
-                                            <p class="card-text">Agregado por: <b>
-                                                    <%= vehiculo.UsuarioAgrego %>
-                                                </b></p>
-                                            <p class="card-text">Certificación: <b>
-                                                    <%= vehiculo.certificacion %>
-                                                </b></p>
-                                            <div class="d-flex align-items-center">
-                                                <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                    class="btn btn-primary mr-3">Editar</a>
-                                                <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST"
-                                                    class="d-inline">
-                                                    <button type="submit" class="btn btn-danger">Borrar</button>
-                                                </form>
+                    <div class="row mt-3" id="vehiculos">
+                        <div class="row mt-3" id="vehiculosNuevos">
+                            <% if (usuario && usuario.rol==='superadmin' ) { %>
+                                <% vehiculos.forEach((vehiculo)=> { %>
+                                    <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>"
+                                        data-certificacion="<%= vehiculo.certificacion %>"
+                                        data-nombre="<%= vehiculo.nombre %>">
+                                        <div class="card">
+                                            <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= vehiculo.marca %> - <%= vehiculo.nombre %>
+                                                </h5>
+                                                <p class="card-text descripcion">
+                                                    <%= vehiculo.descripcion %>
+                                                </p>
+                                                <b>
+                                                    <p class="card-text">
+                                                        Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
+                                                </b>
+                                                <p class="card-text">Agregado por: <b>
+                                                        <%= vehiculo.UsuarioAgrego %>
+                                                    </b></p>
+                                                <p class="card-text">Certificación: <b>
+                                                        <%= vehiculo.certificacion %>
+                                                    </b></p>
+                                                <div class="d-flex align-items-center">
+                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                        class="btn btn-primary mr-3">Editar</a>
+                                                    <form action="/borrar-vehiculo/<%= vehiculo.id %>" method="POST"
+                                                        class="d-inline">
+                                                        <button type="submit" class="btn btn-danger">Borrar</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <% }); %>
-                                    <% } else { %>
-                                        <% if (usuario) { %>
-                                            <% vehiculos.forEach((vehiculo)=> { %>
-                                                <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
-                                                    vehiculo.certificacion==="nuevo" ) { %>
-                                                    <div class="col-md-4 mb-4 vehiculo"
-                                                        data-marca="<%= vehiculo.marca %>">
-                                                        <div class="card">
-                                                            <img src="<%= vehiculo.imagen %>" class="card-img-top"
-                                                                alt="...">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">
-                                                                    <%= vehiculo.marca %> - <%= vehiculo.nombre %>
-                                                                </h5>
-                                                                <p class="card-text descripcion">
-                                                                    <%= vehiculo.descripcion %>
-                                                                </p>
-                                                                <b>
-                                                                    <p class="card-text">
-                                                                        Precio: $<%=
-                                                                            vehiculo.precio.toLocaleString('es-CO') %>
-                                                                            COP</p>
-                                                                </b>
-                                                                <div class="d-flex align-items-center">
-                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                                        class="btn btn-primary mr-3">Editar</a>
-                                                                    <form action="/borrar-vehiculo/<%= vehiculo.id %>"
-                                                                        method="POST" class="d-inline">
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger">Borrar</button>
-                                                                    </form>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <% if (usuario) { %>
+                                                <% vehiculos.forEach((vehiculo)=> { %>
+                                                    <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
+                                                        vehiculo.certificacion==="nuevo" ) { %>
+                                                        <div class="col-md-4 mb-4 vehiculo"
+                                                            data-marca="<%= vehiculo.marca %>">
+                                                            <div class="card">
+                                                                <img src="<%= vehiculo.imagen %>" class="card-img-top"
+                                                                    alt="...">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">
+                                                                        <%= vehiculo.marca %> - <%= vehiculo.nombre %>
+                                                                    </h5>
+                                                                    <p class="card-text descripcion">
+                                                                        <%= vehiculo.descripcion %>
+                                                                    </p>
+                                                                    <b>
+                                                                        <p class="card-text">
+                                                                            Precio: $<%=
+                                                                                vehiculo.precio.toLocaleString('es-CO')
+                                                                                %>
+                                                                                COP</p>
+                                                                    </b>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                                            class="btn btn-primary mr-3">Editar</a>
+                                                                        <form
+                                                                            action="/borrar-vehiculo/<%= vehiculo.id %>"
+                                                                            method="POST" class="d-inline">
+                                                                            <button type="submit"
+                                                                                class="btn-danger">Borrar</button>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <% } %>
-                                                        <% }); %>
-                                                            <% } else { %>
-                                                                <p>No se ha iniciado sesión.</p>
-                                                                <% } %>
+                                                        <% } %>
+                                                            <% }); %>
+                                                                <% } else { %>
+                                                                    <p>No se ha iniciado sesión.</p>
                                                                     <% } %>
+                                                                        <% } %>
 
+                        </div>
                     </div>
 
 
                     <% if (usuario && (usuario.rol==='admin' || usuario.rol==='vendedor' )) { %>
                         <h1 class="mt-5 text-center">VEHÍCULOS USADOS</h1>
                         <% } %>
-                            <div class="row mt-3" id="vehiculosNuevos">
-                                <% if (usuario) { %>
-                                    <% vehiculos.forEach((vehiculo)=> { %>
-                                        <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
-                                            vehiculo.certificacion==="usado" ) { %>
-                                            <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>">
-                                                <div class="card">
-                                                    <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">
-                                                            <%= vehiculo.marca %> - <%= vehiculo.nombre %>
-                                                        </h5>
-                                                        <p class="card-text descripcion">
-                                                            <%= vehiculo.descripcion %>
-                                                                <b>
-                                                                    <p class="card-text">
-                                                                        Precio: $<%=
-                                                                            vehiculo.precio.toLocaleString('es-CO') %>
-                                                                            COP</p>
-                                                                </b>
-                                                                <div class="d-flex align-items-center">
-                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                                        class="btn btn-primary mr-3">Editar</a>
-                                                                    <form action="/borrar-vehiculo/<%= vehiculo.id %>"
-                                                                        method="POST" class="d-inline">
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger">Borrar</button>
-                                                                    </form>
-                                                                </div>
+                            <div class="row mt-3" id="vehiculos">
+                                <div class="row mt-3" id="vehiculosNuevos">
+                                    <% if (usuario) { %>
+                                        <% vehiculos.forEach((vehiculo)=> { %>
+                                            <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
+                                                vehiculo.certificacion==="usado" ) { %>
+                                                <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>"
+                                                    data-nombre="<%= vehiculo.nombre %>">
+                                                    <div class="card">
+                                                        <img src="<%= vehiculo.imagen %>" class="card-img-top"
+                                                            alt="...">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">
+                                                                <%= vehiculo.marca %> - <%= vehiculo.nombre %>
+                                                            </h5>
+                                                            <p class="card-text descripcion">
+                                                                <%= vehiculo.descripcion %>
+                                                                    <b>
+                                                                        <p class="card-text">
+                                                                            Precio: $<%=
+                                                                                vehiculo.precio.toLocaleString('es-CO')
+                                                                                %>
+                                                                                COP</p>
+                                                                    </b>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                                            class="btn btn-primary mr-3">Editar</a>
+                                                                        <form
+                                                                            action="/borrar-vehiculo/<%= vehiculo.id %>"
+                                                                            method="POST" class="d-inline">
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger">Borrar</button>
+                                                                        </form>
+                                                                    </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <% } %>
-                                                <% }); %>
-                                                    <% } else { %>
-                                                        <p>No se ha iniciado sesión.</p>
-                                                        <% } %>
+                                                <% } %>
+                                                    <% }); %>
+                                                        <% } else { %>
+                                                            <p>No se ha iniciado sesión.</p>
+                                                            <% } %>
+                                </div>
                             </div>
                             </div>
                             </div>
@@ -503,6 +563,26 @@
         }
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }, false);
+</script>
+
+<script>
+    // Obtener el input de búsqueda
+    var inputBusqueda = document.getElementById('buscador');
+
+    // Manejar el evento de entrada en el input de búsqueda
+    inputBusqueda.addEventListener('input', function () {
+        var valorBusqueda = inputBusqueda.value.toLowerCase();
+
+        // Mostrar/ocultar los vehículos según el modelo ingresado en el buscador
+        document.querySelectorAll('.vehiculo').forEach(function (vehiculo) {
+            var modelo = vehiculo.querySelector('.card-title').textContent.toLowerCase();
+            if (modelo.includes(valorBusqueda)) {
+                vehiculo.style.display = 'block';
+            } else {
+                vehiculo.style.display = 'none';
+            }
+        });
+    });
 </script>
 
 <script>
