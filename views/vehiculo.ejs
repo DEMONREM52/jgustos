@@ -87,6 +87,21 @@
         /* Color de fondo original */
     }
 
+    #navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #76ABAE;
+        padding: 10px 0;
+        transition: top 0.3s;
+        z-index: 1000;
+    }
+
+    #content {
+        padding-top: 50px;
+        /* Ajusta esto según la altura de tu barra de navegación */
+    }
+
     .titulo {
         margin-top: 100px;
     }
@@ -94,15 +109,15 @@
 
 
 
-<body>
+<body id="content">
 
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="ruta/a/tu/logo.png" alt="Logo" width="50" height="50" style="border-radius: 50%;">
+                <img src="https://i.ibb.co/nQ0JprM/logo-Photoroom-png-Photoroom.png" alt="Logo" width="100" height="60">
             </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class=" collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Inicio</a>
@@ -449,6 +464,36 @@
         // Actualizar la fuente de la imagen de previsualización con la URL ingresada
         imagenPreview.src = imageUrl;
     });
+</script>
+
+<script>
+    let lastScrollTop = 0;
+
+    window.addEventListener("scroll", function () {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > lastScrollTop) {
+            // Descendiendo
+            document.getElementById("navbar").classList.add("navbar-hidden");
+        } else {
+            // Ascendiendo
+            document.getElementById("navbar").classList.remove("navbar-hidden");
+        }
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, false);
+</script>
+
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-54px"; /* Ajusta esto según la altura de tu barra de navegación */
+        }
+        prevScrollpos = currentScrollPos;
+    }
 </script>
 
 
