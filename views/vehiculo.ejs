@@ -27,7 +27,7 @@
         background: #ecf0f3;
         font-size: 15px;
         height: 58px;
-        padding: 20px;
+        padding: 0 10 0 10px;
         letter-spacing: 1px;
         border: none;
         border-radius: 50px;
@@ -107,14 +107,27 @@
 
     @media (max-width: 800px) {
         body {
-        padding: 0 20px 20px 20px;
-    }
+            padding: 0 20px 20px 20px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+        }
+
     }
 
     @media (max-width: 1200px) {
         body {
-        padding: 0 50px 50px 50px;
-    }    
+            padding: 0 50px 50px 50px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+        }
     }
 </style>
 
