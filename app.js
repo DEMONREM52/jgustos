@@ -70,12 +70,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/search", (req, res) => {
-  const searchTerm = req.query.term;
-  // Realiza la búsqueda en la base de datos según el término de búsqueda
-  // y envía los resultados como respuesta en formato JSON
-});
-
 app.get("/vehiculo", (req, res) => {
   // Obtener datos de vehículos de la base de datos
   db.query("SELECT * FROM vehiculos", (err, results) => {
@@ -115,31 +109,34 @@ app.post("/registro", async (req, res) => {
   } = req.body;
 
   if (rol === "admin") {
-    const contraseñaAdminCorrecta = "ayelenlamejor"; // Contraseña del administrador correcta
+    const contraseñaAdminCorrecta = "z;Jpe[W*3Mqsc-TEAT6C"; // Contraseña del administrador correcta
     if (passwordAdmin !== contraseñaAdminCorrecta) {
-      return res.status(400).send(`
-      <script>
-        alert("Contraseña de administrador incorrecta");
+      return res.status(400).send(
+        // Contraseña de administrador incorrecta
+        `<script>
+        alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
     `);
     }
   } else if (rol === "superadmin") {
-    const contraseñaSuperAdminCorrecta = "528437"; // Contraseña del SuperAdmin correcta
+    const contraseñaSuperAdminCorrecta = "BSdEGPAjxJwhv3onUX:a"; // Contraseña del SuperAdmin correcta
     if (passwordSuperAdmin !== contraseñaSuperAdminCorrecta) {
-      return res.status(400).send(`
-      <script>
-        alert("Contraseña de SuperAdmin incorrecta");
+      return res.status(400).send(
+        // Contraseña de SuperAdmin incorrecta
+        `<script>
+        alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
     `);
     }
   } else if (rol === "vendedor") {
-    const costoVendedor = 500000;
+    const costoVendedor = "Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin";
     if (!montoVendedorInput || montoVendedorInput < costoVendedor) {
-      return res.status(400).send(`
-        <script>
-          alert("El monto ingresado debe ser mayor a ${costoVendedor}");
+      return res.status(400).send(
+        // El monto ingresado debe ser mayor a 
+        `<script>
+          alert("${costoVendedor}");
           window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
         </script> ${costoVendedor}`);
     }
