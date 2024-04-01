@@ -21,47 +21,18 @@
 
 <style>
     body {
-        padding: 0 150px 150px 150px;
         font-family: "EB Garamond", serif;
         font-optical-sizing: auto;
         font-weight: 800;
         font-style: normal;
-    }
-
-    .container-agregar {
-        transform: scale(0.80);
-    }
-
-    /* Estilos para input, select y textarea */
-    .form-container input,
-    .form-container select,
-    .form-container textarea {
-        color: #333;
-        background: #ecf0f3;
-        font-size: 15px;
-        height: 58px;
-        padding: 0 10 0 10px;
-        letter-spacing: 1px;
-        border: none;
-        border-radius: 50px;
-        box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #fff;
-        display: inline-block;
-        transition: all 0.3s ease 0s;
+        background-color: #000000;
+        background-image: url('https://i.ibb.co/7Sz7sqF/wallpaperbetter-com-7680x4320-3.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         width: 100%;
-    }
+        max-width: auto;
 
-    .form-container input:focus,
-    .form-container select:focus,
-    .form-container textarea:focus {
-        box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #fff;
-        outline: none;
-    }
-
-    .form-container input::placeholder,
-    .form-container select::placeholder,
-    .form-container textarea::placeholder {
-        color: #808080;
-        font-size: 14px;
     }
 
     /* Color of the links BEFORE scroll */
@@ -95,7 +66,7 @@
     }
 
     .navbar-custom {
-        background-color: #76ABAE;
+        background-color: #b4d5ff93;
         /* Color de fondo original */
     }
 
@@ -103,7 +74,7 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: #76ABAE;
+        background-color: rgba(53, 53, 53, 0.719);
         padding: 10px 0;
         transition: top 0.3s;
         z-index: 1000;
@@ -120,30 +91,41 @@
 
     .btn {
         color: #ffffff;
-        background-color: #160115;
+        background-color: #3b3b3b;
         font-size: 15px;
         font-weight: bold;
         text-transform: uppercase;
         width: 100%;
         padding: 12px 15px 11px;
         border-radius: 20px;
-        box-shadow: 1px 1px 1px #cbced1, -1px -1px 1px #fff;
+        box-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000;
         border: none;
         transition: all 0.5s ease 0s;
-        margin-top: 19px;
+        margin-top: 20px;
+    }
+
+    .btn:hover,
+    .btn:focus {
+        border: 2px solid white;
+        background-color: #000000;
+        color: #fff;
+        letter-spacing: 3px;
+        box-shadow: none;
+        outline: none;
     }
 
     .btn-danger {
         background-color: red;
     }
 
-    .btn:hover,
-    .btn:focus {
-        color: #fff;
-        letter-spacing: 3px;
-        box-shadow: none;
-        outline: none;
+    .card {
+        transition: transform 0.3s ease;
     }
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+
 
     @media (max-width: 800px) {
         body {
@@ -187,7 +169,7 @@
             </a>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <b><a class="nav-link" style="color: #160115; padding-right: 40px;" href="/">Inicio</a></b>
+                    <b><a class="nav-link" style="color: #ffffff; padding-right: 40px;" href="/">Inicio</a></b>
                 </li>
             </ul>
         </div>
@@ -195,13 +177,13 @@
 
 
 
-    <div class="text-center titulo">
+    <div class="text-center titulo" style="color: #ffffff;">
         <h1>Bienvenid@, <%= usuario.nombre %>!</h1>
         <p>Gracias por trabajar con nosotros</p>
     </div>
 
 
-    <div class="container mt-5 container-agregar">
+    <div class=" container mt-5 container-agregar" style="color: #ffffff;">
         <h2>Gestión de Vehículos</h2>
         <form action="/agregar-vehiculo" method="POST" class="form-container">
             <!-- Agregar campo oculto para el nombre de usuario -->
@@ -256,7 +238,7 @@
         </form>
     </div>
     <!-- Aquí se agregará el contenido ocultable -->
-    <div class="mt-5" id="contentToShow">
+    <div class="mt-5" id="contentToShow" style="color: #ffffff;">
         <h1 class="tutorial-direccion-image">No sabes cómo obtener la dirección de la imagen?</h1>
         <h6>Te enseñamos cómo hacerlo
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -281,35 +263,36 @@
 
 
 
-    <h3 class="mt-5">Vehículos Agregados</h3>
+    <h3 class="mt-5" style="color: #ffffff;">Vehículos Agregados</h3>
 
-
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="Toyota" value="Toyota">
-        <label class="form-check-label" for="Toyota">Toyota</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="BMW" value="BMW">
-        <label class="form-check-label" for="BMW">BMW</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="Mercedez-Benz" value="Mercedez-Benz">
-        <label class="form-check-label" for="Mercedez-Benz">Mercedez-Benz</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="Chevrolet" value="Chevrolet">
-        <label class="form-check-label" for="Chevrolet">Chevrolet</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="Renault" value="Renault">
-        <label class="form-check-label" for="Renault">Renault</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="Nissan" value="Nissan">
-        <label class="form-check-label" for="Nissan">Nissan</label>
+    <div style="color: #ffffff;">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="Toyota" value="Toyota">
+            <label class="form-check-label" for="Toyota">Toyota</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="BMW" value="BMW">
+            <label class="form-check-label" for="BMW">BMW</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="Mercedez-Benz" value="Mercedez-Benz">
+            <label class="form-check-label" for="Mercedez-Benz">Mercedez-Benz</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="Chevrolet" value="Chevrolet">
+            <label class="form-check-label" for="Chevrolet">Chevrolet</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="Renault" value="Renault">
+            <label class="form-check-label" for="Renault">Renault</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="Nissan" value="Nissan">
+            <label class="form-check-label" for="Nissan">Nissan</label>
+        </div>
     </div>
     <% if (usuario && usuario.rol==='superadmin' ) { %>
-        <div class="form-group">
+        <div class="form-group" style="color: #ffffff;">
             <label for="filtroCertificacion">Filtrar por Certificación:</label>
             <select class="form-control" id="filtroCertificacion">
                 <option value="todos">Todos</option>
