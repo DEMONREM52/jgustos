@@ -101,6 +101,22 @@
         transition: all 0.3s ease 0s;
     }
 
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+        color: #333;
+        background: #ecf0f3;
+        font-size: 15px;
+        height: 50px;
+        padding: 20px;
+        letter-spacing: 1px;
+        border: none;
+        border-radius: 50px;
+        box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #fff;
+        display: inline-block;
+        transition: all 0.3s ease 0s;
+    }
+
     .form-container .form-horizontal .form-control:focus {
         box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #fff;
         outline: none;
@@ -132,37 +148,60 @@
         box-shadow: none;
         outline: none;
     }
+
+    .btn {
+        color: #ffffff;
+        background-color: #160115;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        padding: 12px 15px 11px;
+        border-radius: 20px;
+        box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px #fff;
+        border: none;
+        transition: all 0.5s ease 0s;
+    }
 </style>
 
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Formulario de Citas</h1>
-        <form action="/registrar-cita" method="POST" id="citaForm">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+    <div class="form-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="form-container">
+                        <h1 class="text-center mb-4">Formulario de Citas</h1>
+                        <form action="/registrar-cita" method="POST" id="citaForm">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="celular" class="form-label">Número de celular:</label>
+                                <input type="tel" class="form-control" id="celular" name="celular" required
+                                    pattern="[0-9]{10}" title="Por favor ingrese un número de celular de 10 dígitos">
+                            </div>
+                            <div class="mb-3">
+                                <label for="motivo">Motivo (Cotización, Visualizacion del vehiculo, otro)</label>
+                                <textarea class="form-control" id="motivo" name="motivo" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha:</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora:</label>
+                                <input type="time" class="form-control" id="hora" name="hora" required min="09:00"
+                                    max="17:00" step="3600" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrar Cita</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="celular" class="form-label">Número de celular:</label>
-                <input type="tel" class="form-control" id="celular" name="celular" required pattern="[0-9]{10}"
-                    title="Por favor ingrese un número de celular de 10 dígitos">
-            </div>
-            <div class="mb-3">
-                <label for="motivo">Motivo (Cotización, Visualizacion del vehiculo, otro)</label>
-                <textarea class="form-control" id="motivo" name="motivo" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="fecha" class="form-label">Fecha:</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" required>
-            </div>
-            <div class="mb-3">
-                <label for="hora" class="form-label">Hora:</label>
-                <input type="time" class="form-control" id="hora" name="hora" required min="09:00" max="17:00"
-                    step="3600" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar Cita</button>
-        </form>
+        </div>
     </div>
+
 
 
     <script>

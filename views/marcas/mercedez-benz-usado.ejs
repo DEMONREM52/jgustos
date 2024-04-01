@@ -19,109 +19,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
 
     <style>
-      
-    body {
-        font-family: "EB Garamond", serif;
-        font-optical-sizing: auto;
-        font-weight: 800;
-        font-style: normal;
-        background-color: #000000;
-        background-image: url('https://i.ibb.co/7Sz7sqF/wallpaperbetter-com-7680x4320-3.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 100%;
-        max-width: auto;
+        body {
+            font-family: "EB Garamond", serif;
+            font-optical-sizing: auto;
+            font-weight: 800;
+            font-style: normal;
+            background-color: #000000;
+            background-image: url('https://i.ibb.co/7Sz7sqF/wallpaperbetter-com-7680x4320-3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            max-width: auto;
 
-    }
+        }
 
-    /* Color of the links BEFORE scroll */
-    .navbar-scroll .nav-link,
-    .navbar-scroll .navbar-toggler-icon,
-    .navbar-scroll .navbar-brand {
-        color: #fff;
-    }
+        /* Color of the links BEFORE scroll */
+        .navbar-scroll .nav-link,
+        .navbar-scroll .navbar-toggler-icon,
+        .navbar-scroll .navbar-brand {
+            color: #fff;
+        }
 
-    /* Color of the links AFTER scroll */
-    .navbar-scrolled .nav-link,
-    .navbar-scrolled .navbar-toggler-icon,
-    .navbar-scrolled .navbar-brand {
-        color: #fff;
-    }
+        /* Color of the links AFTER scroll */
+        .navbar-scrolled .nav-link,
+        .navbar-scrolled .navbar-toggler-icon,
+        .navbar-scrolled .navbar-brand {
+            color: #fff;
+        }
 
-    /* Color of the navbar AFTER scroll */
-    .navbar-scroll,
-    .navbar-scrolled {
-        background-color: #cbbcb1;
-    }
+        /* Color of the navbar AFTER scroll */
+        .navbar-scroll,
+        .navbar-scrolled {
+            background-color: #cbbcb1;
+        }
 
-    .mask-custom {
-        backdrop-filter: blur(5px);
-        background-color: rgba(255, 255, 255, .15);
-    }
+        .mask-custom {
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, .15);
+        }
 
-    .navbar-brand {
-        font-size: 1.75rem;
-        letter-spacing: 3px;
-    }
+        .navbar-brand {
+            font-size: 1.75rem;
+            letter-spacing: 3px;
+        }
 
-    .navbar-custom {
-        background-color: #b4d5ff93;
-        /* Color de fondo original */
-    }
+        .navbar-custom {
+            background-color: #b4d5ff93;
+            /* Color de fondo original */
+        }
 
-    #navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background-color: rgba(53, 53, 53, 0.719);
-        padding: 10px 0;
-        transition: top 0.3s;
-        z-index: 1000;
-    }
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(53, 53, 53, 0.719);
+            padding: 10px 0;
+            transition: top 0.3s;
+            z-index: 1000;
+        }
 
-    #content {
-        padding-top: 50px;
-        /* Ajusta esto según la altura de tu barra de navegación */
-    }
+        #content {
+            padding-top: 50px;
+            /* Ajusta esto según la altura de tu barra de navegación */
+        }
 
-    .card {
-        background-color: #ffffff;
-    }
+        .card {
+            background-color: #ffffff;
+        }
 
-    .container-image {
-        position: relative;
-        margin-top: 40px;
-        width: auto;
-        /* Ajusta el ancho según sea necesario */
-        height: auto;
-        /* Ajusta la altura según sea necesario */
-    }
+        .container-image {
+            position: relative;
+            margin-top: 40px;
+            width: auto;
+            /* Ajusta el ancho según sea necesario */
+            height: auto;
+            /* Ajusta la altura según sea necesario */
+        }
 
-    .image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        /* Ajusta la imagen para cubrir todo el contenedor */
-        clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
-        /* Forma de montaña invertida */
-    }
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ajusta la imagen para cubrir todo el contenedor */
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+            /* Forma de montaña invertida */
+        }
 
-    .text {
-        position: absolute;
-        top: 20%;
-        left: 22%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        /* Coloca el texto encima de la imagen */
-        color: white;
-        font-family: "Rubik Doodle Shadow", system-ui;
-        font-weight: 800;
-        font-style: normal;
-        /* Color del texto */
-    }
+        .text {
+            position: absolute;
+            top: 20%;
+            left: 22%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            color: white;
+            font-family: "Rubik Doodle Shadow", system-ui;
+            font-weight: 800;
+            font-style: normal;
+            /* Color del texto */
+        }
 
-    .buscador{
+        .buscador {
             padding: 0 150px 0 150px;
             margin: 120px 0 120px 0;
         }
@@ -146,50 +145,51 @@
                 margin: 120px 0 120px 0
             }
         }
-        
-    .btn {
-        color: #ffffff;
-        background-color: #3b3b3b;
-        font-size: 15px;
-        font-weight: bold;
-        text-transform: uppercase;
-        width: 100%;
-        padding: 12px 15px 11px;
-        border-radius: 20px;
-        box-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000;
-        border: none;
-        transition: all 0.5s ease 0s;
-    }
 
-    .btn:hover,
-    .btn:focus {
-        border: 2px solid white;
-        background-color: #000000;
-        color: #fff;
-        letter-spacing: 3px;
-        box-shadow: none;
-        outline: none;
-    }
+        .btn {
+            color: #ffffff;
+            background-color: #3b3b3b;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            padding: 12px 15px 11px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000;
+            border: none;
+            transition: all 0.5s ease 0s;
+        }
 
-    .card {
-        transition: transform 0.3s ease;
-    }
+        .btn:hover,
+        .btn:focus {
+            border: 2px solid white;
+            background-color: #000000;
+            color: #fff;
+            letter-spacing: 3px;
+            box-shadow: none;
+            outline: none;
+        }
 
-    .card:hover {
-        transform: scale(1.1);
-    }
+        .card {
+            transition: transform 0.3s ease;
+        }
 
-    .social-link {
-        display: inline-block;
-        font-size: 24px;
-        /* ajusta el tamaño del ícono según sea necesario */
-        transition: transform 0.3s ease;
-    }
+        .card:hover {
+            transform: scale(1.1);
+        }
 
-    .social-link:hover {
-        transform: scale(1.2);
-        /* escala el tamaño del ícono al 120% */
-    }
+        .social-link {
+            display: inline-block;
+            font-size: 24px;
+            /* ajusta el tamaño del ícono según sea necesario */
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2);
+            /* escala el tamaño del ícono al 120% */
+        }
+
         .descripcion {
             max-height: 0;
             overflow: hidden;
@@ -208,14 +208,15 @@
             <H2>NO SE FRENE.</H2>
         </div>
     </div>
-    
+
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a style="padding-left: 20px;" class="navbar-brand" href="#">
                 <img src="https://i.ibb.co/nQ0JprM/logo-Photoroom-png-Photoroom.png" alt="Logo" width="100" height="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border: solid 2px white;">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                style="border: solid 2px white;">
                 <i class="bi bi-list" style="color: #fff;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -224,8 +225,8 @@
                         <b><a class="nav-link" style="color: white; padding-right: 40px;" href="/">Inicio</a></b>
                     </li>
                     <li class="nav-item">
-                        <b><a class="nav-link" style="color: white; padding-right: 40px;"
-                                href="/registrar-cita">Cotización</a></b>
+                        <b><a class="nav-link" style="color: white; padding-right: 40px;" href="/registrar-cita"
+                                target="blank">Cotización</a></b>
                     </li>
                     <li class="nav-item">
                         <b><a class="nav-link" style="color: white; padding-right: 40px;"
@@ -258,14 +259,14 @@
 
     <div class="container mt-5">
         <h1 style="color: #fff; text-align: center;">MERCEDEZ-BENZ</h1>
-        
-        
+
+
         <div class="row buscador" id="vehiculos">
             <div class="col-md-12">
                 <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
             </div>
         </div>
-        
+
 
         <div class="row mt-3" id="vehiculos">
             <% vehiculos.forEach((vehiculo, index)=> { %>
@@ -288,7 +289,8 @@
                                     Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
                                 <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver
                                     Detalles</a>
-                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar Menos</a>
+                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar
+                                    Menos</a>
                             </div>
                         </div>
                     </div>
@@ -388,7 +390,7 @@
 
     </footer>
 
-    
+
 </body>
 
 <script>
@@ -409,11 +411,11 @@
     var inputBusqueda = document.getElementById('buscador');
 
     // Manejar el evento de entrada en el input de búsqueda
-    inputBusqueda.addEventListener('input', function() {
+    inputBusqueda.addEventListener('input', function () {
         var valorBusqueda = inputBusqueda.value.toLowerCase();
-        
+
         // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
-        document.querySelectorAll('.contenedor-autos').forEach(function(vehiculo) {
+        document.querySelectorAll('.contenedor-autos').forEach(function (vehiculo) {
             var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
             if (nombre.includes(valorBusqueda)) {
                 vehiculo.style.display = 'block';
@@ -429,34 +431,34 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
-    const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
+        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
 
-    botonesVerDetalles.forEach((boton, index) => {
-        boton.addEventListener('click', function (event) {
-            event.preventDefault();
-            const descripcion = this.parentElement.querySelector('.descripcion');
-            const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
+        botonesVerDetalles.forEach((boton, index) => {
+            boton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const descripcion = this.parentElement.querySelector('.descripcion');
+                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
 
-            descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
-            botonMostrarMenos.style.display = 'inline-block';
-            this.style.display = 'none';
+                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
+                botonMostrarMenos.style.display = 'inline-block';
+                this.style.display = 'none';
+            });
+        });
+
+        botonesMostrarMenos.forEach((boton) => {
+            boton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const descripcion = this.parentElement.querySelector('.descripcion');
+                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
+
+                descripcion.style.maxHeight = '0';
+                botonVerDetalles.style.display = 'inline-block';
+                this.style.display = 'none';
+            });
         });
     });
-
-    botonesMostrarMenos.forEach((boton) => {
-        boton.addEventListener('click', function (event) {
-            event.preventDefault();
-            const descripcion = this.parentElement.querySelector('.descripcion');
-            const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
-
-            descripcion.style.maxHeight = '0';
-            botonVerDetalles.style.display = 'inline-block';
-            this.style.display = 'none';
-        });
-    });
-});
 </script>
 
 
