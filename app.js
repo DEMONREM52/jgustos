@@ -71,18 +71,73 @@ app.get("/", (req, res) => {
 });
 
 app.get("/vehiculo", (req, res) => {
-  // Obtener datos de vehículos de la base de datos
-  db.query("SELECT * FROM vehiculos", (err, results) => {
-    if (err) {
-      res.status(500).send("Error interno del servidor");
+  // Obtener datos de vehículos y usuarios de la base de datos en paralelo
+  db.query("SELECT * FROM vehiculos", (errVehiculos, resultadosVehiculos) => {
+    if (errVehiculos) {
+      res.status(500).send("Error interno del servidor al obtener vehículos");
     } else {
-      // Obtener el usuario de la sesión
-      const usuario = req.session.usuario;
+      db.query("SELECT * FROM usuarios", (errUsuarios, resultadosUsuarios) => {
+        if (errUsuarios) {
+          res
+            .status(500)
+            .send("Error interno del servidor al obtener usuarios");
+        } else {
+          // Obtener el usuario de la sesión
+          const usuario = req.session.usuario;
 
-      // Renderizar la vista de vehículos y pasar los datos de los vehículos y el usuario
-      res.render("vehiculo", { vehiculos: results, usuario: usuario });
+          // Renderizar la vista de vehículos y pasar los datos de vehículos y usuarios
+          res.render("vehiculo", {
+            vehiculos: resultadosVehiculos,
+            usuarios: resultadosUsuarios,
+            usuario: usuario,
+          });
+        }
+      });
     }
   });
+});
+
+app.get("/editar-usuario/:id", (req, res) => {
+  const usuarioId = req.params.id;
+  // Obtener información del usuario con el ID proporcionado
+  db.query(
+    "SELECT * FROM usuarios WHERE id = ?",
+    [usuarioId],
+    (err, result) => {
+      if (err) {
+        console.error("Error al obtener información del usuario:", err);
+        res.status(500).send("Error interno del servidor");
+      } else {
+        // Renderizar el formulario de edición de usuario y pasar los datos del usuario
+        res.render("editar-usuario", {
+          usuario: result[0],
+          isAdmin: req.session.usuario.rol === 'superadmin', // Verificar si el usuario es superadmin
+        });
+      }
+    }
+  );
+});
+
+
+app.post("/editar-usuario/:id", (req, res) => {
+  const usuarioId = req.params.id;
+  const { nombre, email, contraseña, rol } = req.body; // Asegúrate de que estos campos coincidan con los que se envían desde el formulario
+
+  // Aquí debes ejecutar la consulta SQL para actualizar los datos del usuario en la base de datos
+  db.query(
+    "UPDATE usuarios SET nombre = ?, email = ?,contraseña = ?, rol = ? WHERE id = ?",
+    [nombre, email, contraseña, rol, usuarioId],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error al actualizar el usuario:", err);
+        res.status(500).send("Error interno del servidor");
+      } else {
+        console.log("Usuario actualizado correctamente");
+        // Redireccionar a la página de vehículos después de editar el usuario
+        res.redirect("/vehiculo");
+      }
+    }
+  );
 });
 
 app.post("/cotizacion", (req, res) => {
@@ -117,7 +172,8 @@ app.post("/registro", async (req, res) => {
         alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
-    `);
+    `
+      );
     }
   } else if (rol === "superadmin") {
     const contraseñaSuperAdminCorrecta = "BSdEGPAjxJwhv3onUX:a"; // Contraseña del SuperAdmin correcta
@@ -128,17 +184,20 @@ app.post("/registro", async (req, res) => {
         alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
-    `);
+    `
+      );
     }
   } else if (rol === "vendedor") {
-    const costoVendedor = "Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin";
+    const costoVendedor =
+      "Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin";
     if (!montoVendedorInput || montoVendedorInput < costoVendedor) {
       return res.status(400).send(
-        // El monto ingresado debe ser mayor a 
+        // El monto ingresado debe ser mayor a
         `<script>
           alert("${costoVendedor}");
           window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
-        </script> ${costoVendedor}`);
+        </script> ${costoVendedor}`
+      );
     }
   } else if (!aceptarTerminos) {
     return res.status(400).send(`
