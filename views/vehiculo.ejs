@@ -316,6 +316,9 @@
         </h6>
     </div>
 
+    <!-- Video -->
+    <iframe id="tutorialVideo" width="560" height="315" src="https://www.youtube.com/embed/P2sx47D7AaU?si=DPRPlRozdb7qtaiQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
     <div class="container">
         <% if (usuario && usuario.rol==='superadmin' ) { %>
@@ -679,6 +682,7 @@
 
         if (confirmation) {
             document.getElementById('contentToShow').classList.add('d-none');
+            document.getElementById('tutorialVideo').classList.add('d-none'); // Ocultar el video también
             document.getElementById('showContentButton').classList.add('d-none');
         }
     });
