@@ -1,6 +1,8 @@
 // Importar dependencias
 const express = require("express");
 const session = require("express-session");
+const passport = require("passport");
+const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const path = require("path");
 const bcrypt = require("bcrypt");
@@ -22,11 +24,16 @@ app.use(
   })
 );
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-
 // Agregar middleware para analizar el cuerpo de las peticiones como JSON
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.locals.usuario = req.user; // Pasar req.user a res.locals para que esté disponible en todas las plantillas
+  next();
+});
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Configuración de la base de datos
 const db = mysql.createConnection({
@@ -512,7 +519,6 @@ app.delete("/borrar-vehiculo-confirmado/:id", (req, res) => {
     }
   );
 });
-
 
 // RUTAS PARA LOS VEHICULOS NUEVOS
 

@@ -86,7 +86,7 @@
     }
 
     .card {
-        background-color: #000000;
+        background-color: #ffffff;
     }
 
     .container-image {
@@ -94,7 +94,7 @@
         margin-top: 40px;
         width: auto;
         /* Ajusta el ancho según sea necesario */
-        height: 100vh;
+        height: auto;
         /* Ajusta la altura según sea necesario */
     }
 
@@ -121,6 +121,32 @@
         /* Color del texto */
     }
 
+    .buscador{
+            padding: 0 150px 0 150px;
+            margin: 120px 0 120px 0;
+        }
+
+        @media (max-width: 800px) {
+            .text {
+                /* Tamaño de letra más pequeño */
+                position: absolute;
+                top: 30%;
+                left: 37%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                /* Coloca el texto encima de la imagen */
+                color: white;
+                font-family: "Rubik Doodle Shadow", system-ui;
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            .buscador {
+                padding: 0 50px 0 50px;
+                margin: 120px 0 120px 0
+            }
+        }
+        
     .btn {
         color: #ffffff;
         background-color: #3b3b3b;
@@ -175,14 +201,22 @@
 
 <body id="content">
 
+    <div class="container-image">
+        <img src="https://i.ibb.co/SN6XzvN/wallpaperbetter-com-7680x4320-2.jpg" alt="Imagen" class="image">
+        <div class="text">
+            <h2>QUE TU META DE CARRO NUEVO</h2>
+            <H2>NO SE FRENE.</H2>
+        </div>
+    </div>
+    
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a style="padding-left: 20px;" class="navbar-brand" href="#">
                 <img src="https://i.ibb.co/nQ0JprM/logo-Photoroom-png-Photoroom.png" alt="Logo" width="100" height="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list"></i>
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border: solid 2px white;">
+                <i class="bi bi-list" style="color: #fff;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
@@ -223,10 +257,10 @@
 
 
     <div class="container mt-5">
-        <h1>Bienvenido al Concesionario</h1>
+        <h1 style="color: #fff; text-align: center;">RENAULT</h1>
         
         
-        <div class="row mt-3">
+        <div class="row buscador" id="vehiculos">
             <div class="col-md-12">
                 <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
             </div>
@@ -264,60 +298,128 @@
     </div>
 
 
-    <footer class="mt-5">
-        <!-- Aquí puedes agregar el footer con información sobre la empresa y redes sociales -->
+    <footer class="p-3 mb-2" style="background-color: rgba(53, 53, 53, 0.719); color: white;" class="text-muted">
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem "></i>NUESTROS VEHICULOS
+                        </h6>
+                        <p>
+                            <a href="/toyota-nuevo" class="text-reset">Toyota</a>
+                        </p>
+                        <p>
+                            <a href="/bmw-nuevo" class="text-reset">BMW</a>
+                        </p>
+                        <p>
+                            <a href="/mercedez-benz-nuevo" class="text-reset">Mercedez Benz</a>
+                        </p>
+                        <p>
+                            <a href="/chevrolet-nuevo" class="text-reset">Chevrolet</a>
+                        </p>
+                        <p>
+                            <a href="/renault-nuevo" class="text-reset">Renault</a>
+                        </p>
+                        <p>
+                            <a href="/nissan-nuevo" class="text-reset">Nissan</a>
+                        </p>
+                        <p>
+                            <a href="#vehiculosUsadosCertificados" class="text-reset">Usados certificados</a>
+                        </p>
+
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-3 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            CENTRO DE AYUDA
+                        </h6>
+                        <p>
+                            <a id="contactoFooter" href="" class="text-reset">Contactanos</a>
+                        </p>
+                        <p>
+                            <a href="https://publuu.com/flip-book/448547/1011621" target="blank"
+                                class="text-reset">Politicas y privacidad</a>
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">¿Trabajamos juntos?</h6>
+                        <p><i class="bi bi-house-door-fill"></i> Medellin, Colombia </p>
+                        <p>
+                            <i class="bi bi-envelope-fill"></i>
+                            Tucarrosonado8@gmail.com
+                        </p>
+                        <p><i class="bi bi-telephone-fill"></i> + 57 123 456 7808</p>
+                    </div>
+
+                    <section class="d-flex justify-content-center col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                        <div>
+                            <a href="https://web.facebook.com/" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-facebook" style="color: #0066ff;"></i>
+                            </a>
+
+                            <a href="https://twitter.com/?lang=es" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-twitter-x" style="color: #000000;"></i>
+                            </a>
+
+                            <a href="" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-instagram" style="color: #9900ffd3;"></i>
+                            </a>
+                            <a href="" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-whatsapp" style="color: #00ff00;"></i>
+                            </a>
+
+                        </div>
+                        <!-- Right -->
+                    </section>
+                    <!-- Grid row -->
+                </div>
+
     </footer>
 
-    <script>
-        // Obtener el input de búsqueda
-        var inputBusqueda = document.getElementById('buscador');
     
-        // Manejar el evento de entrada en el input de búsqueda
-        inputBusqueda.addEventListener('input', function() {
-            var valorBusqueda = inputBusqueda.value.toLowerCase();
-            
-            // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
-            document.querySelectorAll('.contenedor-autos').forEach(function(vehiculo) {
-                var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
-                if (nombre.includes(valorBusqueda)) {
-                    vehiculo.style.display = 'block';
-                } else {
-                    vehiculo.style.display = 'none';
-                }
-            });
-        });
-    </script>
-
-    
-
+</body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
-        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-54px"; /* Ajusta esto según la altura de tu barra de navegación */
+        }
+        prevScrollpos = currentScrollPos;
+    }
+</script>
 
-        botonesVerDetalles.forEach((boton, index) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
+<script>
+    // Obtener el input de búsqueda
+    var inputBusqueda = document.getElementById('buscador');
 
-                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
-                botonMostrarMenos.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
-        });
-
-        botonesMostrarMenos.forEach((boton) => {
-            boton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const descripcion = this.parentElement.querySelector('.descripcion');
-                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
-
-                descripcion.style.maxHeight = '0';
-                botonVerDetalles.style.display = 'inline-block';
-                this.style.display = 'none';
-            });
+    // Manejar el evento de entrada en el input de búsqueda
+    inputBusqueda.addEventListener('input', function() {
+        var valorBusqueda = inputBusqueda.value.toLowerCase();
+        
+        // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
+        document.querySelectorAll('.contenedor-autos').forEach(function(vehiculo) {
+            var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
+            if (nombre.includes(valorBusqueda)) {
+                vehiculo.style.display = 'block';
+            } else {
+                vehiculo.style.display = 'none';
+            }
         });
     });
 </script>
@@ -325,9 +427,42 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
+    const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
+
+    botonesVerDetalles.forEach((boton, index) => {
+        boton.addEventListener('click', function (event) {
+            event.preventDefault();
+            const descripcion = this.parentElement.querySelector('.descripcion');
+            const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
+
+            descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
+            botonMostrarMenos.style.display = 'inline-block';
+            this.style.display = 'none';
+        });
+    });
+
+    botonesMostrarMenos.forEach((boton) => {
+        boton.addEventListener('click', function (event) {
+            event.preventDefault();
+            const descripcion = this.parentElement.querySelector('.descripcion');
+            const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
+
+            descripcion.style.maxHeight = '0';
+            botonVerDetalles.style.display = 'inline-block';
+            this.style.display = 'none';
+        });
+    });
+});
+</script>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>
