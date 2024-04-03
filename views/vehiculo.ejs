@@ -389,7 +389,8 @@
                         <label class="form-check-label" for="BMW">BMW</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input marca-checkbox" type="checkbox" id="Mercedez-Benz" value="Mercedez-Benz">
+                        <input class="form-check-input marca-checkbox" type="checkbox" id="Mercedez-Benz"
+                            value="Mercedez-Benz">
                         <label class="form-check-label" for="Mercedez-Benz">Mercedez-Benz</label>
                     </div>
                     <div class="form-check">
@@ -405,47 +406,50 @@
                         <label class="form-check-label" for="Nissan">Nissan</label>
                     </div>
                 </div>
-                
+
                 <% if (usuario && usuario.rol==='superadmin' ) { %>
                     <div class="form-group" style="color: #ffffff;">
                         <label for="filtroCertificacion">Filtrar por Certificación:</label>
                         <div class="form-check">
-                            <input class="form-check-input certificacion-checkbox" type="checkbox" id="filtroCertificacion_todos" value="todos">
-                            <label class="form-check-label" for="filtroCertificacion_todos">Todos</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input certificacion-checkbox" type="checkbox" id="filtroCertificacion_nuevo" value="nuevo">
+                            <input class="form-check-input certificacion-checkbox" type="checkbox"
+                                id="filtroCertificacion_nuevo" value="nuevo">
                             <label class="form-check-label" for="filtroCertificacion_nuevo">Nuevo</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input certificacion-checkbox" type="checkbox" id="filtroCertificacion_usado" value="usado">
+                            <input class="form-check-input certificacion-checkbox" type="checkbox"
+                                id="filtroCertificacion_usado" value="usado">
                             <label class="form-check-label" for="filtroCertificacion_usado">Usado</label>
                         </div>
                     </div>
-                <% } %>
-                
-                <% if (usuario && usuario.rol==='superadmin' ) { %>
-                    <div class="form-group" style="color: #ffffff;">
-                        <label for="filtroUsuario">Filtrar por Usuario:</label>
-                        <div class="form-check">
-                            <input class="form-check-input usuario-checkbox" type="checkbox" id="filtroUsuario_todos" value="todos">
-                            <label class="form-check-label" for="filtroUsuario_todos">Todos</label>
-                        </div>
-                        <% usuarios.forEach((usuario)=> { %>
-                            <div class="form-check">
-                                <input class="form-check-input usuario-checkbox" type="checkbox" id="filtroUsuario_<%= usuario.nombre %>" value="<%= usuario.nombre %>">
-                                <label class="form-check-label" for="filtroUsuario_<%= usuario.nombre %>"><%= usuario.nombre %></label>
+                    <% } %>
+
+                        <% if (usuario && usuario.rol==='superadmin' ) { %>
+                            <div class="form-group" style="color: #ffffff;">
+                                <label for="filtroUsuario">Filtrar por Usuario:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input usuario-checkbox" type="checkbox"
+                                        id="filtroUsuario_todos" value="todos">
+                                    <label class="form-check-label" for="filtroUsuario_todos">Todos</label>
+                                </div>
+                                <% usuarios.forEach((usuario)=> { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input usuario-checkbox" type="checkbox"
+                                            id="filtroUsuario_<%= usuario.nombre %>" value="<%= usuario.nombre %>">
+                                        <label class="form-check-label" for="filtroUsuario_<%= usuario.nombre %>">
+                                            <%= usuario.nombre %>
+                                        </label>
+                                    </div>
+                                    <% }); %>
                             </div>
-                        <% }); %>
-                    </div>
-                <% } %>
-                
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
-                    </div>
-                </div>
-                
+                            <% } %>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <input type="text" id="buscador" class="form-control"
+                                            placeholder="Buscar por modelo...">
+                                    </div>
+                                </div>
+
 
                                 <% if (usuario && (usuario.rol==='admin' )) { %>
                                     <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS NUEVOS</h1>
@@ -690,32 +694,6 @@
         filtrarVehiculos();
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>

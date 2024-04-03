@@ -121,24 +121,131 @@ app.get("/editar-usuario/:id", (req, res) => {
 
 app.post("/editar-usuario/:id", (req, res) => {
   const usuarioId = req.params.id;
-  const { nombre, email, contraseña, rol } = req.body; // Asegúrate de que estos campos coincidan con los que se envían desde el formulario
+  const { nombre: nuevoNombre, email, contraseña, rol } = req.body;
 
-  // Aquí debes ejecutar la consulta SQL para actualizar los datos del usuario en la base de datos
+  // Obtener el nombre actual del usuario
   db.query(
-    "UPDATE usuarios SET nombre = ?, email = ?,contraseña = ?, rol = ? WHERE id = ?",
-    [nombre, email, contraseña, rol, usuarioId],
+      "SELECT nombre FROM usuarios WHERE id = ?",
+      [usuarioId],
+      (err, resultado) => {
+          if (err) {
+              console.error("Error al obtener el nombre del usuario:", err);
+              res.status(500).send("Error interno del servidor");
+          } else {
+              const nombreAnterior = resultado[0].nombre;
+
+              // Verificar si el nuevo nombre ya está en uso
+              db.query(
+                  "SELECT COUNT(*) AS count FROM usuarios WHERE nombre = ? AND id != ?",
+                  [nuevoNombre, usuarioId],
+                  (err, resultado) => {
+                      if (err) {
+                          console.error("Error al verificar el nombre de usuario:", err);
+                          res.status(500).send("Error interno del servidor");
+                      } else {
+                          const count = resultado[0].count;
+
+                          if (count > 0) {
+                              // Si el nombre ya está en uso, mostrar un mensaje de alerta
+                              res.send(`
+                                  <script>
+                                      alert("El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
+                                      window.location.href = "/editar-usuario/${usuarioId}";
+                                  </script>
+                              `);
+                          } else {
+                              // Actualizar el nombre del usuario en la tabla de usuarios
+                              db.query(
+                                  "UPDATE usuarios SET nombre = ?, email = ?, contraseña = ?, rol = ? WHERE id = ?",
+                                  [nuevoNombre, email, contraseña, rol, usuarioId],
+                                  (err, resultado) => {
+                                      if (err) {
+                                          console.error("Error al actualizar el usuario:", err);
+                                          res.status(500).send("Error interno del servidor");
+                                      } else {
+                                          // Actualizar el nombre en la tabla de vehículos
+                                          db.query(
+                                              "UPDATE vehiculos SET usuarioAgrego = ? WHERE usuarioAgrego = ?",
+                                              [nuevoNombre, nombreAnterior],
+                                              (err, resultado) => {
+                                                  if (err) {
+                                                      console.error("Error al actualizar el nombre en la tabla de vehículos:", err);
+                                                      res.status(500).send("Error interno del servidor");
+                                                  } else {
+                                                      console.log("Usuario y vehículos actualizados correctamente");
+                                                      // Redireccionar a la página de vehículos después de editar el usuario
+                                                      res.redirect("/vehiculo");
+                                                  }
+                                              }
+                                          );
+                                      }
+                                  }
+                              );
+                          }
+                      }
+                  }
+              );
+          }
+      }
+  );
+});
+
+
+
+app.post("/borrar-usuario/:id", (req, res) => {
+  const usuarioId = req.params.id;
+
+  // Obtener el nombre del usuario para mostrar en el mensaje de confirmación
+  db.query(
+    "SELECT nombre FROM usuarios WHERE id = ?",
+    [usuarioId],
     (err, resultado) => {
       if (err) {
-        console.error("Error al actualizar el usuario:", err);
+        console.error("Error al buscar el usuario:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        console.log("Usuario actualizado correctamente");
-        // Redireccionar a la página de vehículos después de editar el usuario
+        const nombreUsuario = resultado[0].nombre;
+
+        // Mostrar mensaje de confirmación utilizando JavaScript
+        res.send(`
+          <script>
+            var confirmacion = confirm("¿Estás seguro de eliminar a ${nombreUsuario}?");
+
+            if (confirmacion) {
+              window.location.href = "/confirmar-eliminacion/${usuarioId}";
+            } else {
+              window.location.href = "/usuario";
+            }
+          </script>
+        `);
+      }
+    }
+  );
+});
+
+app.get("/confirmar-eliminacion/:id", (req, res) => {
+  const usuarioId = req.params.id;
+
+  // Aquí debes ejecutar la lógica para eliminar el usuario de la base de datos
+  db.query(
+    "DELETE FROM usuarios WHERE id = ?",
+    [usuarioId],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error al eliminar el usuario:", err);
+        res.status(500).send("Error interno del servidor");
+      } else {
+        console.log("Usuario eliminado correctamente");
         res.redirect("/vehiculo");
       }
     }
   );
 });
+
+
+
+
+
 
 app.post("/cotizacion", (req, res) => {
   const { nombre, email, telefono, mensaje, vehiculoId } = req.body;
