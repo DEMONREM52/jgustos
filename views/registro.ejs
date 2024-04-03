@@ -132,6 +132,35 @@
         box-shadow: none;
         outline: none;
     }
+
+    /* Estilo personalizado para el checkbox */
+    .form-check-input[type="checkbox"] {
+        -webkit-appearance: none;
+        /* Deshabilita la apariencia predeterminada de WebKit (Chrome, Safari) */
+        -moz-appearance: none;
+        /* Deshabilita la apariencia predeterminada de Mozilla Firefox */
+        appearance: none;
+        /* Deshabilita la apariencia predeterminada de otros navegadores */
+        width: 16px;
+        /* Ancho y altura del checkbox personalizado */
+        height: 16px;
+        border: 2px solid #140314;
+        /* Borde negro */
+        border-radius: 3px;
+        /* Bordes redondeados */
+        outline: none;
+        /* Elimina el contorno predeterminado */
+        cursor: pointer;
+        /* Cambia el cursor al pasar sobre el checkbox */
+        vertical-align: middle;
+        /* Alinea verticalmente el checkbox con el texto */
+    }
+
+    /* Estilo del checkbox cuando está marcado */
+    .form-check-input[type="checkbox"]:checked {
+        background-color: green;
+        /* Cambia el fondo del checkbox a verde */
+    }
 </style>
 
 
@@ -192,7 +221,8 @@
                                     name="montoVendedorInput" placeholder="Ingrese el monto a pagar">
                             </div>
                             <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="aceptarTerminos" required>
+                                <input type="checkbox" class="form-check-input" id="aceptarTerminos"
+                                    style="border-color: #140314;" required>
                                 <label class="form-check-label" for="aceptarTerminos" style="font-size: 15px;">Acepto
                                     los <a href="https://publuu.com/flip-book/448547/1011621" target="_blank">Términos y
                                         Condiciones de Uso</a></label>

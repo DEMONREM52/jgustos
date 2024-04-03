@@ -226,21 +226,51 @@ app.post("/borrar-usuario/:id", (req, res) => {
 app.get("/confirmar-eliminacion/:id", (req, res) => {
   const usuarioId = req.params.id;
 
-  // Aquí debes ejecutar la lógica para eliminar el usuario de la base de datos
+  // Obtener el nombre del usuario que se está eliminando
   db.query(
-    "DELETE FROM usuarios WHERE id = ?",
-    [usuarioId],
-    (err, resultado) => {
-      if (err) {
-        console.error("Error al eliminar el usuario:", err);
-        res.status(500).send("Error interno del servidor");
-      } else {
-        console.log("Usuario eliminado correctamente");
-        res.redirect("/vehiculo");
+      "SELECT nombre FROM usuarios WHERE id = ?",
+      [usuarioId],
+      (err, resultado) => {
+          if (err) {
+              console.error("Error al obtener el nombre del usuario:", err);
+              res.status(500).send("Error interno del servidor");
+          } else {
+              const nombreUsuario = resultado[0].nombre;
+
+              // Eliminar todos los vehículos asociados al usuario
+              db.query(
+                  "DELETE FROM vehiculos WHERE usuarioAgrego = ?",
+                  [nombreUsuario],
+                  (err, resultado) => {
+                      if (err) {
+                          console.error("Error al eliminar los vehículos asociados al usuario:", err);
+                          res.status(500).send("Error interno del servidor");
+                      } else {
+                          console.log("Vehículos asociados al usuario eliminados correctamente");
+
+                          // Ahora procedemos a eliminar al usuario
+                          db.query(
+                              "DELETE FROM usuarios WHERE id = ?",
+                              [usuarioId],
+                              (err, resultado) => {
+                                  if (err) {
+                                      console.error("Error al eliminar el usuario:", err);
+                                      res.status(500).send("Error interno del servidor");
+                                  } else {
+                                      console.log("Usuario eliminado correctamente");
+                                      res.redirect("/vehiculo");
+                                  }
+                              }
+                          );
+                      }
+                  }
+              );
+          }
       }
-    }
   );
 });
+
+
 
 
 
