@@ -111,13 +111,12 @@ app.get("/editar-usuario/:id", (req, res) => {
         // Renderizar el formulario de edición de usuario y pasar los datos del usuario
         res.render("editar-usuario", {
           usuario: result[0],
-          isAdmin: req.session.usuario.rol === 'superadmin', // Verificar si el usuario es superadmin
+          isAdmin: req.session.usuario.rol === "superadmin", // Verificar si el usuario es superadmin
         });
       }
     }
   );
 });
-
 
 app.post("/editar-usuario/:id", (req, res) => {
   const usuarioId = req.params.id;
@@ -125,72 +124,75 @@ app.post("/editar-usuario/:id", (req, res) => {
 
   // Obtener el nombre actual del usuario
   db.query(
-      "SELECT nombre FROM usuarios WHERE id = ?",
-      [usuarioId],
-      (err, resultado) => {
-          if (err) {
-              console.error("Error al obtener el nombre del usuario:", err);
+    "SELECT nombre FROM usuarios WHERE id = ?",
+    [usuarioId],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error al obtener el nombre del usuario:", err);
+        res.status(500).send("Error interno del servidor");
+      } else {
+        const nombreAnterior = resultado[0].nombre;
+
+        // Verificar si el nuevo nombre ya está en uso
+        db.query(
+          "SELECT COUNT(*) AS count FROM usuarios WHERE nombre = ? AND id != ?",
+          [nuevoNombre, usuarioId],
+          (err, resultado) => {
+            if (err) {
+              console.error("Error al verificar el nombre de usuario:", err);
               res.status(500).send("Error interno del servidor");
-          } else {
-              const nombreAnterior = resultado[0].nombre;
+            } else {
+              const count = resultado[0].count;
 
-              // Verificar si el nuevo nombre ya está en uso
-              db.query(
-                  "SELECT COUNT(*) AS count FROM usuarios WHERE nombre = ? AND id != ?",
-                  [nuevoNombre, usuarioId],
-                  (err, resultado) => {
-                      if (err) {
-                          console.error("Error al verificar el nombre de usuario:", err);
-                          res.status(500).send("Error interno del servidor");
-                      } else {
-                          const count = resultado[0].count;
-
-                          if (count > 0) {
-                              // Si el nombre ya está en uso, mostrar un mensaje de alerta
-                              res.send(`
+              if (count > 0) {
+                // Si el nombre ya está en uso, mostrar un mensaje de alerta
+                res.send(`
                                   <script>
                                       alert("El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
                                       window.location.href = "/editar-usuario/${usuarioId}";
                                   </script>
                               `);
+              } else {
+                // Actualizar el nombre del usuario en la tabla de usuarios
+                db.query(
+                  "UPDATE usuarios SET nombre = ?, email = ?, contraseña = ?, rol = ? WHERE id = ?",
+                  [nuevoNombre, email, contraseña, rol, usuarioId],
+                  (err, resultado) => {
+                    if (err) {
+                      console.error("Error al actualizar el usuario:", err);
+                      res.status(500).send("Error interno del servidor");
+                    } else {
+                      // Actualizar el nombre en la tabla de vehículos
+                      db.query(
+                        "UPDATE vehiculos SET usuarioAgrego = ? WHERE usuarioAgrego = ?",
+                        [nuevoNombre, nombreAnterior],
+                        (err, resultado) => {
+                          if (err) {
+                            console.error(
+                              "Error al actualizar el nombre en la tabla de vehículos:",
+                              err
+                            );
+                            res.status(500).send("Error interno del servidor");
                           } else {
-                              // Actualizar el nombre del usuario en la tabla de usuarios
-                              db.query(
-                                  "UPDATE usuarios SET nombre = ?, email = ?, contraseña = ?, rol = ? WHERE id = ?",
-                                  [nuevoNombre, email, contraseña, rol, usuarioId],
-                                  (err, resultado) => {
-                                      if (err) {
-                                          console.error("Error al actualizar el usuario:", err);
-                                          res.status(500).send("Error interno del servidor");
-                                      } else {
-                                          // Actualizar el nombre en la tabla de vehículos
-                                          db.query(
-                                              "UPDATE vehiculos SET usuarioAgrego = ? WHERE usuarioAgrego = ?",
-                                              [nuevoNombre, nombreAnterior],
-                                              (err, resultado) => {
-                                                  if (err) {
-                                                      console.error("Error al actualizar el nombre en la tabla de vehículos:", err);
-                                                      res.status(500).send("Error interno del servidor");
-                                                  } else {
-                                                      console.log("Usuario y vehículos actualizados correctamente");
-                                                      // Redireccionar a la página de vehículos después de editar el usuario
-                                                      res.redirect("/vehiculo");
-                                                  }
-                                              }
-                                          );
-                                      }
-                                  }
-                              );
+                            console.log(
+                              "Usuario y vehículos actualizados correctamente"
+                            );
+                            // Redireccionar a la página de vehículos después de editar el usuario
+                            res.redirect("/vehiculo");
                           }
-                      }
+                        }
+                      );
+                    }
                   }
-              );
+                );
+              }
+            }
           }
+        );
       }
+    }
   );
 });
-
-
 
 app.post("/borrar-usuario/:id", (req, res) => {
   const usuarioId = req.params.id;
@@ -228,54 +230,52 @@ app.get("/confirmar-eliminacion/:id", (req, res) => {
 
   // Obtener el nombre del usuario que se está eliminando
   db.query(
-      "SELECT nombre FROM usuarios WHERE id = ?",
-      [usuarioId],
-      (err, resultado) => {
-          if (err) {
-              console.error("Error al obtener el nombre del usuario:", err);
-              res.status(500).send("Error interno del servidor");
-          } else {
-              const nombreUsuario = resultado[0].nombre;
+    "SELECT nombre FROM usuarios WHERE id = ?",
+    [usuarioId],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error al obtener el nombre del usuario:", err);
+        res.status(500).send("Error interno del servidor");
+      } else {
+        const nombreUsuario = resultado[0].nombre;
 
-              // Eliminar todos los vehículos asociados al usuario
-              db.query(
-                  "DELETE FROM vehiculos WHERE usuarioAgrego = ?",
-                  [nombreUsuario],
-                  (err, resultado) => {
-                      if (err) {
-                          console.error("Error al eliminar los vehículos asociados al usuario:", err);
-                          res.status(500).send("Error interno del servidor");
-                      } else {
-                          console.log("Vehículos asociados al usuario eliminados correctamente");
-
-                          // Ahora procedemos a eliminar al usuario
-                          db.query(
-                              "DELETE FROM usuarios WHERE id = ?",
-                              [usuarioId],
-                              (err, resultado) => {
-                                  if (err) {
-                                      console.error("Error al eliminar el usuario:", err);
-                                      res.status(500).send("Error interno del servidor");
-                                  } else {
-                                      console.log("Usuario eliminado correctamente");
-                                      res.redirect("/vehiculo");
-                                  }
-                              }
-                          );
-                      }
-                  }
+        // Eliminar todos los vehículos asociados al usuario
+        db.query(
+          "DELETE FROM vehiculos WHERE usuarioAgrego = ?",
+          [nombreUsuario],
+          (err, resultado) => {
+            if (err) {
+              console.error(
+                "Error al eliminar los vehículos asociados al usuario:",
+                err
               );
+              res.status(500).send("Error interno del servidor");
+            } else {
+              console.log(
+                "Vehículos asociados al usuario eliminados correctamente"
+              );
+
+              // Ahora procedemos a eliminar al usuario
+              db.query(
+                "DELETE FROM usuarios WHERE id = ?",
+                [usuarioId],
+                (err, resultado) => {
+                  if (err) {
+                    console.error("Error al eliminar el usuario:", err);
+                    res.status(500).send("Error interno del servidor");
+                  } else {
+                    console.log("Usuario eliminado correctamente");
+                    res.redirect("/vehiculo");
+                  }
+                }
+              );
+            }
           }
+        );
       }
+    }
   );
 });
-
-
-
-
-
-
-
 
 app.post("/cotizacion", (req, res) => {
   const { nombre, email, telefono, mensaje, vehiculoId } = req.body;
