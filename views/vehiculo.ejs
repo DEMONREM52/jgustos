@@ -321,10 +321,10 @@
                 <a href="https://imgbb.com/login" class="btn btn-success" target="_blank">Subir Imagen</a>
             </h6>
             <iframe id="tutorialVideo" width="560" height="315"
-            src="https://www.youtube.com/embed/gKeEmMXR-vg?si=_w64S1qko3IiYkeU" title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                src="https://www.youtube.com/embed/gKeEmMXR-vg?si=_w64S1qko3IiYkeU" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <% } %>
 
@@ -380,246 +380,237 @@
 
                         <h3 class="mt-5" style="color: #ffffff;">Vehículos Agregados</h3>
 
-                        <div style="color: #ffffff;">
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="Toyota"
-                                    value="Toyota">
-                                <label class="form-check-label" for="Toyota">Toyota</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="BMW" value="BMW">
-                                <label class="form-check-label" for="BMW">BMW</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="Mercedez-Benz"
-                                    value="Mercedez-Benz">
-                                <label class="form-check-label" for="Mercedez-Benz">Mercedez-Benz</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="Chevrolet"
-                                    value="Chevrolet">
-                                <label class="form-check-label" for="Chevrolet">Chevrolet</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="Renault"
-                                    value="Renault">
-                                <label class="form-check-label" for="Renault">Renault</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input marca-checkbox" type="checkbox" id="Nissan"
-                                    value="Nissan">
-                                <label class="form-check-label" for="Nissan">Nissan</label>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div style="color: #ffffff;">
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox" id="Toyota"
+                                                value="Toyota">
+                                            <label class="form-check-label" for="Toyota">Toyota</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox" id="BMW"
+                                                value="BMW">
+                                            <label class="form-check-label" for="BMW">BMW</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox"
+                                                id="Mercedez-Benz" value="Mercedez-Benz">
+                                            <label class="form-check-label" for="Mercedez-Benz">Mercedez-Benz</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox"
+                                                id="Chevrolet" value="Chevrolet">
+                                            <label class="form-check-label" for="Chevrolet">Chevrolet</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox" id="Renault"
+                                                value="Renault">
+                                            <label class="form-check-label" for="Renault">Renault</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input marca-checkbox" type="checkbox" id="Nissan"
+                                                value="Nissan">
+                                            <label class="form-check-label" for="Nissan">Nissan</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% if (usuario && usuario.rol==='superadmin' ) { %>
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="color: #ffffff;">
+                                            <label for="filtroCertificacion">Filtrar por Certificación:</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input certificacion-checkbox" type="checkbox"
+                                                    id="filtroCertificacion_nuevo" value="nuevo">
+                                                <label class="form-check-label"
+                                                    for="filtroCertificacion_nuevo">Nuevo</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input certificacion-checkbox" type="checkbox"
+                                                    id="filtroCertificacion_usado" value="usado">
+                                                <label class="form-check-label"
+                                                    for="filtroCertificacion_usado">Usado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="color: #ffffff;">
+                                            <label for="filtroUsuario">Filtrar por Usuario:</label>
+                                            <% usuarios.forEach((usuario)=> { %>
+                                                <div class="form-check">
+                                                    <input class="form-check-input usuario-checkbox" type="checkbox"
+                                                        id="filtroUsuario_<%= usuario.nombre %>"
+                                                        value="<%= usuario.nombre %>">
+                                                    <label class="form-check-label"
+                                                        for="filtroUsuario_<%= usuario.nombre %>">
+                                                        <%= usuario.nombre %>
+                                                    </label>
+                                                </div>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+                                    <% } %>
                             </div>
                         </div>
 
-                        <% if (usuario && usuario.rol==='superadmin' ) { %>
-                            <div class="form-group" style="color: #ffffff;">
-                                <label for="filtroCertificacion">Filtrar por Certificación:</label>
-                                <div class="form-check">
-                                    <input class="form-check-input certificacion-checkbox" type="checkbox"
-                                        id="filtroCertificacion_nuevo" value="nuevo">
-                                    <label class="form-check-label" for="filtroCertificacion_nuevo">Nuevo</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input certificacion-checkbox" type="checkbox"
-                                        id="filtroCertificacion_usado" value="usado">
-                                    <label class="form-check-label" for="filtroCertificacion_usado">Usado</label>
-                                </div>
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <input type="text" id="buscador" class="form-control"
+                                    placeholder="Buscar por modelo...">
                             </div>
+                        </div>
+
+
+                        <% if (usuario && (usuario.rol==='admin' )) { %>
+                            <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS NUEVOS</h1>
                             <% } %>
 
-                                <% if (usuario && usuario.rol==='superadmin' ) { %>
-                                    <div class="form-group" style="color: #ffffff;">
-                                        <label for="filtroUsuario">Filtrar por Usuario:</label>
-                                        <% usuarios.forEach((usuario)=> { %>
-                                            <div class="form-check">
-                                                <input class="form-check-input usuario-checkbox" type="checkbox"
-                                                    id="filtroUsuario_<%= usuario.nombre %>"
-                                                    value="<%= usuario.nombre %>">
-                                                <label class="form-check-label"
-                                                    for="filtroUsuario_<%= usuario.nombre %>">
-                                                    <%= usuario.nombre %>
-                                                </label>
-                                            </div>
-                                            <% }); %>
-                                    </div>
-                                    <% } %>
-
-                                        <div class="row mt-3">
-                                            <div class="col-md-12">
-                                                <input type="text" id="buscador" class="form-control"
-                                                    placeholder="Buscar por modelo...">
-                                            </div>
-                                        </div>
-
-
-                                        <% if (usuario && (usuario.rol==='admin' )) { %>
-                                            <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS NUEVOS</h1>
-                                            <% } %>
-
-                                                <div class="row mt-3" id="vehiculos">
-                                                    <div class="row mt-3" id="vehiculosNuevos">
-                                                        <% if (usuario && usuario.rol==='superadmin' ) { %>
+                                <div class="row mt-3" id="vehiculos">
+                                    <div class="row mt-3" id="vehiculosNuevos">
+                                        <% if (usuario && usuario.rol==='superadmin' ) { %>
+                                            <% vehiculos.forEach((vehiculo)=> { %>
+                                                <div class="col-md-4 mb-4 vehiculo" data-marca="<%= vehiculo.marca %>"
+                                                    data-certificacion="<%= vehiculo.certificacion %>"
+                                                    data-nombre="<%= vehiculo.nombre %>"
+                                                    data-usuario-agrego="<%= vehiculo.UsuarioAgrego %>">
+                                                    <div class="card">
+                                                        <img src="<%= vehiculo.imagen %>" class="card-img-top"
+                                                            alt="...">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">
+                                                                <%= vehiculo.marca %> - <%= vehiculo.nombre %>
+                                                            </h5>
+                                                            <p class="card-text descripcion">
+                                                                <%= vehiculo.descripcion %>
+                                                            </p>
+                                                            <b>
+                                                                <p class="card-text">
+                                                                    Precio: $<%= vehiculo.precio.toLocaleString('es-CO')
+                                                                        %> COP</p>
+                                                            </b>
+                                                            <p class="card-text">Agregado por: <b>
+                                                                    <%= vehiculo.UsuarioAgrego %>
+                                                                </b></p>
+                                                            <p class="card-text">Certificación: <b>
+                                                                    <%= vehiculo.certificacion %>
+                                                                </b></p>
+                                                            <div class="d-flex align-items-center">
+                                                                <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                                    class="btn btn-primary mr-3">Editar</a>
+                                                                <form action="/borrar-vehiculo/<%= vehiculo.id %>"
+                                                                    method="POST" class="d-inline">
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger">Borrar</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }); %>
+                                                    <% } else { %>
+                                                        <% if (usuario) { %>
                                                             <% vehiculos.forEach((vehiculo)=> { %>
-                                                                <div class="col-md-4 mb-4 vehiculo"
-                                                                    data-marca="<%= vehiculo.marca %>"
-                                                                    data-certificacion="<%= vehiculo.certificacion %>"
-                                                                    data-nombre="<%= vehiculo.nombre %>"
-                                                                    data-usuario-agrego="<%= vehiculo.UsuarioAgrego %>">
-                                                                    <div class="card">
-                                                                        <img src="<%= vehiculo.imagen %>"
-                                                                            class="card-img-top" alt="...">
-                                                                        <div class="card-body">
-                                                                            <h5 class="card-title">
-                                                                                <%= vehiculo.marca %> - <%=
-                                                                                        vehiculo.nombre %>
-                                                                            </h5>
-                                                                            <p class="card-text descripcion">
-                                                                                <%= vehiculo.descripcion %>
-                                                                            </p>
-                                                                            <b>
-                                                                                <p class="card-text">
-                                                                                    Precio: $<%=
-                                                                                        vehiculo.precio.toLocaleString('es-CO')
-                                                                                        %> COP</p>
-                                                                            </b>
-                                                                            <p class="card-text">Agregado por: <b>
-                                                                                    <%= vehiculo.UsuarioAgrego %>
-                                                                                </b></p>
-                                                                            <p class="card-text">Certificación: <b>
-                                                                                    <%= vehiculo.certificacion %>
-                                                                                </b></p>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                                                    class="btn btn-primary mr-3">Editar</a>
-                                                                                <form
-                                                                                    action="/borrar-vehiculo/<%= vehiculo.id %>"
-                                                                                    method="POST" class="d-inline">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger">Borrar</button>
-                                                                                </form>
+                                                                <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
+                                                                    vehiculo.certificacion==="nuevo" ) { %>
+                                                                    <div class="col-md-4 mb-4 vehiculo"
+                                                                        data-marca="<%= vehiculo.marca %>">
+                                                                        <div class="card">
+                                                                            <img src="<%= vehiculo.imagen %>"
+                                                                                class="card-img-top" alt="...">
+                                                                            <div class="card-body">
+                                                                                <h5 class="card-title">
+                                                                                    <%= vehiculo.marca %> - <%=
+                                                                                            vehiculo.nombre %>
+                                                                                </h5>
+                                                                                <p class="card-text descripcion">
+                                                                                    <%= vehiculo.descripcion %>
+                                                                                </p>
+                                                                                <b>
+                                                                                    <p class="card-text">
+                                                                                        Precio: $<%=
+                                                                                            vehiculo.precio.toLocaleString('es-CO')
+                                                                                            %>
+                                                                                            COP</p>
+                                                                                </b>
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                                                        class="btn btn-primary mr-3">Editar</a>
+                                                                                    <form
+                                                                                        action="/borrar-vehiculo/<%= vehiculo.id %>"
+                                                                                        method="POST" class="d-inline">
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger">Borrar</button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <% } %>
+                                                                        <% }); %>
+                                                                            <% } else { %>
+                                                                                <p>No se ha iniciado
+                                                                                    sesión.</p>
+                                                                                <% } %>
+                                                                                    <% } %>
+
+                                    </div>
+                                </div>
+
+
+                                <% if (usuario && (usuario.rol==='admin' || usuario.rol==='vendedor' )) { %>
+                                    <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS USADOS
+                                    </h1>
+                                    <% } %>
+                                        <div class="row mt-3" id="vehiculos">
+                                            <div class="row mt-3" id="vehiculosNuevos">
+                                                <% if (usuario) { %>
+                                                    <% vehiculos.forEach((vehiculo)=> { %>
+                                                        <% if (vehiculo.UsuarioAgrego===usuario.nombre &&
+                                                            vehiculo.certificacion==="usado" ) { %>
+                                                            <div class="col-md-4 mb-4 vehiculo"
+                                                                data-marca="<%= vehiculo.marca %>"
+                                                                data-nombre="<%= vehiculo.nombre %>">
+                                                                <div class="card">
+                                                                    <img src="<%= vehiculo.imagen %>"
+                                                                        class="card-img-top" alt="...">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">
+                                                                            <%= vehiculo.marca %> - <%= vehiculo.nombre
+                                                                                    %>
+                                                                        </h5>
+                                                                        <p class="card-text descripcion">
+                                                                            <%= vehiculo.descripcion %>
+                                                                                <b>
+                                                                                    <p class="card-text">
+                                                                                        Precio: $<%=
+                                                                                            vehiculo.precio.toLocaleString('es-CO')
+                                                                                            %>
+                                                                                            COP</p>
+                                                                                </b>
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
+                                                                                        class="btn btn-primary mr-3">Editar</a>
+                                                                                    <form
+                                                                                        action="/borrar-vehiculo/<%= vehiculo.id %>"
+                                                                                        method="POST" class="d-inline">
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger">Borrar</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                            <% } %>
                                                                 <% }); %>
                                                                     <% } else { %>
-                                                                        <% if (usuario) { %>
-                                                                            <% vehiculos.forEach((vehiculo)=> { %>
-                                                                                <% if
-                                                                                    (vehiculo.UsuarioAgrego===usuario.nombre
-                                                                                    && vehiculo.certificacion==="nuevo"
-                                                                                    ) { %>
-                                                                                    <div class="col-md-4 mb-4 vehiculo"
-                                                                                        data-marca="<%= vehiculo.marca %>">
-                                                                                        <div class="card">
-                                                                                            <img src="<%= vehiculo.imagen %>"
-                                                                                                class="card-img-top"
-                                                                                                alt="...">
-                                                                                            <div class="card-body">
-                                                                                                <h5 class="card-title">
-                                                                                                    <%= vehiculo.marca
-                                                                                                        %> - <%=
-                                                                                                            vehiculo.nombre
-                                                                                                            %>
-                                                                                                </h5>
-                                                                                                <p
-                                                                                                    class="card-text descripcion">
-                                                                                                    <%= vehiculo.descripcion
-                                                                                                        %>
-                                                                                                </p>
-                                                                                                <b>
-                                                                                                    <p
-                                                                                                        class="card-text">
-                                                                                                        Precio: $<%=
-                                                                                                            vehiculo.precio.toLocaleString('es-CO')
-                                                                                                            %>
-                                                                                                            COP</p>
-                                                                                                </b>
-                                                                                                <div
-                                                                                                    class="d-flex align-items-center">
-                                                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                                                                        class="btn btn-primary mr-3">Editar</a>
-                                                                                                    <form
-                                                                                                        action="/borrar-vehiculo/<%= vehiculo.id %>"
-                                                                                                        method="POST"
-                                                                                                        class="d-inline">
-                                                                                                        <button
-                                                                                                            type="submit"
-                                                                                                            class="btn btn-danger">Borrar</button>
-                                                                                                    </form>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <% } %>
-                                                                                        <% }); %>
-                                                                                            <% } else { %>
-                                                                                                <p>No se ha iniciado
-                                                                                                    sesión.</p>
-                                                                                                <% } %>
-                                                                                                    <% } %>
-
-                                                    </div>
-                                                </div>
-
-
-                                                <% if (usuario && (usuario.rol==='admin' || usuario.rol==='vendedor' ))
-                                                    { %>
-                                                    <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS USADOS
-                                                    </h1>
-                                                    <% } %>
-                                                        <div class="row mt-3" id="vehiculos">
-                                                            <div class="row mt-3" id="vehiculosNuevos">
-                                                                <% if (usuario) { %>
-                                                                    <% vehiculos.forEach((vehiculo)=> { %>
-                                                                        <% if (vehiculo.UsuarioAgrego===usuario.nombre
-                                                                            && vehiculo.certificacion==="usado" ) { %>
-                                                                            <div class="col-md-4 mb-4 vehiculo"
-                                                                                data-marca="<%= vehiculo.marca %>"
-                                                                                data-nombre="<%= vehiculo.nombre %>">
-                                                                                <div class="card">
-                                                                                    <img src="<%= vehiculo.imagen %>"
-                                                                                        class="card-img-top" alt="...">
-                                                                                    <div class="card-body">
-                                                                                        <h5 class="card-title">
-                                                                                            <%= vehiculo.marca %> - <%=
-                                                                                                    vehiculo.nombre %>
-                                                                                        </h5>
-                                                                                        <p
-                                                                                            class="card-text descripcion">
-                                                                                            <%= vehiculo.descripcion %>
-                                                                                                <b>
-                                                                                                    <p
-                                                                                                        class="card-text">
-                                                                                                        Precio: $<%=
-                                                                                                            vehiculo.precio.toLocaleString('es-CO')
-                                                                                                            %>
-                                                                                                            COP</p>
-                                                                                                </b>
-                                                                                                <div
-                                                                                                    class="d-flex align-items-center">
-                                                                                                    <a href="/editar-vehiculo/<%= vehiculo.id %>"
-                                                                                                        class="btn btn-primary mr-3">Editar</a>
-                                                                                                    <form
-                                                                                                        action="/borrar-vehiculo/<%= vehiculo.id %>"
-                                                                                                        method="POST"
-                                                                                                        class="d-inline">
-                                                                                                        <button
-                                                                                                            type="submit"
-                                                                                                            class="btn btn-danger">Borrar</button>
-                                                                                                    </form>
-                                                                                                </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <% } %>
-                                                                                <% }); %>
-                                                                                    <% } else { %>
-                                                                                        <p>No se ha iniciado sesión.</p>
-                                                                                        <% } %>
-                                                            </div>
-                                                        </div>
+                                                                        <p>No se ha iniciado sesión.</p>
+                                                                        <% } %>
+                                            </div>
+                                        </div>
             </div>
             </div>
 </body>
