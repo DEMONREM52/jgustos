@@ -306,7 +306,7 @@ app.post("/registro", async (req, res) => {
       return res.status(400).send(
         // Contraseña de administrador incorrecta
         `<script>
-        alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
+        alert("Contraseña de administrador incorrecta");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
     `
@@ -318,7 +318,7 @@ app.post("/registro", async (req, res) => {
       return res.status(400).send(
         // Contraseña de SuperAdmin incorrecta
         `<script>
-        alert("Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin");
+        alert("Contraseña de SuperAdmin incorrecta");
         window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
       </script>
     `
@@ -326,12 +326,12 @@ app.post("/registro", async (req, res) => {
     }
   } else if (rol === "vendedor") {
     const costoVendedor =
-      "Lo siento pero esta acción solo estara disponible para la exposicion ATT: Admin";
+      "30000";
     if (!montoVendedorInput || montoVendedorInput < costoVendedor) {
       return res.status(400).send(
-        // El monto ingresado debe ser mayor a
+        // 
         `<script>
-          alert("${costoVendedor}");
+          alert("El monto ingresado debe ser mayor a ${costoVendedor}");
           window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
         </script> ${costoVendedor}`
       );
