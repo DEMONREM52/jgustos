@@ -231,23 +231,6 @@
                         <b><a class="nav-link" style="color: white; padding-right: 40px;"
                                 href="#contactoFooter">Contacto</a></b>
                     </li>
-                    <% if (usuario) { %>
-                        <li class="nav-item">
-                            <b><a class="nav-link" style="color: white; padding-right: 40px;"
-                                    href="/inicio-sesion">Trabaja
-                                    con nosotros</a></b>
-                        </li>
-                        <li class="nav-item">
-                            <b><a class="nav-link" style="color: white; padding-right: 40px;"
-                                    href="/cerrar-sesion">Cerrar
-                                    Sesion</a></b>
-                        </li>
-                        <% } else { %>
-                            <li class="nav-item">
-                                <b><a class="nav-link" style="color: white; padding-right: 40px;"
-                                        href="/inicio-sesion">Trabaja con nosotros</a></b>
-                            </li>
-                            <% } %>
                 </ul>
             </div>
         </div>
@@ -261,32 +244,32 @@
         <h1 style="color: #fff; text-align: center;">NISSAN</h1>
 
 
-        <div class="row buscador" id="vehiculos">
+        <div class="row buscador" id="catalogos">
             <div class="col-md-12">
                 <input type="text" id="buscador" class="form-control" placeholder="Buscar por modelo...">
             </div>
         </div>
 
 
-        <div class="row mt-3" id="vehiculos">
-            <% vehiculos.forEach((vehiculo, index)=> { %>
-                <% if (vehiculo.marca==='Nissan' && vehiculo.certificacion==='nuevo' ) { %>
-                    <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= vehiculo.nombre %>">
+        <div class="row mt-3" id="catalogos">
+            <% catalogos.forEach((catalogo, index)=> { %>
+                <% if (catalogo.marca==='Nissan' && catalogo.certificacion==='nuevo' ) { %>
+                    <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= catalogo.nombre %>">
                         <div class="card">
-                            <img src="<%= vehiculo.imagen %>" class="card-img-top" alt="<%= vehiculo.marca %>">
+                            <img src="<%= catalogo.imagen %>" class="card-img-top" alt="<%= catalogo.marca %>">
                             <div class="card-body">
                                 <h3 class="card-title">
-                                    <%= vehiculo.marca %>
+                                    <%= catalogo.marca %>
                                 </h3>
                                 <h5 class="card-title">
-                                    <%= vehiculo.nombre %>
+                                    <%= catalogo.nombre %>
                                 </h5>
                                 <p class="card-text descripcion">
-                                    <%= vehiculo.descripcion %>
+                                    <%= catalogo.descripcion %>
                                 </p>
                                 <p class="card-text"
                                     style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
-                                    Precio: $<%= vehiculo.precio.toLocaleString('es-CO') %> COP</p>
+                                    Precio: $<%= catalogo.precio.toLocaleString('es-CO') %> COP</p>
                                 <a href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>">Ver
                                     Detalles</a>
                                 <a href="#" class="btn btn-secondary mostrar-menos" style="display: none;">Mostrar
@@ -309,7 +292,7 @@
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem "></i>NUESTROS VEHICULOS
+                            <i class="fas fa-gem "></i>NUESTROS catalogos
                         </h6>
                         <p>
                             <a href="/toyota-nuevo" class="text-reset">Toyota</a>
@@ -330,7 +313,7 @@
                             <a href="/nissan-nuevo" class="text-reset">Nissan</a>
                         </p>
                         <p>
-                            <a href="#vehiculosUsadosCertificados" class="text-reset">Usados certificados</a>
+                            <a href="#catalogosUsadosCertificados" class="text-reset">Usados certificados</a>
                         </p>
 
 
@@ -415,12 +398,12 @@
         var valorBusqueda = inputBusqueda.value.toLowerCase();
 
         // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
-        document.querySelectorAll('.contenedor-autos').forEach(function (vehiculo) {
-            var nombre = vehiculo.getAttribute('data-nombre').toLowerCase();
+        document.querySelectorAll('.contenedor-autos').forEach(function (catalogo) {
+            var nombre = catalogo.getAttribute('data-nombre').toLowerCase();
             if (nombre.includes(valorBusqueda)) {
-                vehiculo.style.display = 'block';
+                catalogo.style.display = 'block';
             } else {
-                vehiculo.style.display = 'none';
+                catalogo.style.display = 'none';
             }
         });
     });

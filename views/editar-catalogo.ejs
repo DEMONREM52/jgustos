@@ -108,7 +108,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">EDITAR VEHÍCULO</h4>
+                        <h4 class="card-title">EDITAR CATALOGO</h4>
                     </div>
                     <div class="card-body">
                         <form action="/editar-vehiculo/<%= vehiculo.id %>" method="POST">
@@ -116,23 +116,10 @@
                             <input type="hidden" id="nombreUsuario" name="nombreUsuario"
                                 value="<%= usuario ? usuario.nombre : '' %>">
 
-                            <div class="mb-3">
-                                <label for="marca" class="form-label">Marca</label>
-                                <select class="custom-select" id="marca" name="marca" required>
-                                    <option value="" selected>Selecciona una marca</option>
-                                    <option value="Toyota" <%=vehiculo.marca==='Toyota' ? 'selected' : '' %>>Toyota
-                                    </option>
-                                    <option value="BMW" <%=vehiculo.marca==='BMW' ? 'selected' : '' %>>BMW</option>
-                                    <option value="Mercedez-Benz" <%=vehiculo.marca==='Mercedez-Benz' ? 'selected' : ''
-                                        %>>Mercedez-Benz</option>
-                                    <option value="Chevrolet" <%=vehiculo.marca==='Chevrolet' ? 'selected' : '' %>
-                                        >Chevrolet</option>
-                                    <option value="Renault" <%=vehiculo.marca==='Renault' ? 'selected' : '' %>>Renault
-                                    </option>
-                                    <option value="Nissan" <%=vehiculo.marca==='Nissan' ? 'selected' : '' %>>Nissan
-                                    </option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="marca"><b>Marca</b></label>
+                                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingresa una marca" required>
+                                </div>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre"

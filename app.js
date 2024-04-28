@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 const DB_HOST = process.env.DB_HOST || "localhost";
 const DB_USER = process.env.DB_USER || "root";
 const DB_PASSWORD = process.env.DB_PASSWORD || "";
-const DB_NAME = process.env.DB_NAME || "concesionario";
+const DB_NAME = process.env.DB_NAME || "j&a";
 const DB_PORT = process.env.DB_PORT || "3306";
 
 app.use(
@@ -58,7 +58,7 @@ app.set("views", path.join(__dirname, "views"));
 // Rutas
 app.get("/", (req, res) => {
   // Obtener datos de vehículos de la base de datos
-  db.query("SELECT * FROM vehiculos", (err, results) => {
+  db.query("SELECT * FROM catalogos", (err, results) => {
     if (err) {
       throw err;
     }
@@ -66,14 +66,14 @@ app.get("/", (req, res) => {
     const usuario = req.session.usuario;
 
     // Renderizar la vista index.ejs y pasar los datos de los vehículos y el usuario
-    res.render("index", { usuario: usuario, vehiculos: results });
+    res.render("index", { usuario: usuario, catalogos: results });
   });
 });
 
-app.get("/vehiculo", (req, res) => {
+app.get("/catalogo", (req, res) => {
   // Obtener datos de vehículos y usuarios de la base de datos en paralelo
-  db.query("SELECT * FROM vehiculos", (errVehiculos, resultadosVehiculos) => {
-    if (errVehiculos) {
+  db.query("SELECT * FROM catalogos", (errcatalogos, resultadoscatalogos) => {
+    if (errcatalogos) {
       res.status(500).send("Error interno del servidor al obtener vehículos");
     } else {
       db.query("SELECT * FROM usuarios", (errUsuarios, resultadosUsuarios) => {
@@ -86,8 +86,8 @@ app.get("/vehiculo", (req, res) => {
           const usuario = req.session.usuario;
 
           // Renderizar la vista de vehículos y pasar los datos de vehículos y usuarios
-          res.render("vehiculo", {
-            vehiculos: resultadosVehiculos,
+          res.render("catalogo", {
+            catalogos: resultadoscatalogos,
             usuarios: resultadosUsuarios,
             usuario: usuario,
           });
@@ -164,7 +164,7 @@ app.post("/editar-usuario/:id", (req, res) => {
                     } else {
                       // Actualizar el nombre en la tabla de vehículos
                       db.query(
-                        "UPDATE vehiculos SET usuarioAgrego = ? WHERE usuarioAgrego = ?",
+                        "UPDATE catalogos SET usuarioAgrego = ? WHERE usuarioAgrego = ?",
                         [nuevoNombre, nombreAnterior],
                         (err, resultado) => {
                           if (err) {
@@ -178,7 +178,7 @@ app.post("/editar-usuario/:id", (req, res) => {
                               "Usuario y vehículos actualizados correctamente"
                             );
                             // Redireccionar a la página de vehículos después de editar el usuario
-                            res.redirect("/vehiculo");
+                            res.redirect("/catalogo");
                           }
                         }
                       );
@@ -241,7 +241,7 @@ app.get("/confirmar-eliminacion/:id", (req, res) => {
 
         // Eliminar todos los vehículos asociados al usuario
         db.query(
-          "DELETE FROM vehiculos WHERE usuarioAgrego = ?",
+          "DELETE FROM catalogos WHERE usuarioAgrego = ?",
           [nombreUsuario],
           (err, resultado) => {
             if (err) {
@@ -265,7 +265,7 @@ app.get("/confirmar-eliminacion/:id", (req, res) => {
                     res.status(500).send("Error interno del servidor");
                   } else {
                     console.log("Usuario eliminado correctamente");
-                    res.redirect("/vehiculo");
+                    res.redirect("/catalogo");
                   }
                 }
               );
@@ -278,7 +278,7 @@ app.get("/confirmar-eliminacion/:id", (req, res) => {
 });
 
 app.post("/cotizacion", (req, res) => {
-  const { nombre, email, telefono, mensaje, vehiculoId } = req.body;
+  const { nombre, email, telefono, mensaje, catalogoId } = req.body;
   // Aquí puedes enviar los datos de la cotización a través de WhatsApp
 });
 
@@ -325,11 +325,10 @@ app.post("/registro", async (req, res) => {
       );
     }
   } else if (rol === "vendedor") {
-    const costoVendedor =
-      "30000";
+    const costoVendedor = "30000";
     if (!montoVendedorInput || montoVendedorInput < costoVendedor) {
       return res.status(400).send(
-        // 
+        //
         `<script>
           alert("El monto ingresado debe ser mayor a ${costoVendedor}");
           window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
@@ -385,17 +384,17 @@ app.post("/registro", async (req, res) => {
   }
 });
 
-app.get("/vehiculo", (req, res) => {
+app.get("/catalogo", (req, res) => {
   // Verificar si el usuario ha iniciado sesión
   if (req.session.usuario) {
     // Obtener los vehículos de alguna fuente, por ejemplo, desde la base de datos
-    const vehiculos = obtenerVehiculos(); // Aquí debes implementar tu lógica para obtener los vehículos
+    const catalogos = obtenercatalogos(); // Aquí debes implementar tu lógica para obtener los vehículos
 
     // Obtener el usuario de la sesión
     const usuario = req.session.usuario;
 
-    // Renderizar la vista vehiculo.ejs y pasar los vehículos y el usuario
-    res.render("vehiculo", { vehiculos: vehiculos, usuario: usuario });
+    // Renderizar la vista catalogo.ejs y pasar los vehículos y el usuario
+    res.render("catalogo", { catalogos: catalogos, usuario: usuario });
   } else {
     // Si el usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
     res.redirect("/inicio-sesion");
@@ -406,8 +405,8 @@ app.get("/vehiculo", (req, res) => {
 app.get("/inicio-sesion", (req, res) => {
   // Verificar si el usuario ha iniciado sesión
   if (req.session.usuario) {
-    // Si el usuario ha iniciado sesión, redirigir a vehiculo.ejs
-    res.redirect("/vehiculo");
+    // Si el usuario ha iniciado sesión, redirigir a catalogo.ejs
+    res.redirect("/catalogo");
   } else {
     // Si el usuario no ha iniciado sesión, renderizar la página de inicio de sesión
     res.render("inicio-sesion");
@@ -450,7 +449,7 @@ app.post("/inicio-sesion", (req, res) => {
           const rol = resultados[0].rol;
           // Iniciar sesión y guardar el nombre de usuario y el rol en la sesión
           req.session.usuario = { nombre: resultados[0].nombre, rol: rol };
-          res.redirect("/vehiculo"); // Redirige a la página principal o a donde desees
+          res.redirect("/catalogo"); // Redirige a la página principal o a donde desees
         }
       }
     }
@@ -468,7 +467,7 @@ app.post("/inicio-sesion", (req, res) => {
   req.session.usuario = { nombre: nombreDeUsuario };
 
   // Redirigir al usuario a la página principal después de iniciar sesión
-  res.redirect("/vehiculo");
+  res.redirect("/catalogo");
 });
 
 app.get("/registrar-cita", (req, res) => {
@@ -519,14 +518,14 @@ app.post("/registrar-cita", (req, res) => {
   });
 });
 
-app.post("/agregar-vehiculo", (req, res) => {
+app.post("/agregar-catalogo", (req, res) => {
   const { marca, modelo, descripcion, certificacion, precio, imagen } =
     req.body;
   const nombreDeUsuario = req.session.usuario.nombre; // Obtener el nombre de usuario de la sesión
 
   // Realizar la inserción en la base de datos con el nombre de usuario
   db.query(
-    "INSERT INTO vehiculos (marca, nombre, descripcion, certificacion, precio, imagen, UsuarioAgrego) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO catalogos (marca, nombre, descripcion, certificacion, precio, imagen, UsuarioAgrego) VALUES (?, ?, ?, ?, ?, ?, ?)",
     [
       marca,
       modelo,
@@ -541,7 +540,7 @@ app.post("/agregar-vehiculo", (req, res) => {
         console.error("Error al agregar vehículo:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        res.redirect("/vehiculo");
+        res.redirect("/catalogo");
       }
     }
   );
@@ -566,7 +565,7 @@ app.get("/inicio-sesion", (req, res) => {
   if (req.session.usuario) {
     // El usuario ha iniciado sesión
     // Puedes acceder al nombre de usuario usando req.session.usuario.nombre
-    res.render("vehiculo", { usuario: req.session.usuario.nombre });
+    res.render("catalogo", { usuario: req.session.usuario.nombre });
   } else {
     // El usuario no ha iniciado sesión
     res.render("/", { usuario: null });
@@ -588,55 +587,55 @@ function verificarRol(rolPermitido) {
 }
 
 // Ruta para agregar un vehículo
-app.post("/agregar-vehiculo", (req, res) => {
+app.post("/agregar-catalogo", (req, res) => {
   // Lógica para agregar un vehículo a la base de datos
   const { marca, nombre, descripcion, certificacion, precio, imagen } =
     req.body;
   const usuarioAgrego = req.session.usuario.nombre; // Obtener el nombre del usuario que inició sesión
   // Agregar el vehículo a la base de datos
-  res.redirect("/vehiculos"); // Redireccionar a la página de gestión de vehículos
+  res.redirect("/catalogos"); // Redireccionar a la página de gestión de vehículos
 });
 
-app.get("/vehiculo", (req, res) => {
+app.get("/catalogo", (req, res) => {
   // Obtener el usuario de la sesión
   const usuario = req.session.usuario;
 
   // Obtener los vehículos del usuario actual
-  const vehiculosDelUsuario = obtenerVehiculos(usuario);
+  const catalogosDelUsuario = obtenercatalogos(usuario);
 
-  // Renderizar la vista vehiculo.ejs y pasar los vehículos y el usuario
-  res.render("vehiculo", { vehiculos: vehiculosDelUsuario, usuario: usuario });
+  // Renderizar la vista catalogo.ejs y pasar los vehículos y el usuario
+  res.render("catalogo", { catalogos: catalogosDelUsuario, usuario: usuario });
 });
 
-app.get("/vehiculo", (req, res) => {
+app.get("/catalogo", (req, res) => {
   // Obtener datos de vehículos de la base de datos
-  db.query("SELECT * FROM vehiculos", (err, results) => {
+  db.query("SELECT * FROM catalogos", (err, results) => {
     if (err) {
       res.status(500).send("Error interno del servidor");
     } else {
       // Renderizar la vista de vehículos y pasar los datos de los vehículos y el usuario
-      res.render("vehiculo", { vehiculos: results, usuarios: req.user });
+      res.render("catalogo", { catalogos: results, usuarios: req.user });
     }
   });
 });
 
-//Ruta para editar y eliminar vehiculos
+//Ruta para editar y eliminar catalogos
 
 // Ruta para editar un vehículo
-app.get("/editar-vehiculo/:id", (req, res) => {
-  const vehiculoId = req.params.id;
+app.get("/editar-catalogo/:id", (req, res) => {
+  const catalogoId = req.params.id;
   // Obtener información del vehículo con el ID proporcionado
   db.query(
-    "SELECT * FROM vehiculos WHERE id = ?",
-    [vehiculoId],
+    "SELECT * FROM catalogos WHERE id = ?",
+    [catalogoId],
     (err, result) => {
       if (err) {
         console.error("Error al obtener información del vehículo:", err);
         res.status(500).send("Error interno del servidor");
       } else {
         // Renderizar el formulario de edición de vehículo y pasar los datos del vehículo
-        res.render("editar-vehiculo", {
-          vehiculo: result[0],
+        res.render("editar-catalogo", {
+          catalogo: result[0],
           usuario: req.session.usuario,
         });
       }
@@ -645,40 +644,40 @@ app.get("/editar-vehiculo/:id", (req, res) => {
 });
 
 // Ruta para procesar la edición de un vehículo
-app.post("/editar-vehiculo/:id", (req, res) => {
-  const vehiculoId = req.params.id;
+app.post("/editar-catalogo/:id", (req, res) => {
+  const catalogoId = req.params.id;
   const { marca, nombre, descripcion, certificacion, precio, imagen } =
     req.body;
   // Actualizar la información del vehículo en la base de datos
   db.query(
-    "UPDATE vehiculos SET marca = ?, nombre = ?, descripcion = ?, certificacion = ?, precio = ?, imagen = ? WHERE id = ?",
-    [marca, nombre, descripcion, certificacion, precio, imagen, vehiculoId],
+    "UPDATE catalogos SET marca = ?, nombre = ?, descripcion = ?, certificacion = ?, precio = ?, imagen = ? WHERE id = ?",
+    [marca, nombre, descripcion, certificacion, precio, imagen, catalogoId],
     (err, result) => {
       if (err) {
         console.error("Error al editar vehículo:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        res.redirect("/vehiculo"); // Redirigir a la página de vehículos después de editar
+        res.redirect("/catalogo"); // Redirigir a la página de vehículos después de editar
       }
     }
   );
 });
 
 // Ruta para borrar un vehículo
-app.post("/borrar-vehiculo/:id", (req, res) => {
-  const vehiculoId = req.params.id;
+app.post("/borrar-catalogo/:id", (req, res) => {
+  const catalogoId = req.params.id;
 
   // Mostrar un mensaje de confirmación al usuario antes de eliminar el vehículo
   res.send(
     `<script>
       if (confirm('¿Estás seguro de que deseas eliminar este vehículo?')) {
-        fetch('/borrar-vehiculo-confirmado/${vehiculoId}', {
+        fetch('/borrar-catalogo-confirmado/${catalogoId}', {
           method: 'DELETE'
         })
         .then(response => {
           if (response.ok) {
             alert('Vehículo eliminado correctamente');
-            window.location.href = '/vehiculo'; // Redirigir a la página de vehículos después de borrar
+            window.location.href = '/catalogo'; // Redirigir a la página de vehículos después de borrar
           } else {
             throw new Error('Error al intentar eliminar el vehículo');
           }
@@ -686,22 +685,22 @@ app.post("/borrar-vehiculo/:id", (req, res) => {
         .catch(error => {
           console.error('Error al intentar eliminar el vehículo:', error);
           alert('Hubo un error al intentar eliminar el vehículo');
-          window.location.href = '/vehiculo'; // Redirigir a la página de vehículos en caso de error
+          window.location.href = '/catalogo'; // Redirigir a la página de vehículos en caso de error
         });
       } else {
-        window.location.href = '/vehiculo'; // Redirigir a la página de vehículos si el usuario cancela
+        window.location.href = '/catalogo'; // Redirigir a la página de vehículos si el usuario cancela
       }
     </script>`
   );
 });
 
 // Ruta para confirmar la eliminación del vehículo
-app.delete("/borrar-vehiculo-confirmado/:id", (req, res) => {
-  const vehiculoId = req.params.id;
+app.delete("/borrar-catalogo-confirmado/:id", (req, res) => {
+  const catalogoId = req.params.id;
   // Eliminar el vehículo de la base de datos
   db.query(
-    "DELETE FROM vehiculos WHERE id = ?",
-    [vehiculoId],
+    "DELETE FROM catalogos WHERE id = ?",
+    [catalogoId],
     (err, result) => {
       if (err) {
         console.error("Error al borrar vehículo:", err);
@@ -713,22 +712,22 @@ app.delete("/borrar-vehiculo-confirmado/:id", (req, res) => {
   );
 });
 
-// RUTAS PARA LOS VEHICULOS NUEVOS
+// RUTAS PARA LOS catalogos NUEVOS
 
-//Ruta para 'toyota-nuevo' en Express
-app.get("/toyota-nuevo", (req, res) => {
+//Ruta para 'gorras' en Express
+app.get("/gorras", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
-    "Toyota",
-    "nuevo",
-    (err, vehiculos) => {
+  obtenercatalogosPorMarcaYCertificacion(
+    "Gorras",
+    "siHay",
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
-        console.error("Error al obtener vehículos:", err);
+        console.error("Error al obtener el catalogo:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/toyota-nuevo", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/gorras", { catalogos });
       }
     }
   );
@@ -737,33 +736,33 @@ app.get("/toyota-nuevo", (req, res) => {
 //Ruta para 'toyota-usado' en Express
 app.get("/toyota-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "usado"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Toyota",
     "usado",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
         // Renderizar la vista 'toyota-usado' y pasar los vehículos como datos
-        res.render("marcas/toyota-usado", { vehiculos });
+        res.render("marcas/toyota-usado", { catalogos });
       }
     }
   );
 });
 
-//Ruta para 'bmw-nuevo' en Express
-app.get("/bmw-nuevo", (req, res) => {
+//Ruta para 'aseo' en Express
+app.get("/aseo", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion("BMW", "nuevo", (err, vehiculos) => {
+  obtenercatalogosPorMarcaYCertificacion("Aseo", "siHay", (err, catalogos) => {
     if (err) {
       // Manejar el error si ocurre
-      console.error("Error al obtener vehículos:", err);
+      console.error("Error al obtener aseo:", err);
       res.status(500).send("Error interno del servidor");
     } else {
-      // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-      res.render("marcas/bmw-nuevo", { vehiculos });
+      // Renderizar la vista 'gorras' y pasar los vehículos como datos
+      res.render("marcas/aseo", { catalogos });
     }
   });
 });
@@ -771,14 +770,14 @@ app.get("/bmw-nuevo", (req, res) => {
 //Ruta para 'bmw-usado' en Express
 app.get("/bmw-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion("BMW", "usado", (err, vehiculos) => {
+  obtenercatalogosPorMarcaYCertificacion("BMW", "usado", (err, catalogos) => {
     if (err) {
       // Manejar el error si ocurre
       console.error("Error al obtener vehículos:", err);
       res.status(500).send("Error interno del servidor");
     } else {
-      // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-      res.render("marcas/bmw-usado", { vehiculos });
+      // Renderizar la vista 'gorras' y pasar los vehículos como datos
+      res.render("marcas/bmw-usado", { catalogos });
     }
   });
 });
@@ -786,17 +785,17 @@ app.get("/bmw-usado", (req, res) => {
 //Ruta para 'chevrolet-nuevo' en Express
 app.get("/chevrolet-nuevo", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Chevrolet",
     "nuevo",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/chevrolet-nuevo", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/chevrolet-nuevo", { catalogos });
       }
     }
   );
@@ -805,36 +804,36 @@ app.get("/chevrolet-nuevo", (req, res) => {
 //Ruta para 'chevrolet-usado' en Express
 app.get("/chevrolet-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Chevrolet",
     "usado",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/chevrolet-usado", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/chevrolet-usado", { catalogos });
       }
     }
   );
 });
 
-//Ruta para 'mercedez-benz-nuevo' en Express
-app.get("/mercedez-benz-nuevo", (req, res) => {
+//Ruta para 'mascotas' en Express
+app.get("/mascotas", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
-    "Mercedez-Benz",
-    "nuevo",
-    (err, vehiculos) => {
+  obtenercatalogosPorMarcaYCertificacion(
+    "Mascotas",
+    "siHay",
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
-        console.error("Error al obtener vehículos:", err);
+        console.error("Error al obtener mascota:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/mercedez-benz-nuevo", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/mascotas", { catalogos });
       }
     }
   );
@@ -843,17 +842,17 @@ app.get("/mercedez-benz-nuevo", (req, res) => {
 //Ruta para 'mercedez-benz-usado' en Express
 app.get("/mercedez-benz-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Mercedez-Benz",
     "usado",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/mercedez-benz-usado", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/mercedez-benz-usado", { catalogos });
       }
     }
   );
@@ -862,17 +861,17 @@ app.get("/mercedez-benz-usado", (req, res) => {
 //Ruta para 'nissan-nuevo' en Express
 app.get("/nissan-nuevo", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Nissan",
     "nuevo",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/nissan-nuevo", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/nissan-nuevo", { catalogos });
       }
     }
   );
@@ -881,17 +880,17 @@ app.get("/nissan-nuevo", (req, res) => {
 //Ruta para 'nissan-usado' en Express
 app.get("/nissan-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Nissan",
     "usado",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/nissan-usado", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/nissan-usado", { catalogos });
       }
     }
   );
@@ -900,17 +899,17 @@ app.get("/nissan-usado", (req, res) => {
 //Ruta para 'renault-nuevo' en Express
 app.get("/renault-nuevo", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Renault",
     "nuevo",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/renault-nuevo", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/renault-nuevo", { catalogos });
       }
     }
   );
@@ -919,17 +918,17 @@ app.get("/renault-nuevo", (req, res) => {
 //Ruta para 'renault-usado' en Express
 app.get("/renault-usado", (req, res) => {
   // Obtener los vehículos de Toyota con la certificación "nuevo"
-  obtenerVehiculosPorMarcaYCertificacion(
+  obtenercatalogosPorMarcaYCertificacion(
     "Renault",
     "usado",
-    (err, vehiculos) => {
+    (err, catalogos) => {
       if (err) {
         // Manejar el error si ocurre
         console.error("Error al obtener vehículos:", err);
         res.status(500).send("Error interno del servidor");
       } else {
-        // Renderizar la vista 'toyota-nuevo' y pasar los vehículos como datos
-        res.render("marcas/renault-usado", { vehiculos });
+        // Renderizar la vista 'gorras' y pasar los vehículos como datos
+        res.render("marcas/renault-usado", { catalogos });
       }
     }
   );
@@ -940,13 +939,13 @@ app.listen(port, () => {
   console.log(`Servidor iniciado en http://localhost:${port}`);
 });
 
-function obtenerVehiculosPorMarcaYCertificacion(
+function obtenercatalogosPorMarcaYCertificacion(
   marca,
   certificacion,
   callback
 ) {
   // Consulta SQL para obtener los vehículos según la marca y la certificación
-  const sql = `SELECT * FROM vehiculos WHERE marca = ? AND certificacion = ?`;
+  const sql = `SELECT * FROM catalogos WHERE marca = ? AND certificacion = ?`;
 
   // Ejecutar la consulta SQL
   db.query(sql, [marca, certificacion], (err, results) => {
@@ -960,9 +959,9 @@ function obtenerVehiculosPorMarcaYCertificacion(
   });
 }
 
-function obtenerVehiculos(usuario, callback) {
+function obtenercatalogos(usuario, callback) {
   // Consulta SQL para obtener los vehículos del usuario actual
-  const sql = `SELECT * FROM vehiculos WHERE usuarioAgrego = ?`;
+  const sql = `SELECT * FROM catalogos WHERE usuarioAgrego = ?`;
 
   // Ejecutar la consulta SQL
   db.query(sql, [usuario.nombre], (err, results) => {
@@ -975,9 +974,9 @@ function obtenerVehiculos(usuario, callback) {
     callback(null, results);
   });
 
-  const vehiculosDelUsuario = vehiculos.filter(
-    (vehiculo) => vehiculo.UsuarioAgrego === usuario.nombre
+  const catalogosDelUsuario = catalogos.filter(
+    (catalogo) => catalogo.UsuarioAgrego === usuario.nombre
   );
 
-  return vehiculosDelUsuario;
+  return catalogosDelUsuario;
 }
