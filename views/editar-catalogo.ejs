@@ -117,9 +117,18 @@
                                 value="<%= usuario ? usuario.nombre : '' %>">
 
                                 <div class="form-group">
-                                    <label for="marca"><b>Marca</b></label>
-                                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingresa una marca" required>
-                                </div>
+                                    <label for="marca"><b>Catalogo</b></label>
+                                    <b><select class="form-control custom-select" id="marca" name="marca" required>
+                                        <option value="">Selecciona un catalogo</option>
+                                        <option value="Gorras" <%=catalogo.marca==='Gorras' ? 'selected' : '' %>>Gorras</option>
+                                        <option value="Aseo" <%=catalogo.marca==='Aseo' ? 'selected' : '' %>>Aseo</option>
+                                        <option value="Mascotas" <%=catalogo.marca==='Mascotas' ? 'selected' : '' %>>Mascotas</option>
+                                        <option value="Chevrolet" <%=catalogo.marca==='Chevrolet' ? 'selected' : '' %>>Chevrolet</option>
+                                        <option value="Renault" <%=catalogo.marca==='Renault' ? 'selected' : '' %>>Renault</option>
+                                        <option value="Nissan" <%=catalogo.marca==='Nissan' ? 'selected' : '' %>>Nissan</option>
+                                    </select>
+                                </b>
+                                </div>                                
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre"
