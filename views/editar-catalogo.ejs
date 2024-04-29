@@ -111,7 +111,7 @@
                         <h4 class="card-title">EDITAR CATALOGO</h4>
                     </div>
                     <div class="card-body">
-                        <form action="/editar-vehiculo/<%= vehiculo.id %>" method="POST">
+                        <form action="/editar-catalogo/<%= catalogo.id %>" method="POST">
                             <!-- Agregar campo oculto para el nombre de usuario -->
                             <input type="hidden" id="nombreUsuario" name="nombreUsuario"
                                 value="<%= usuario ? usuario.nombre : '' %>">
@@ -123,37 +123,31 @@
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre"
-                                    value="<%= vehiculo.nombre %>" required>
+                                    value="<%= catalogo.nombre %>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
-                                    required><%= vehiculo.descripcion %></textarea>
+                                    required><%= catalogo.descripcion %></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="certificacion" class="form-label">Certificación</label>
                                 <select class="custom-select" id="certificacion" name="certificacion" required>
-                                    <% if (usuario && usuario.rol==='admin' || usuario.rol==='superadmin' ) { %>
-                                        <option value="nuevo" <%=vehiculo.certificacion==='nuevo' ? 'selected' : '' %>
-                                            >Nuevo</option>
-                                        <option value="usado" <%=vehiculo.certificacion==='usado' ? 'selected' : '' %>
-                                            >Usado</option>
-                                        <% } else { %>
-                                            <option value="usado" <%=vehiculo.certificacion==='usado' ? 'selected' : ''
-                                                %>>Usado</option>
-                                            <% } %>
+                                    <option value="siHay" <%=catalogo.certificacion==='siHay' ? 'selected' : '' %>>Si Hay</option>
+                                    <option value="noHay" <%=catalogo.certificacion==='noHay' ? 'selected' : '' %>>No Hay</option>
                                 </select>
+                                
                             </div>
                             <div class="mb-3">
                                 <label for="precio" class="form-label">Precio (SIN CARACTERES ESPECIALES)</label>
                                 <input type="number" class="form-control" id="precio" name="precio"
-                                    value="<%= vehiculo.precio %>" required>
+                                    value="<%= catalogo.precio %>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="imagen" class="form-label">Dirección de la Imagen</label>
                                 <input type="text" class="form-control" id="imagen" name="imagen"
-                                    value="<%= vehiculo.imagen %>" required>
-                                <img id="preview" src="<%= vehiculo.imagen %>" alt="Previsualización de la imagen"
+                                    value="<%= catalogo.imagen %>" required>
+                                <img id="preview" src="<%= catalogo.imagen %>" alt="Previsualización de la imagen"
                                     class="img-fluid mt-2" style="max-height: 200px;">
                             </div>
 
