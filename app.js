@@ -619,6 +619,10 @@ app.get("/catalogo", (req, res) => {
   });
 });
 
+
+
+
+
 //Ruta para editar y eliminar catalogos
 
 // Ruta para editar un vehículo
@@ -980,3 +984,23 @@ function obtenercatalogos(usuario, callback) {
 
   return catalogosDelUsuario;
 }
+
+// Estructura del carrito de compras
+let carrito = {};
+
+// Middleware para agregar productos al carrito
+app.post('/agregar-al-carrito', (req, res) => {
+  const { productoId, cantidad } = req.body;
+
+  // Verifica si el producto ya está en el carrito
+  if (carrito[productoId]) {
+      carrito[productoId] += parseInt(cantidad);
+  } else {
+      carrito[productoId] = parseInt(cantidad);
+  }
+
+  // Envía una respuesta indicando que el producto se agregó al carrito
+  res.json({ mensaje: 'Producto agregado al carrito' });
+});
+
+
