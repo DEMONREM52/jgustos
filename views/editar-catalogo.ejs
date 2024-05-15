@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Vehículo</title>
+    <title>Editar menu</title>
     <link rel="shortcut icon" href="https://i.ibb.co/cYxswKs/carro-deportivo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -21,17 +21,18 @@
 
     <style>
         body {
-            background-image: url('https://img.freepik.com/vector-gratis/fondo-oscuro-abstracto-fibra-carbono_1017-23630.jpg?size=626&ext=jpg');
-            /* Agrega la ruta de tu imagen */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             font-family: "EB Garamond", serif;
             font-optical-sizing: auto;
             font-weight: 800;
             font-style: normal;
-            /* Para que la imagen de fondo no se desplace */
+            background: linear-gradient(to top, #008B8B, black), linear-gradient(to bottom, #008B8B, black);
+            background-position: top, bottom;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            max-width: auto;
+            color: #000000;
         }
 
         .card {
@@ -108,26 +109,18 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">EDITAR CATALOGO</h4>
+                        <h4 class="card-title">EDITAR MENÚ</h4>
                     </div>
                     <div class="card-body">
-                        <form action="/editar-catalogo/<%= catalogo.id %>" method="POST">
+                        <form action="/editar-catalogo/<%= catalogo.id %>" method="POST" onsubmit="return validateForm()">
                             <!-- Agregar campo oculto para el nombre de usuario -->
                             <input type="hidden" id="nombreUsuario" name="nombreUsuario"
                                 value="<%= usuario ? usuario.nombre : '' %>">
 
                                 <div class="form-group">
-                                    <label for="marca"><b>Catalogo</b></label>
-                                    <b><select class="form-control custom-select" id="marca" name="marca" required>
-                                        <option value="">Selecciona un catalogo</option>
-                                        <option value="Gorras" <%=catalogo.marca==='Gorras' ? 'selected' : '' %>>Gorras</option>
-                                        <option value="Aseo" <%=catalogo.marca==='Aseo' ? 'selected' : '' %>>Aseo</option>
-                                        <option value="Mascotas" <%=catalogo.marca==='Mascotas' ? 'selected' : '' %>>Mascotas</option>
-                                        <option value="Chevrolet" <%=catalogo.marca==='Chevrolet' ? 'selected' : '' %>>Chevrolet</option>
-                                        <option value="Renault" <%=catalogo.marca==='Renault' ? 'selected' : '' %>>Renault</option>
-                                        <option value="Nissan" <%=catalogo.marca==='Nissan' ? 'selected' : '' %>>Nissan</option>
-                                    </select>
-                                </b>
+                                    <label for="marca"><b>Nombre del negocio (sin caracteres especiales)</b></label>
+                                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Escriba el nombre del negocio" value="<%= catalogo.marca %>" oninput="this.value = this.value.toLowerCase()" required>
+                                    <div id="error-message" style="color: red; display: none;">No se permiten caracteres especiales.</div>
                                 </div>                                
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -170,6 +163,32 @@
 
 </body>
 
+<script>
+    function validateInput(input) {
+        var forbiddenChars = /[^a-zA-Z\s]/g;
+        var errorMessage = document.getElementById('error-message');
+        if (forbiddenChars.test(input.value)) {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
+
+    function validateForm() {
+        var forbiddenChars = /[^a-zA-Z\s]/g;
+        var input = document.getElementById('marca');
+        var errorMessage = document.getElementById('error-message');
+        if (forbiddenChars.test(input.value)) {
+            errorMessage.style.display = 'block';
+            // Desplazar la página hasta el principio del formulario
+            window.scrollTo(180, 180);
+            return false; // Evitar que se envíe el formulario
+        } else {
+            errorMessage.style.display = 'none';
+            return true; // Permitir que se envíe el formulario
+        }
+    }
+</script>
 
 <script>
     // Obtener el campo de entrada y la imagen de previsualización

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GORRA</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/b54jMFb/pixelcut-export-19.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <style>
+        body {
+            font-family: "EB Garamond", serif;
+            font-optical-sizing: auto;
+            font-weight: 800;
+            font-style: normal;
+            background-color: #008B8B;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            max-width: auto;
+            color: #000000;
+        }
+
+        a {
+            font-size: large;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            /* Elimina el subrayado predeterminado */
+        }
+
+/* Color of the links BEFORE scroll */
+.navbar-scroll .nav-link,
+        .navbar-scroll .navbar-toggler-icon,
+        .navbar-scroll .navbar-brand {
+            color: #000000;
+        }
+
+        /* Color of the links AFTER scroll */
+        .navbar-scrolled .nav-link,
+        .navbar-scrolled .navbar-toggler-icon,
+        .navbar-scrolled .navbar-brand {
+            color: #000000;
+        }
+
+        /* Color of the navbar AFTER scroll */
+        .navbar-scroll,
+        .navbar-scrolled {
+            background-color: #000000;
+        }
+
+        .mask-custom {
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, .15);
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem;
+            letter-spacing: 3px;
+        }
+
+        .navbar-custom {
+            background-color: #b4d5ff93;
+            /* Color de fondo original */
+        }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgb(0, 0, 0);
+            padding: 10px 0;
+            transition: top 0.3s;
+            z-index: 1000;
+        }
+
+        #content {
+            padding-top: 50px;
+            /* Ajusta esto según la altura de tu barra de navegación */
+        }
+
+        .card {
+            background-color: #ffffff;
+        }
+
+        .container-image {
+            position: relative;
+            margin-top: 40px;
+            width: auto;
+            /* Ajusta el ancho según sea necesario */
+            height: auto;
+            /* Ajusta la altura según sea necesario */
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ajusta la imagen para cubrir todo el contenedor */
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+            /* Forma de montaña invertida */
+        }
+
+        .text {
+            position: absolute;
+            top: 20%;
+            left: 22%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Coloca el texto encima de la imagen */
+            color: white;
+            font-family: "Rubik Doodle Shadow", system-ui;
+            font-weight: 800;
+            font-style: normal;
+            /* Color del texto */
+        }
+
+        .buscador {
+            padding: 0 150px 0 150px;
+            margin: 120px 0 120px 0;
+        }
+
+        @media (max-width: 800px) {
+            .text {
+                /* Tamaño de letra más pequeño */
+                position: absolute;
+                top: 30%;
+                left: 37%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                /* Coloca el texto encima de la imagen */
+                color: white;
+                font-family: "Rubik Doodle Shadow", system-ui;
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            .buscador {
+                padding: 0 50px 0 50px;
+                margin: 120px 0 120px 0
+            }
+        }
+
+        .btn {
+            color: #000000;
+            background-color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            padding: 12px 15px 11px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 1px #b4ffc463, -1px -1px 1px #b4ffc463;
+            border: none;
+            transition: all 0.5s ease 0s;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            border: 2px solid white;
+            background-color: #00ff88;
+            color: #000000;
+            letter-spacing: 3px;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .card {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            background-color: #ebebeba6;
+            border-style: solid 1px;
+            border-color: #00ff00a1;
+        }
+
+        .social-link {
+            display: inline-block;
+            font-size: 24px;
+            /* ajusta el tamaño del ícono según sea necesario */
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2);
+            /* escala el tamaño del ícono al 120% */
+        }
+
+        .descripcion {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        #carrito {
+            display: none;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            color: #ffffff;
+        }
+
+        #toggle-carrito {
+            border: none;
+            /* Eliminar bordes */
+            padding: 0;
+            /* Eliminar relleno */
+            background: none;
+            /* Eliminar fondo */
+        }
+
+        #carrito-icon {
+            width: 60px;
+            /* Aumentar el tamaño de la imagen */
+            height: 60px;
+            /* Aumentar el tamaño de la imagen */
+            transition: transform 0.5s ease;
+            /* Agregar transición para la animación */
+        }
+
+        #carrito-icon:hover {
+            animation: tada 1s infinite;
+            /* Aplicar animación al hacer hover */
+        }
+
+        @keyframes tada {
+            0% {
+                transform: scale(1);
+            }
+
+            10%,
+            20% {
+                transform: scale(0.9) rotate(-3deg);
+            }
+
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: scale(1.1) rotate(3deg);
+            }
+
+            40%,
+            60%,
+            80% {
+                transform: scale(1.1) rotate(-3deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .boton-eliminar-lista {
+            color: #000000;
+            background-color: #ff0000cc;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 12px 15px 11px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 1px #b4ffc463, -1px -1px 1px #b4ffc463;
+            border: none;
+            transition: all 0.5s ease 0s;
+        }
+
+        .boton-eliminar-lista:hover,
+        .boton-eliminar-lista:focus {
+            border: 2px solid white;
+            background-color: #ff0000;
+            color: #000000;
+            letter-spacing: 3px;
+            box-shadow: none;
+            outline: none;
+        }
+    </style>
+
+</head>
+
+<body id="content">
+
+    <div class="container-image">
+        <img src="https://i.ibb.co/XyWLDzc/pixelcut-export.jpg" alt="Imagen" class="image">
+    </div>
+
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
+        <div class="container">
+            <a style="padding-left: 20px;" class="navbar-brand" href="#">
+                <img src="https://i.ibb.co/1dLVZ1k/pixelcut-export-23.png" alt="Logo" width="100" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                style="border: solid 2px rgb(255, 255, 255);">
+                <i class="bi bi-list" style="color: #ffffff;"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <b><a class="nav-link" style="color: rgb(255, 255, 255); padding-right: 40px;"
+                                href="/">Inicio</a></b>
+                    </li>
+                    <li class="nav-item">
+                        <b><a class="nav-link" style="color: rgb(255, 255, 255); padding-right: 40px;"
+                                href="/registrar-cita" target="blank">Cotización</a></b>
+                    </li>
+                    <li class="nav-item">
+                        <b><a class="nav-link" style="color: rgb(255, 255, 255); padding-right: 40px;"
+                                href="#contactoFooter">Contacto</a></b>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 style="color: #ffffff; text-align: center;">Gorras</h1>
+
+        <!-- Div que representa el carrito -->
+        <!-- Div que representa el carrito -->
+        <div>
+            <button id="toggle-carrito" onmouseover="startAnimation()" onmouseout="stopAnimation()"
+                onclick="toggleCarrito()">
+                <box-icon name='cart' id="carrito-icon"></box-icon>
+            </button>
+            <div id="carrito" style="display: none;">
+                <label for="nombre">Por favor dijite su nombre para realizar la compra:</label>
+                <input type="text" id="nombre" required>
+                <ol style="font-size: x-large;" id="lista-carrito"></ol>
+                <p id="total-carrito" style="display: none; font-size: xx-large;">Total a pagar: </p>
+                <!-- Total del carrito -->
+                <button class="btn btn-primary" onclick="comprar()">Comprar</button>
+            </div>
+        </div>
+
+        <div class="row buscador" id="catalogos">
+            <div class="col-md-12">
+                <input type="text" id="buscador" class="form-control" placeholder="Buscar por nombre...">
+            </div>
+        </div>
+
+
+        <div class="row mt-3" id="catalogos">
+            <% catalogos.forEach((catalogo, index)=> { %>
+                <% if (catalogo.marca==='Gorras' && catalogo.certificacion==='siHay' ) { %>
+                    <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= catalogo.nombre %>">
+                        <div class="card">
+                            <img src="<%= catalogo.imagen %>" class="card-img-top" alt="<%= catalogo.marca %>">
+                            <div class="card-body">
+                                <h3 class="card-title" style="display: none;">
+                                    <%= catalogo.marca %>
+                                </h3>
+                                <h3 class="card-title">
+                                    <%= catalogo.nombre %>
+                                </h3>
+                                <p class="card-text descripcion">
+                                    <%= catalogo.descripcion %>
+                                </p>
+                                <p class="card-text"
+                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 20px;">
+                                    Precio: $<%= catalogo.precio.toLocaleString('es-CO') %> COP</p>
+                                <div class="form-group">
+                                    <label for="cantidad_<%= index %>">Cantidad:</label>
+                                    <input type="number" class="form-control" id="cantidad_<%= index %>" min="1" value="1">
+                                </div>
+                                <form class="agregar-al-carrito" action="/agregar-al-carrito" method="POST">
+                                    <!-- Campos ocultos para el ID, nombre y precio del producto -->
+                                    <input type="hidden" name="productoId" value="<%= catalogo.id %>">
+                                    <input type="hidden" name="nombreProducto" value="<%= catalogo.nombre %>">
+                                    <input type="hidden" name="precioProducto" value="<%= catalogo.precio %>">
+                                    <!-- Campo de entrada para la cantidad -->
+                                    <label for="cantidad-<%= index %>">Cantidad:</label>
+                                    <input type="number" id="cantidad-<%= index %>" name="cantidad" value="1" min="1">
+                                    <!-- Botón para agregar al carrito -->
+                                    <button class="btn btn-primary" type="submit">Agregar al carrito</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% }); %>
+        </div>
+    </div>
+
+    <footer class="p-3 mb-2" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);" class="text-muted">
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem "></i>NUESTROS catalogos
+                        </h6>
+                        <p>
+                            <a href="/gorras" class="text-reset">Gorras</a>
+                        </p>
+                        <p>
+                            <a href="/vagon" class="text-reset">vagon</a>
+                        </p>
+                        <p>
+                            <a href="/mascotas" class="text-reset">Mascotas</a>
+                        </p>
+                        <p>
+                            <a href="/chevrolet-nuevo" class="text-reset">Chevrolet</a>
+                        </p>
+                        <p>
+                            <a href="/renault-nuevo" class="text-reset">Renault</a>
+                        </p>
+                        <p>
+                            <a href="/nissan-nuevo" class="text-reset">Nissan</a>
+                        </p>
+                        <p>
+                            <a href="#catalogosUsadosCertificados" class="text-reset">Usados certificados</a>
+                        </p>
+
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-3 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            CENTRO DE AYUDA
+                        </h6>
+                        <p>
+                            <a id="contactoFooter" href="" class="text-reset">Contactanos</a>
+                        </p>
+                        <p>
+                            <a href="https://publuu.com/flip-book/448547/1011621" target="blank"
+                                class="text-reset">Politicas y privacidad</a>
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">¿Trabajamos juntos?</h6>
+                        <p><i class="bi bi-house-door-fill"></i> Medellin, Colombia </p>
+                        <p>
+                            <i class="bi bi-envelope-fill"></i>
+                            Tucarrosonado8@gmail.com
+                        </p>
+                        <p><i class="bi bi-telephone-fill"></i> + 57 123 456 7808</p>
+                    </div>
+
+                    <section class="d-flex justify-content-center col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                        <div>
+                            <a href="https://web.facebook.com/" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-facebook" style="color: #0066ff;"></i>
+                            </a>
+
+                            <a href="https://twitter.com/?lang=es" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-twitter-x" style="color: #ffffff;"></i>
+                            </a>
+
+                            <a href="" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-instagram" style="color: #9900ffd3;"></i>
+                            </a>
+                            <a href="" target="blank" class="me-4 text-reset social-link">
+                                <i class="bi bi-whatsapp" style="color: #00ff00;"></i>
+                            </a>
+
+                        </div>
+                        <!-- Right -->
+                    </section>
+                    <!-- Grid row -->
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mb-4 mx-auto text-center">
+                            <p>&copy; <%= new Date().getFullYear() %> Tu Empresa... Todos los derechos reservados...</p>
+                            <p>Política de privacidad | Términos y condiciones</p>
+                        </div>
+                    </div>
+                </div>
+
+
+    </footer>
+
+
+</body>
+
+<script>
+    let totalCarrito = 0; // Variable para almacenar el total del carrito
+    let totalGeneral = 0; // Variable para almacenar el total general de todos los productos
+
+    // Event listener para los formularios de agregar al carrito
+    document.querySelectorAll('.agregar-al-carrito').forEach(form => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evitar que el formulario se envíe por defecto
+
+            const formData = new FormData(form);
+            const productoId = formData.get('productoId');
+            const nombreProducto = formData.get('nombreProducto');
+            const precioProducto = parseFloat(formData.get('precioProducto'));
+            let cantidad = parseInt(formData.get('cantidad'));
+
+            // Verificar si ya existe un registro para este producto en el carrito
+            const productoEnCarrito = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"]`);
+            if (productoEnCarrito) {
+                const cantidadAnterior = parseInt(productoEnCarrito.querySelector('.cantidad').value);
+                const precioAnterior = parseFloat(productoEnCarrito.querySelector('.precio').textContent.replace(/[^\d.-]/g, '')); // Eliminar cualquier caracter que no sea número, punto o signo negativo
+                totalCarrito -= precioAnterior * cantidadAnterior; // Restar el total del producto anterior
+                totalGeneral -= precioAnterior * cantidadAnterior; // Restar el total general del producto anterior
+                cantidad += cantidadAnterior; // Sumar la cantidad anterior a la nueva cantidad
+                productoEnCarrito.remove(); // Eliminar el registro anterior del carrito
+            }
+
+            agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad);
+        });
+    });
+
+    // Función para calcular el total del carrito y mostrarlo
+    function calcularTotal() {
+        totalCarrito = 0; // Reinicia el total del carrito
+
+        // Recorre todos los elementos del carrito y suma los totales
+        document.querySelectorAll('#lista-carrito li').forEach(item => {
+            const totalProducto = parseFloat(item.querySelector('.total').textContent.replace(/[^\d-]/g, ''));
+            totalCarrito += totalProducto;
+        });
+
+        // Formatea el total para mostrarlo completo
+        const totalCarritoElement = document.getElementById('total-carrito');
+        totalCarritoElement.textContent = `Total a pagar: ${totalCarrito.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
+        totalCarritoElement.style.display = 'block'; // Muestra el elemento
+    }
+
+
+
+
+    // Función para agregar un producto al carrito
+    function agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad) {
+        const totalProducto = precioProducto * cantidad; // Calcular el total por producto
+        totalCarrito += totalProducto; // Actualizar el total del carrito
+        totalGeneral += totalProducto; // Actualizar el total general
+        const itemCarrito = `
+        <li data-producto-id="${productoId}">
+            ${nombreProducto} - Precio: <span class="precio">${precioProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span> - Cantidad: <input type="number" class="cantidad" style="width: 7ch;" value="${cantidad}" min="1" onchange="actualizarCantidad(${productoId}, ${precioProducto})"> - Total: <span class="total">${totalProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
+            <button class="boton-eliminar-lista" onclick="eliminarDelCarrito(${productoId}, ${precioProducto}, ${cantidad})">Eliminar</button>
+        </li>
+    `;
+        const listaCarrito = document.getElementById('lista-carrito');
+        listaCarrito.insertAdjacentHTML('beforeend', itemCarrito);
+
+        calcularTotal(); // Calcular y mostrar el total del carrito
+        actualizarTotalGeneral(); // Actualizar el total general mostrado
+    }
+
+    // Función para actualizar la cantidad de un producto en el carrito
+    function actualizarCantidad(productoId, precioProducto) {
+        const cantidadElement = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"] .cantidad`);
+        const nuevaCantidad = parseInt(cantidadElement.value);
+        const totalAnterior = parseFloat(cantidadElement.parentElement.querySelector('.total').textContent.replace(/[^\d.-]/g, '')); // Eliminar cualquier caracter que no sea número, punto o signo negativo
+        const nuevoTotal = precioProducto * nuevaCantidad;
+        totalCarrito -= totalAnterior; // Restar el total del producto anterior del carrito
+        totalCarrito += nuevoTotal; // Sumar el nuevo total del producto al carrito
+        totalGeneral -= totalAnterior; // Restar el total general del producto anterior
+        totalGeneral += nuevoTotal; // Sumar el nuevo total del producto al total general
+        cantidadElement.parentElement.querySelector('.total').textContent = nuevoTotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }); // Actualizar el total del producto
+        calcularTotal(); // Calcular y mostrar el total del carrito
+        actualizarTotalGeneral(); // Actualizar el total general mostrado
+    }
+
+
+
+
+
+
+    // Función para actualizar el total general mostrado
+    function actualizarTotalGeneral() {
+        const totalGeneralElement = document.getElementById('total-general');
+        totalGeneralElement.textContent = `Total general: $${totalGeneral.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
+    }
+
+    // Función para eliminar un producto del carrito
+    function eliminarDelCarrito(productoId, precioProducto, cantidad) {
+        const totalProducto = precioProducto * cantidad; // Calcular el total por producto
+        totalCarrito -= totalProducto; // Restar el total del producto del carrito
+        totalGeneral -= totalProducto; // Restar el total general del producto
+        const productoEnCarrito = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"]`);
+        productoEnCarrito.remove(); // Eliminar el registro del carrito
+
+        calcularTotal(); // Calcular y mostrar el total del carrito
+        actualizarTotalGeneral(); // Actualizar el total general mostrado
+    }
+</script>
+
+
+
+
+<script>
+    // Función para mostrar u ocultar el carrito
+    function toggleCarrito() {
+        const carrito = document.getElementById('carrito');
+        if (carrito.style.display === 'none') {
+            carrito.style.display = 'block';
+            setTimeout(() => {
+                carrito.style.opacity = '1';
+                carrito.style.transform = 'scale(1)';
+            }, 50); // Espera un breve momento antes de aplicar la transición para dar tiempo a que el cambio de visibilidad ocurra
+        } else {
+            carrito.style.opacity = '0';
+            carrito.style.transform = 'scale(0)';
+            setTimeout(() => {
+                carrito.style.display = 'none';
+            }, 300); // Espera 300 ms (la duración de la transición CSS) antes de ocultar completamente el carrito
+        }
+    }
+
+
+
+    // Función para enviar un mensaje de compra por WhatsApp
+    function comprar() {
+        // Verificar si se ha ingresado un nombre
+        const nombre = document.getElementById('nombre').value;
+        if (!nombre) {
+            alert('Por favor, ingrese su nombre antes de continuar.');
+            return; // Detener la ejecución si no se ha ingresado un nombre
+        }
+
+        // Número de WhatsApp al que enviar el mensaje
+        const numeroWhatsApp = '3218846041'; // Reemplazar con el número de WhatsApp al que quieras enviar el mensaje
+
+        // Obtener los elementos de la lista del carrito
+        const listaCarrito = document.getElementById('lista-carrito');
+        const itemsCarrito = Array.from(listaCarrito.children);
+
+        // Construir el mensaje con los detalles de la compra
+        let mensaje = `¡Hola ${nombre}!\n Quieres realizar una compra?\n Tu pedido es:\n\n`;
+        itemsCarrito.forEach(item => {
+            const nombreProducto = item.textContent.split(' - ')[0].trim(); // Extraer el nombre del producto del texto
+            const cantidad = item.querySelector('.cantidad').value; // Obtener la cantidad del producto
+            const total = item.querySelector('.total').textContent; // Obtener el total del producto
+            mensaje += `${nombreProducto}\n Cantidad: ${cantidad}\n Total: ${total}\n\n`;
+        });
+        mensaje += `\n ${document.getElementById('total-carrito').textContent}\n Tu pedido esta correcto?\n SI/NO\n`;
+
+        // Codificar el mensaje para que sea compatible con la URL
+        const mensajeCodificado = encodeURIComponent(mensaje);
+
+        // Construir la URL de WhatsApp
+        const url = `https://wa.me/${numeroWhatsApp}/?text=${mensajeCodificado}`;
+
+        // Abrir la URL en una nueva pestaña
+        window.open(url, '_blank');
+    }
+
+
+</script>
+
+
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-54px"; /* Ajusta esto según la altura de tu barra de navegación */
+        }
+        prevScrollpos = currentScrollPos;
+    }
+</script>
+
+<script>
+    // Obtener el input de búsqueda
+    var inputBusqueda = document.getElementById('buscador');
+
+    // Manejar el evento de entrada en el input de búsqueda
+    inputBusqueda.addEventListener('input', function () {
+        var valorBusqueda = inputBusqueda.value.toLowerCase();
+
+        // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
+        document.querySelectorAll('.contenedor-autos').forEach(function (catalogo) {
+            var nombre = catalogo.getAttribute('data-nombre').toLowerCase();
+            if (nombre.includes(valorBusqueda)) {
+                catalogo.style.display = 'block';
+            } else {
+                catalogo.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesVerDetalles = document.querySelectorAll('.ver-detalles');
+        const botonesMostrarMenos = document.querySelectorAll('.mostrar-menos');
+
+        botonesVerDetalles.forEach((boton, index) => {
+            boton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const descripcion = this.parentElement.querySelector('.descripcion');
+                const botonMostrarMenos = this.parentElement.querySelector('.mostrar-menos');
+
+                descripcion.style.maxHeight = descripcion.scrollHeight + 'px';
+                botonMostrarMenos.style.display = 'inline-block';
+                this.style.display = 'none';
+            });
+        });
+
+        botonesMostrarMenos.forEach((boton) => {
+            boton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const descripcion = this.parentElement.querySelector('.descripcion');
+                const botonVerDetalles = this.parentElement.querySelector('.ver-detalles');
+
+                descripcion.style.maxHeight = '0';
+                botonVerDetalles.style.display = 'inline-block';
+                this.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>

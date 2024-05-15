@@ -2,7 +2,7 @@
   "name": "miproyecto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ejs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon app"
@@ -20,11 +20,12 @@
     "memorystore": "^1.6.7",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
+    "node": "^20.13.1",
     "nodemailer": "^6.9.13",
     "passport": "^0.7.0",
     "sweetalert2": "^11.10.5"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.3"
   }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Vehículos</title>
-    <link rel="shortcut icon" href="https://i.ibb.co/cYxswKs/carro-deportivo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://i.ibb.co/1dLVZ1k/pixelcut-export-23.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -21,20 +21,19 @@
 
 <style>
     body {
-        font-family: "EB Garamond", serif;
-        font-optical-sizing: auto;
-        font-weight: 800;
-        font-style: normal;
-        background-color: #000000;
-        background-image: url('https://i.ibb.co/7Sz7sqF/wallpaperbetter-com-7680x4320-3.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 100%;
-        max-width: auto;
-        padding: 0 150px 100px 150px;
-
-    }
+            font-family: "EB Garamond", serif;
+            font-optical-sizing: auto;
+            font-weight: 800;
+            font-style: normal;
+            background: linear-gradient(to top, #008B8B, black), linear-gradient(to bottom, #008B8B, black);
+            background-position: top, bottom;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            max-width: auto;
+            color: #000000;
+        }
 
     /* Color of the links BEFORE scroll */
     .navbar-scroll .nav-link,
@@ -75,7 +74,7 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: rgba(53, 53, 53, 0.719);
+        background-color: rgb(0, 0, 0);
         padding: 10px 0;
         transition: top 0.3s;
         z-index: 1000;
@@ -231,7 +230,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a style="padding-left: 20px;" class="navbar-brand" href="#">
-                <img src="https://i.ibb.co/nQ0JprM/logo-Photoroom-png-Photoroom.png" alt="Logo" width="100" height="60">
+                <img src="https://i.ibb.co/1dLVZ1k/pixelcut-export-23.png" alt="Logo" width="100" height="60">
             </a>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -250,33 +249,27 @@
 
 
     <div class=" container mt-5 container-agregar" style="color: #ffffff;">
-        <h2>Gestión de catalogos</h2>
-        <form action="/agregar-catalogo" method="POST" class="form-container">
+        <h2>Gestión de restaurantes</h2>
+        <form action="/agregar-catalogo" method="POST" class="form-container" onsubmit="return validateForm()">
             <!-- Agregar campo oculto para el nombre de usuario -->
             <input type="hidden" id="nombreUsuario" name="nombreUsuario" value="<%= usuario.nombre %>">
+            
             <div class="form-group">
-                <label for="marca"><b>Catalogo</b></label>
-                <b><select class="form-control custom-select" id="marca" name="marca" required>
-                    <option value="">Selecciona un catalogo</option>
-                    <option value="Gorras">Gorras</option>
-                    <option value="Aseo">Aseo</option>
-                    <option value="Mascotas">Mascotas</option>
-                    <option value="Chevrolet">Chevrolet</option>
-                    <option value="Renault">Renault</option>
-                    <option value="Nissan">Nissan</option>
-                </select>
-            </b>
+                <label for="marca"><b>Nombre del negocio (sin caracteres especiales)</b></label>
+                <input type="text" class="form-control" id="marca" name="marca" placeholder="Escriba el nombre del negocio" oninput="this.value = this.value.toLowerCase()" required>
+                <div id="error-message" style="color: red; display: none;">No se permiten caracteres especiales.</div>
+            </div>                
+            
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" style="font-size: 25px;" required>
             </div>
             
             <div class="form-group">
-                <label for="modelo">Nombre</label>
-                <input type="text" class="form-control" id="modelo" name="modelo" style="font-size: 25px;" required>
-            </div>
-            <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" style="font-size: 25px;"
-                    required></textarea>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" style="font-size: 25px;" required></textarea>
             </div>
+            
             <div class="form-group">
                 <label for="certificacion">Certificación</label>
                 <select class="form-control" id="certificacion" name="certificacion" style="font-size: 25px;" required>
@@ -284,22 +277,27 @@
                     <option value="noHay">No Hay</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label for="precio">Precio (SIN COMAS NI PUNTOS)</label>
-                <input type="number" class="form-control" id="precio" name="precio" style="font-size: 25px;" required
-                    pattern="[0-9]*" title="Ingrese solo números">
+                <input type="number" class="form-control" id="precio" name="precio" style="font-size: 25px;" required pattern="[0-9]*" title="Ingrese solo números">
             </div>
-
+        
             <div class="mb-3">
                 <label for="imagen" class="form-label">DIRECCIÓN DE LA IMAGEN</label>
                 <input type="text" class="form-control" id="imagen" name="imagen" style="font-size: 25px;" required>
-                <img id="preview" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;"
-                    style="font-size: 25px;">
+                <img id="preview" alt="Previsualización de la imagen" class="img-fluid mt-2" style="max-height: 200px;" style="font-size: 25px;">
             </div>
-            <button type="submit" class="btn btn-default">
-                Agregar vehículo
-            </button>
+            
+            <button type="submit" class="btn btn-default">Agregar al menú</button>
         </form>
+        
+        
+        
+        
+        
+        
+        
     </div>
     <!-- Aquí se agregará el contenido ocultable -->
     <% if (usuario && usuario.rol==='vendedor' ) { %>
@@ -381,7 +379,7 @@
 
 
 
-                        <h3 class="mt-5" style="color: #ffffff;">Vehículos Agregados</h3>
+                        <h3 class="mt-5" style="color: #ffffff;">Menú agregados</h3>
 
                         <div class="container mt-4">
                             <div class="row">
@@ -393,9 +391,9 @@
                                             <label class="form-check-label" for="Gorras">Gorras</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input marca-checkbox" type="checkbox" id="Aseo"
-                                                value="Aseo">
-                                            <label class="form-check-label" for="Aseo">Aseo</label>
+                                            <input class="form-check-input marca-checkbox" type="checkbox" id="el vagon"
+                                                value="el vagon">
+                                            <label class="form-check-label" for="el vagon">EL VAGÓN</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input marca-checkbox" type="checkbox"
@@ -463,7 +461,7 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <input type="text" id="buscador" class="form-control"
-                                    placeholder="Buscar por modelo...">
+                                    placeholder="Buscar por nombre...">
                             </div>
                         </div>
 
@@ -472,10 +470,10 @@
                             <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS siHayS</h1>
                             <% } %>
 
-                                <div class="row mt-3" id="catalogos">
-                                    <div class="row mt-3" id="catalogosNuevos">
+                                <div class="row mt-3" id="restaurantes">
+                                    <div class="row mt-3" id="restaurantesNuevos">
                                         <% if (usuario && usuario.rol==='superadmin' ) { %>
-                                            <% catalogos.forEach((catalogo)=> { %>
+                                            <% restaurantes.forEach((catalogo)=> { %>
                                                 <div class="col-md-4 mb-4 catalogo" data-marca="<%= catalogo.marca %>"
                                                     data-certificacion="<%= catalogo.certificacion %>"
                                                     data-nombre="<%= catalogo.nombre %>"
@@ -516,7 +514,7 @@
                                                 <% }); %>
                                                     <% } else { %>
                                                         <% if (usuario) { %>
-                                                            <% catalogos.forEach((catalogo)=> { %>
+                                                            <% restaurantes.forEach((catalogo)=> { %>
                                                                 <% if (catalogo.UsuarioAgrego===usuario.nombre &&
                                                                     catalogo.certificacion==="siHay" ) { %>
                                                                     <div class="col-md-4 mb-4 catalogo"
@@ -568,10 +566,10 @@
                                     <h1 class="mt-5 text-center" style="color: #fff;">VEHÍCULOS USADOS
                                     </h1>
                                     <% } %>
-                                        <div class="row mt-3" id="catalogos">
-                                            <div class="row mt-3" id="catalogosNuevos">
+                                        <div class="row mt-3" id="restaurantes">
+                                            <div class="row mt-3" id="restaurantesNuevos">
                                                 <% if (usuario) { %>
-                                                    <% catalogos.forEach((catalogo)=> { %>
+                                                    <% restaurantes.forEach((catalogo)=> { %>
                                                         <% if (catalogo.UsuarioAgrego===usuario.nombre &&
                                                             catalogo.certificacion==="noHay" ) { %>
                                                             <div class="col-md-4 mb-4 catalogo"
@@ -622,7 +620,32 @@
 
 
 
+<script>
+    function validateInput(input) {
+        var forbiddenChars = /[^a-zA-Z\s]/g;
+        var errorMessage = document.getElementById('error-message');
+        if (forbiddenChars.test(input.value)) {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
 
+    function validateForm() {
+        var forbiddenChars = /[^a-zA-Z\s]/g;
+        var input = document.getElementById('marca');
+        var errorMessage = document.getElementById('error-message');
+        if (forbiddenChars.test(input.value)) {
+            errorMessage.style.display = 'block';
+            // Desplazar la página hasta el principio del formulario
+            window.scrollTo(180, 180);
+            return false; // Evitar que se envíe el formulario
+        } else {
+            errorMessage.style.display = 'none';
+            return true; // Permitir que se envíe el formulario
+        }
+    }
+</script>
 
 
 
@@ -631,26 +654,26 @@
     // Manejar el cambio en los checkboxes de marca
     document.querySelectorAll('.marca-checkbox').forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            filtrarcatalogos();
+            filtrarrestaurantes();
         });
     });
 
     // Manejar el cambio en los checkboxes de certificación
     document.querySelectorAll('.certificacion-checkbox').forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            filtrarcatalogos();
+            filtrarrestaurantes();
         });
     });
 
     // Manejar el cambio en los checkboxes de usuario
     document.querySelectorAll('.usuario-checkbox').forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            filtrarcatalogos();
+            filtrarrestaurantes();
         });
     });
 
     // Función para filtrar los vehículos
-    function filtrarcatalogos() {
+    function filtrarrestaurantes() {
         // Obtener las marcas seleccionadas
         var marcasSeleccionadas = [];
         document.querySelectorAll('.marca-checkbox:checked').forEach(function (checkbox) {
@@ -702,7 +725,7 @@
 
     // Filtrar vehículos al cargar la página
     window.addEventListener('load', function () {
-        filtrarcatalogos();
+        filtrarrestaurantes();
     });
 </script>
 
@@ -803,10 +826,10 @@
     inputBusqueda.addEventListener('input', function () {
         var valorBusqueda = inputBusqueda.value.toLowerCase();
 
-        // Mostrar/ocultar los vehículos según el modelo ingresado en el buscador
+        // Mostrar/ocultar los vehículos según el nombre ingresado en el buscador
         document.querySelectorAll('.catalogo').forEach(function (catalogo) {
-            var modelo = catalogo.querySelector('.card-title').textContent.toLowerCase();
-            if (modelo.includes(valorBusqueda)) {
+            var nombre = catalogo.querySelector('.card-title').textContent.toLowerCase();
+            if (nombre.includes(valorBusqueda)) {
                 catalogo.style.display = 'block';
             } else {
                 catalogo.style.display = 'none';
