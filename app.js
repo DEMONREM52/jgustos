@@ -37,47 +37,50 @@ app.use(passport.session());
 
 
 
+let db = null; // Variable para almacenar la conexión a la base de datos
 
-  const db = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-  });
-  
-  db.connect((err) => {
-    if (err) {
-      console.error('Error connecting to database: ' + err.stack);
-      return;
-    }
-    console.log('Connected to database as id ' + db.threadId);
-    
-    // Ejecutar consultas SQL para ajustar las variables de tiempo de espera
-    const sqlQueries = [
-      "SET GLOBAL wait_timeout = 28800",
-      "SET GLOBAL interactive_timeout = 28800"
-    ];
-  
-    // Iterar sobre las consultas y ejecutarlas
-    sqlQueries.forEach(query => {
-      db.query(query, (error, results, fields) => {
-        if (error) {
-          console.error('Error executing query: ' + error.stack);
-          return;
-        }
-        console.log('Query executed successfully.');
-      });
+// Función para conectar a la base de datos
+function connectDB() {
+  if (!db) { // Verifica si no hay una conexión existente
+    console.log('Connecting to database...');
+    db = mysql.createConnection({
+      host: 'DB_HOST',
+      user: 'DB_USER',
+      password: 'DB_PASSWORD',
+      database: 'DB_NAME'
     });
-  
-    // Cierra la conexión a la base de datos
-    db.end((err) => {
+
+    // Manejador de eventos para errores de conexión
+    db.on('error', (err) => {
+      console.error('Database error: ', err);
+      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        handleDisconnect(); // Reconectar en caso de conexión perdida
+      } else {
+        throw err;
+      }
+    });
+
+    db.connect((err) => {
       if (err) {
-        console.error('Error closing connection: ' + err.stack);
+        console.error('Error connecting to database: ' + err.stack);
+        setTimeout(connectDB, 2000); // Intentar reconectar después de un tiempo
         return;
       }
-      console.log('Connection closed.');
+      console.log('Connected to database as id ' + db.threadId);
     });
-  });
+  }
+}
+
+// Función para reconectar en caso de pérdida de conexión
+function handleDisconnect() {
+  console.log('Reconnecting to database...');
+  db = null; // Marcar la conexión como nula para que se cree una nueva en el próximo intento de conexión
+  connectDB(); // Intentar reconectar
+}
+
+// Llama a la función para conectar a la base de datos
+connectDB();
+
 
 
 // Configuración de la base de datos
