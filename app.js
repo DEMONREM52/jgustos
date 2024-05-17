@@ -42,10 +42,10 @@ app.use(passport.session());
 
 
 const dbConfig = {
-  host: 'DB_HOST',
-  user: 'DB_USER',
-  password: 'DB_PASSWORD',
-  database: 'DB_NAME'
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME
 };
 
 // Crear la conexión a la base de datos
