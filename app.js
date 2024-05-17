@@ -43,45 +43,12 @@ const db = mysql.createConnection({
   database: DB_NAME,
 });
 
-function handleDisconnect() {
-  db = mysql.createConnection(db.config);
-
-  db.connect((err) => {
-    if (err) {
-      console.error('Error connecting after disconnect: ' + err.stack);
-      setTimeout(handleDisconnect, 2000);
-    } else {
-      console.log('Reconnected as id ' + db.threadId);
-    }
-  });
-
-  db.on('error', (err) => {
-    console.error('MySQL error: ', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
-
-// Conexión inicial a la base de datos
+// Conexión a la base de datos
 db.connect((err) => {
   if (err) {
-    console.error('Error connecting: ' + err.stack);
-    return;
-  }
-  console.log('Connected as id ' + db.threadId);
-});
-
-// Manejador de eventos para reconexión
-db.on('error', (err) => {
-  console.error('MySQL error: ', err);
-  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-    handleDisconnect();
-  } else {
     throw err;
   }
+  console.log("Conexión exitosa a la base de datos MySQL");
 });
 
 // Configurar EJS como motor de plantillas
