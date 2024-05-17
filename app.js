@@ -38,9 +38,6 @@ app.use(passport.session());
 
 
 
-
-
-
 const dbConfig = {
   host: DB_HOST,
   user: DB_USER,
@@ -48,16 +45,56 @@ const dbConfig = {
   database: DB_NAME
 };
 
-// Crear la conexión a la base de datos
-const db = mysql.createConnection(dbConfig);
+let db;
 
-// Función para manejar las consultas a la base de datos
-function queryDB(sql, values, callback) {
-  db.query(sql, values, (error, results, fields) => {
-    if (error) {
-      return callback(error, null);
+// Función para establecer la conexión inicial
+function connectDB() {
+  db = mysql.createConnection(dbConfig);
+
+  db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database: ' + err.stack);
+      return;
     }
-    callback(null, results);
+    console.log('Connected to database as id ' + db.threadId);
+  });
+
+  // Manejador de eventos para errores de conexión
+  db.on('error', (err) => {
+    console.error('Database error: ', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+// Llamamos a la función para establecer la conexión inicial
+connectDB();
+
+// Manejador de reconexión en caso de pérdida de conexión
+function handleDisconnect() {
+  console.log('Reconnecting to database...');
+  db = mysql.createConnection(dbConfig);
+
+  db.connect((err) => {
+    if (err) {
+      console.error('Error reconnecting to database: ' + err.stack);
+      setTimeout(handleDisconnect, 2000); // Intenta reconectar después de 2 segundos
+    } else {
+      console.log('Reconnected to database as id ' + db.threadId);
+    }
+  });
+
+  // Manejador de eventos para errores de conexión
+  db.on('error', (err) => {
+    console.error('Database error: ', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
   });
 }
 
