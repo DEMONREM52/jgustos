@@ -36,41 +36,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Configuración de la base de datos
-const db = mysql.createConnection({
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-});
-
-// Conexión a la base de datos
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("Conexión exitosa a la base de datos MySQL");
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database: ' + err.stack);
-    return;
-  }
-  console.log('Connected to database as id ' + db.threadId);
-});
-
-// Manejador de eventos para errores de conexión
-db.on('error', (err) => {
-  console.error('Database error: ', err);
-  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-    handleDisconnect();
-  } else {
-    throw err;
-  }
-});
-
 function handleDisconnect() {
-  db = mysql.createConnection(db.config);
+  db = mysql.createConnection({
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+  });
+
   db.connect((err) => {
     if (err) {
       console.error('Error reconnecting to database: ' + err.stack);
@@ -79,7 +52,48 @@ function handleDisconnect() {
       console.log('Reconnected to database as id ' + db.threadId);
     }
   });
+
+  // Manejador de eventos para errores de conexión
+  db.on('error', (err) => {
+    console.error('Database error: ', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
 }
+
+// Función para establecer la conexión inicial
+function connectDB() {
+  db = mysql.createConnection({
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+  });
+
+  db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database: ' + err.stack);
+      return;
+    }
+    console.log('Connected to database as id ' + db.threadId);
+  });
+
+  // Manejador de eventos para errores de conexión
+  db.on('error', (err) => {
+    console.error('Database error: ', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+// Llamamos a la función para establecer la conexión inicial
+connectDB();
 
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
