@@ -10,7 +10,7 @@ const { render } = require("ejs");
 // Configuración de Express
 const app = express();
 const port = process.env.PORT || 80;
-const DB_HOST = process.env.DB_HOST || "srv1455.hstgr.io";
+const DB_HOST = process.env.DB_HOST || "82.197.82.8";
 const DB_USER = process.env.DB_USER || "u733059767_jyjgustos";
 const DB_PASSWORD = process.env.DB_PASSWORD || "3C2pxzLXibgE7XnKDIMQ";
 const DB_NAME = process.env.DB_NAME || "u733059767_gustos";
@@ -24,8 +24,6 @@ app.use(
   })
 );
 
-let db;
-
 // Agregar middleware para analizar el cuerpo de las peticiones como JSON
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -37,91 +35,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-
-
-
-
-
-function handleDisconnect() {
-  console.log('Reconnecting to database...');
-  db = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-  });
-
-  db.connect((err) => {
-    if (err) {
-      console.error('Error reconnecting to database: ' + err.stack);
-      setTimeout(handleDisconnect, 2000);
-    } else {
-      console.log('Reconnected to database as id ' + db.threadId);
-    }
-  });
-
-  // Manejador de eventos para errores de conexión
-  db.on('error', (err) => {
-    console.error('Database error: ', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect();
-    } else {
-      console.error('Database error: ', err);
-    }
-  });
-}
-
-// Función para establecer la conexión inicial
-function connectDB() {
-  console.log('Connecting to database...');
-  db = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-  });
-
-  db.connect((err) => {
-    if (err) {
-      console.error('Error connecting to database: ' + err.stack);
-      setTimeout(connectDB, 2000);
-      return;
-    }
-    console.log('Connected to database as id ' + db.threadId);
-  });
-
-  // Manejador de eventos para errores de conexión
-  db.on('error', (err) => {
-    console.error('Database error: ', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect();
-    } else {
-      console.error('Database error: ', err);
-    }
-  });
-}
-
-// Llamamos a la función para establecer la conexión inicial
-connectDB();
-
-// Middleware para verificar la conexión a la base de datos
-function checkDBConnection(req, res, next) {
-  if (!db || db.state !== 'authenticated') {
-    // La conexión no está disponible o no está autenticada
-    // Puedes manejar este caso como desees, por ejemplo, enviar un mensaje de error
-    return res.status(500).send('Error de conexión a la base de datos');
-  }
-  // La conexión está disponible y autenticada, continúa con la siguiente función en la cadena de middleware
-  next();
-}
-
-// Ruta de ejemplo que utiliza el middleware de verificación de conexión a la base de datos
-app.get('/', checkDBConnection, (req, res) => {
-  // Realiza la consulta a la base de datos aquí
+// Configuración de la base de datos
+const db = mysql.createConnection({
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
 });
 
+// Conexión a la base de datos
+db.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log("Conexión exitosa a la base de datos MySQL");
+});
 
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
