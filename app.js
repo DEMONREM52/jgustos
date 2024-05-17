@@ -37,6 +37,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
+
+
+
+
+
 function handleDisconnect() {
   console.log('Reconnecting to database...');
   db = mysql.createConnection({
@@ -98,6 +105,23 @@ function connectDB() {
 
 // Llamamos a la función para establecer la conexión inicial
 connectDB();
+
+// Middleware para verificar la conexión a la base de datos
+function checkDBConnection(req, res, next) {
+  if (!db || db.state !== 'authenticated') {
+    // La conexión no está disponible o no está autenticada
+    // Puedes manejar este caso como desees, por ejemplo, enviar un mensaje de error
+    return res.status(500).send('Error de conexión a la base de datos');
+  }
+  // La conexión está disponible y autenticada, continúa con la siguiente función en la cadena de middleware
+  next();
+}
+
+// Ruta de ejemplo que utiliza el middleware de verificación de conexión a la base de datos
+app.get('/', checkDBConnection, (req, res) => {
+  // Realiza la consulta a la base de datos aquí
+});
+
 
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
