@@ -55,22 +55,16 @@ const dbConfig = {
   database: 'DB_NAME'
 };
 
-// Crear un pool de conexiones
-const pool = mysql.createPool(dbConfig);
+// Crear la conexión a la base de datos
+const db = mysql.createConnection(dbConfig);
 
 // Función para manejar las consultas a la base de datos
 function queryDB(sql, values, callback) {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      return callback(err, null);
+  db.query(sql, values, (error, results, fields) => {
+    if (error) {
+      return callback(error, null);
     }
-    connection.query(sql, values, (error, results, fields) => {
-      connection.release(); // Liberar la conexión después de la consulta
-      if (error) {
-        return callback(error, null);
-      }
-      callback(null, results);
-    });
+    callback(null, results);
   });
 }
 
@@ -94,13 +88,13 @@ function queryDB(sql, values, callback) {
 
 
 
-// // Conexión a la base de datos
-// db.connect((err) => {
-//   if (err) {
-//     throw err;
-//   }
-//   console.log("Conexión exitosa a la base de datos MySQL");
-// });
+// Conexión a la base de datos
+db.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log("Conexión exitosa a la base de datos MySQL");
+});
 
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
