@@ -94,13 +94,13 @@ function queryDB(sql, values, callback) {
 
 
 
-// Conexión a la base de datos
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("Conexión exitosa a la base de datos MySQL");
-});
+// // Conexión a la base de datos
+// db.connect((err) => {
+//   if (err) {
+//     throw err;
+//   }
+//   console.log("Conexión exitosa a la base de datos MySQL");
+// });
 
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
