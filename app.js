@@ -10,7 +10,7 @@ const { render } = require("ejs");
 // Configuración de Express
 const app = express();
 const port = process.env.PORT || 80;
-const DB_HOST = process.env.DB_HOST || "u733059767_jyjgustos";
+const DB_HOST = process.env.DB_HOST || "82.197.83.86";
 const DB_USER = process.env.DB_USER || "u733059767_jyjgustos";
 const DB_PASSWORD = process.env.DB_PASSWORD || "3C2pxzLXibgE7XnKDIMQ";
 const DB_NAME = process.env.DB_NAME || "u733059767_gustos";
