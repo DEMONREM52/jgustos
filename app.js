@@ -98,6 +98,7 @@ function connectDB() {
 
 // Llamamos a la función para establecer la conexión inicial
 connectDB();
+
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
