@@ -48,53 +48,31 @@ app.use(passport.session());
 
 
 
-let db = null; // Variable para almacenar la conexión a la base de datos
+const dbConfig = {
+  host: 'DB_HOST',
+  user: 'DB_USER',
+  password: 'DB_PASSWORD',
+  database: 'DB_NAME'
+};
 
-// Función para conectar a la base de datos
-function connectDB() {
-  if (!db || db.state === 'disconnected') { // Verifica si no hay una conexión existente o si la conexión está desconectada
-    console.log('Connecting to database...');
-    db = mysql.createConnection({
-      host: 'DB_HOST',
-      user: 'DB_USER',
-      password: 'DB_PASSWORD',
-      database: 'DB_NAME'
-    });
+// Crear un pool de conexiones
+const pool = mysql.createPool(dbConfig);
 
-    // Manejador de eventos para errores de conexión
-    db.on('error', (err) => {
-      console.error('Database error: ', err);
-      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        handleDisconnect(); // Reconectar en caso de conexión perdida
-      } else {
-        throw err;
+// Función para manejar las consultas a la base de datos
+function queryDB(sql, values, callback) {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return callback(err, null);
+    }
+    connection.query(sql, values, (error, results, fields) => {
+      connection.release(); // Liberar la conexión después de la consulta
+      if (error) {
+        return callback(error, null);
       }
+      callback(null, results);
     });
-
-    db.connect((err) => {
-      if (err) {
-        console.error('Error connecting to database: ' + err.stack);
-        setTimeout(connectDB, 2000); // Intentar reconectar después de un tiempo
-        return;
-      }
-      console.log('Connected to database as id ' + db.threadId);
-    });
-  }
+  });
 }
-
-// Función para reconectar en caso de pérdida de conexión
-function handleDisconnect() {
-  console.log('Reconnecting to database...');
-  db = null; // Marcar la conexión como nula para que se cree una nueva en el próximo intento de conexión
-  connectDB(); // Intentar reconectar
-}
-
-// Llama a la función para conectar a la base de datos
-connectDB();
-// Configuración de la base de datos
-
-
-
 
 
 
