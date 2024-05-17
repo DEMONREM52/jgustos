@@ -36,6 +36,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 let db = null; // Variable para almacenar la conexión a la base de datos
 
 // Función para conectar a la base de datos
@@ -79,8 +91,29 @@ function handleDisconnect() {
 
 // Llama a la función para conectar a la base de datos
 connectDB();
-
 // Configuración de la base de datos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Conexión a la base de datos
