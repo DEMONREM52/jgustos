@@ -35,13 +35,53 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
+
+  const db = mysql.createConnection({
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+  });
+  
+  db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database: ' + err.stack);
+      return;
+    }
+    console.log('Connected to database as id ' + db.threadId);
+    
+    // Ejecutar consultas SQL para ajustar las variables de tiempo de espera
+    const sqlQueries = [
+      "SET GLOBAL wait_timeout = 28800",
+      "SET GLOBAL interactive_timeout = 28800"
+    ];
+  
+    // Iterar sobre las consultas y ejecutarlas
+    sqlQueries.forEach(query => {
+      db.query(query, (error, results, fields) => {
+        if (error) {
+          console.error('Error executing query: ' + error.stack);
+          return;
+        }
+        console.log('Query executed successfully.');
+      });
+    });
+  
+    // Cierra la conexión a la base de datos
+    db.end((err) => {
+      if (err) {
+        console.error('Error closing connection: ' + err.stack);
+        return;
+      }
+      console.log('Connection closed.');
+    });
+  });
+
+
 // Configuración de la base de datos
-const db = mysql.createConnection({
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-});
+
 
 // Conexión a la base de datos
 db.connect((err) => {
