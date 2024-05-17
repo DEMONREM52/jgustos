@@ -36,12 +36,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
 let db = null; // Variable para almacenar la conexión a la base de datos
 
 // Función para conectar a la base de datos
 function connectDB() {
-  if (!db) { // Verifica si no hay una conexión existente
+  if (!db || db.state === 'disconnected') { // Verifica si no hay una conexión existente o si la conexión está desconectada
     console.log('Connecting to database...');
     db = mysql.createConnection({
       host: 'DB_HOST',
@@ -80,8 +79,6 @@ function handleDisconnect() {
 
 // Llama a la función para conectar a la base de datos
 connectDB();
-
-
 
 // Configuración de la base de datos
 
