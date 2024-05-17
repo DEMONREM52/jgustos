@@ -51,6 +51,36 @@ db.connect((err) => {
   console.log("Conexión exitosa a la base de datos MySQL");
 });
 
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to database as id ' + db.threadId);
+});
+
+// Manejador de eventos para errores de conexión
+db.on('error', (err) => {
+  console.error('Database error: ', err);
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    handleDisconnect();
+  } else {
+    throw err;
+  }
+});
+
+function handleDisconnect() {
+  db = mysql.createConnection(db.config);
+  db.connect((err) => {
+    if (err) {
+      console.error('Error reconnecting to database: ' + err.stack);
+      setTimeout(handleDisconnect, 2000);
+    } else {
+      console.log('Reconnected to database as id ' + db.threadId);
+    }
+  });
+}
+
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
