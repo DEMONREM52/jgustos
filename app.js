@@ -24,6 +24,8 @@ app.use(
   })
 );
 
+let db;
+
 // Agregar middleware para analizar el cuerpo de las peticiones como JSON
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -35,8 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Configuración de la base de datos
 function handleDisconnect() {
+  console.log('Reconnecting to database...');
   db = mysql.createConnection({
     host: DB_HOST,
     user: DB_USER,
@@ -59,13 +61,14 @@ function handleDisconnect() {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       handleDisconnect();
     } else {
-      throw err;
+      console.error('Database error: ', err);
     }
   });
 }
 
 // Función para establecer la conexión inicial
 function connectDB() {
+  console.log('Connecting to database...');
   db = mysql.createConnection({
     host: DB_HOST,
     user: DB_USER,
@@ -76,6 +79,7 @@ function connectDB() {
   db.connect((err) => {
     if (err) {
       console.error('Error connecting to database: ' + err.stack);
+      setTimeout(connectDB, 2000);
       return;
     }
     console.log('Connected to database as id ' + db.threadId);
@@ -87,14 +91,13 @@ function connectDB() {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       handleDisconnect();
     } else {
-      throw err;
+      console.error('Database error: ', err);
     }
   });
 }
 
 // Llamamos a la función para establecer la conexión inicial
 connectDB();
-
 // Configurar EJS como motor de plantillas
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
