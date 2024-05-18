@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J&A</title>
-    <link rel="shortcut icon" href="https://i.ibb.co/cYxswKs/carro-deportivo.png" type="image/x-icon">
+    <title>JGUSTOS</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/hZ7b8P1/pixelcut-export-17.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -23,8 +23,13 @@
 
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
     body {
-            font-family: "EB Garamond", serif;
+            font-family: "Dancing Script", cursive;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
             font-optical-sizing: auto;
             font-weight: 800;
             font-style: normal;
@@ -97,7 +102,7 @@
         margin-top: 40px;
         width: auto;
         /* Ajusta el ancho según sea necesario */
-        height: auto;
+        height: 100vh;
         /* Ajusta la altura según sea necesario */
     }
 
@@ -120,12 +125,42 @@
         z-index: 1;
         /* Coloca el texto encima de la imagen */
         color: white;
-        font-family: "Rubik Doodle Shadow", system-ui;
         font-weight: 800;
         font-style: normal;
     }
 
+    @media (max-width: 1400px) {
+        .container-image {
+        position: relative;
+        margin-top: 40px;
+        width: auto;
+        /* Ajusta el ancho según sea necesario */
+        height: 90vh;
+        /* Ajusta la altura según sea necesario */
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .container-image {
+        position: relative;
+        margin-top: 40px;
+        width: auto;
+        /* Ajusta el ancho según sea necesario */
+        height: auto;
+        /* Ajusta la altura según sea necesario */
+        }
+    }
+
     @media (max-width: 800px) {
+        .container-image {
+        position: relative;
+        margin-top: 40px;
+        width: auto;
+        /* Ajusta el ancho según sea necesario */
+        height: auto;
+        /* Ajusta la altura según sea necesario */
+    }
+
         .text {
             /* Tamaño de letra más pequeño */
             position: absolute;
@@ -135,7 +170,6 @@
             z-index: 1;
             /* Coloca el texto encima de la imagen */
             color: white;
-            font-family: "Rubik Doodle Shadow", system-ui;
             font-weight: 400;
             font-style: normal;
         }
@@ -187,7 +221,7 @@
 </style>
 
 <div class="container-image">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/CISNEROS_-_ANTIOQUIA.jpg" alt="Imagen" class="image">
+    <img src="https://i.ibb.co/9p8HFRY/pixelcut-export-25.png" alt="Imagen" class="image">
 </div>
 
 <body id="content">
@@ -195,7 +229,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a style="padding-left: 20px;" class="navbar-brand" href="#">
-                <img src="https://i.ibb.co/1dLVZ1k/pixelcut-export-23.png" alt="Logo" width="100" height="60">
+                <img src="https://i.ibb.co/hZ7b8P1/pixelcut-export-17.png" alt="Logo" width="70" height="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -207,7 +241,7 @@
                     <li class="nav-item">
                         <b><a class="nav-link" style="color: white; padding-right: 40px;" href="/">Inicio</a></b>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" style=" display: none;">
                         <b><a class="nav-link" style="color: white; padding-right: 40px;" href="/registrar-cita"
                                 target="blank">Cotización</a></b>
                     </li>
@@ -222,19 +256,21 @@
 
 
     <div class="container">
-        <h1 class="text-center display-4" style="margin-top: 120px; color: #fff;">J&J</h1>
+        <h1 class="text-center display-4" style="margin-top: 120px;">
+            <img src="https://i.ibb.co/LhfngPX/restaurante.png" alt="J&J" style="max-width: 200px; height: 140px;">
+        </h1>    
     </div>
 
 
 
-    <h1 style="text-align: center; margin-top: 6rem; color: #fff;">NUESTROS RESTAURANTES</h1>
+    <h1 style="font-size: 48px; text-align: center; margin-top: 1rem; color: #fff;">Nuestros Restaurantes</h1>
 
 
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4 mb-4" style="display: none;">
                 <div class="card h-100">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/CISNEROS_-_ANTIOQUIA.jpg" width="500px"
+                    <img src="https://i.ibb.co/qrKMGn7/CISNEROS-ANTIOQUIA2.png" width="500px"
                         height="200px" class="card-img-top" alt="Gorra">
                     <div class="card-body d-flex flex-column justify-content-center">
                         <h5 class="card-title text-center" style="color: white;">Restaurante01</h5>
@@ -473,7 +509,7 @@
         if (prevScrollpos > currentScrollPos) {
             document.getElementById("navbar").style.top = "0";
         } else {
-            document.getElementById("navbar").style.top = "-54px"; /* Ajusta esto según la altura de tu barra de navegación */
+            document.getElementById("navbar").style.top = "-65px"; /* Ajusta esto según la altura de tu barra de navegación */
         }
         prevScrollpos = currentScrollPos;
     }
