@@ -87,20 +87,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
-  // Mostrar SweetAlert para informar al usuario sobre la redirección
-  Swal.fire({
-    title: 'Página no encontrada',
-    text: 'Serás redirigido a la página principal',
-    icon: 'warning',
-    confirmButtonText: 'OK'
-  }).then((result) => {
-    // Redirigir al usuario a la página principal
-    if (result.isConfirmed || result.dismiss === Swal.DismissReason.backdrop) {
-      res.redirect('/index');
-    }
-  });
-});
 
 app.get("/catalogo", (req, res) => {
   // Obtener datos de vehículos y usuarios de la base de datos en paralelo
