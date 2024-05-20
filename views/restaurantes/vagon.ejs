@@ -618,6 +618,31 @@
     let totalCarrito = 0; // Variable para almacenar el total del carrito
     let totalGeneral = 0; // Variable para almacenar el total general de todos los productos
 
+    // Event listeners para los radio buttons
+document.querySelectorAll('input[name="opcion"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        // Llamar a la función para recalcular el total del carrito cada vez que cambie la selección de radio
+        calcularTotal();
+    });
+});
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad) {
+    const totalProducto = precioProducto * cantidad; // Calcular el total por producto
+    let totalRadio = 0; // Inicializar el total de las opciones de radio
+
+    // Obtener el valor del radio button seleccionado y sumarlo al total de las opciones de radio
+    const opcionSeleccionada = document.querySelector('input[name="opcion"]:checked');
+    if (opcionSeleccionada) {
+        totalRadio = parseFloat(opcionSeleccionada.value); // Obtener el valor del radio button
+    }
+
+    totalCarrito += totalProducto + totalRadio; // Sumar el total del producto y el total de las opciones de radio al total del carrito
+    totalGeneral += totalProducto; // Actualizar el total general
+
+    // Resto del código para agregar el producto al carrito...
+}
+
     // Event listener para los formularios de agregar al carrito
     document.querySelectorAll('.agregar-al-carrito').forEach(form => {
         form.addEventListener('submit', (event) => {
@@ -644,66 +669,68 @@
         });
     });
 
+
+
     // Función para calcular el total del carrito y mostrarlo
-    function calcularTotal() {
-        totalCarrito = 0; // Reinicia el total del carrito
+// Función para calcular el total del carrito y mostrarlo
+// Función para calcular el total del carrito y mostrarlo
+function calcularTotal() {
+    totalCarrito = 0; // Reinicia el total del carrito
 
-        // Recorre todos los elementos del carrito y suma los totales
-        document.querySelectorAll('#lista-carrito li').forEach(item => {
-            const totalProducto = parseFloat(item.querySelector('.total').textContent.replace(/[^\d-]/g, ''));
-            totalCarrito += totalProducto;
-        });
-
-        // Obtener el valor del radiobutton seleccionado y sumarlo al total del carrito
-        const opcionSeleccionada = parseFloat(document.querySelector('input[name="opcion"]:checked').value);
-        const totalAPagar = totalCarrito + opcionSeleccionada;
-
-        // Formatea el total para mostrarlo completo
-        const totalCarritoElement = document.getElementById('total-carrito');
-        totalCarritoElement.textContent = `Total a pagar: ${totalAPagar.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
-        totalCarritoElement.style.display = 'block'; // Muestra el elemento
-    }
-
-    // Adjuntar evento a los radio buttons
-    document.querySelectorAll('input[name="opcion"]').forEach(radio => {
-        radio.addEventListener('change', calcularTotal);
+    // Recorre todos los elementos del carrito y suma los totales
+    document.querySelectorAll('#lista-carrito li').forEach(item => {
+        const totalProducto = parseFloat(item.querySelector('.total').textContent.replace(/[^\d-]/g, ''));
+        totalCarrito += totalProducto;
     });
 
-
-
-
-
-
-
-
-    // Función para agregar un producto al carrito
-    // Función para agregar un producto al carrito
-    function agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad) {
-        const totalProducto = precioProducto * cantidad; // Calcular el total por producto
-        totalCarrito += totalProducto; // Actualizar el total del carrito
-        totalGeneral += totalProducto; // Actualizar el total general
-
-        // Crear la cadena de texto para mostrar el total en el elemento total-carrito
-        const totalCarritoElement = document.getElementById('total-carrito');
-        totalCarritoElement.textContent = `Total a pagar: ${totalCarrito.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
-        totalCarritoElement.style.display = 'block'; // Muestra el elemento
-
-        const itemCarrito = `
-    <li data-producto-id="${productoId}">
-        ${nombreProducto} - Precio: <span class="precio">${precioProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span> - Cantidad: <input type="number" class="cantidad" style="width: 7ch;" value="${cantidad}" min="1" onchange="actualizarCantidad(${productoId}, ${precioProducto})"> - Total: <span class="total">${totalProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
-        <button class="boton-eliminar-lista" onclick="eliminarDelCarrito(${productoId}, ${precioProducto}, ${cantidad})">Eliminar</button>
-    </li>
-    `;
-
-        const listaCarrito = document.getElementById('lista-carrito');
-        listaCarrito.insertAdjacentHTML('beforeend', itemCarrito);
-
-        calcularTotal(); // Calcular y mostrar el total del carrito
-        actualizarTotalGeneral(); // Actualizar el total general mostrado
+    // Obtener el valor del radio button seleccionado y sumarlo al total del carrito
+    const opcionSeleccionada = document.querySelector('input[name="opcion"]:checked');
+    if (opcionSeleccionada) {
+        totalCarrito += parseFloat(opcionSeleccionada.value); // Obtener el valor del radio button
     }
 
-    // Función para actualizar la cantidad de un producto en el carrito
-    function actualizarCantidad(productoId, precioProducto) {
+    // Formatea el total para mostrarlo completo
+    const totalCarritoElement = document.getElementById('total-carrito');
+    totalCarritoElement.textContent = `Total a pagar: ${totalCarrito.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
+    totalCarritoElement.style.display = 'block'; // Muestra el elemento
+}
+
+
+
+
+
+
+
+
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad) {
+    const totalProducto = precioProducto * cantidad; // Calcular el total por producto
+    totalCarrito += totalProducto; // Actualizar el total del carrito
+
+    // Obtener el valor del radio button seleccionado
+    const opcionSeleccionada = document.querySelector('input[name="opcion"]:checked');
+    if (opcionSeleccionada) {
+        totalCarrito += parseFloat(opcionSeleccionada.value); // Sumar el valor del radio button al total del carrito
+    }
+
+    totalGeneral += totalProducto; // Actualizar el total general
+
+    const itemCarrito = `
+        <li data-producto-id="${productoId}">
+            ${nombreProducto} - Precio: <span class="precio">${precioProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span> - Cantidad: <input type="number" class="cantidad" style="width: 7ch;" value="${cantidad}" min="1" onchange="actualizarCantidad(${productoId}, ${precioProducto})"> - Total: <span class="total">${totalProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
+            <button class="boton-eliminar-lista" onclick="eliminarDelCarrito(${productoId}, ${precioProducto}, ${cantidad})">Eliminar</button>
+        </li>
+    `;
+    const listaCarrito = document.getElementById('lista-carrito');
+    listaCarrito.insertAdjacentHTML('beforeend', itemCarrito);
+
+    calcularTotal(); // Calcular y mostrar el total del carrito
+    actualizarTotalGeneral(); // Actualizar el total general mostrado
+}
+
+// Función para actualizar la cantidad de un producto en el carrito
+function actualizarCantidad(productoId, precioProducto) {
         const cantidadElement = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"] .cantidad`);
         const nuevaCantidad = parseInt(cantidadElement.value);
         const totalAnterior = parseFloat(cantidadElement.parentElement.querySelector('.total').textContent.replace(/[^\d.-]/g, '')); // Eliminar cualquier caracter que no sea número, punto o signo negativo
@@ -722,23 +749,58 @@
 
 
 
+
+
+
+
     // Función para actualizar el total general mostrado
     function actualizarTotalGeneral() {
         const totalGeneralElement = document.getElementById('total-general');
         totalGeneralElement.textContent = `Total general: $${totalGeneral.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
     }
 
-    // Función para eliminar un producto del carrito
-    function eliminarDelCarrito(productoId, precioProducto, cantidad) {
-        const totalProducto = precioProducto * cantidad; // Calcular el total por producto
-        totalCarrito -= totalProducto; // Restar el total del producto del carrito
-        totalGeneral -= totalProducto; // Restar el total general del producto
-        const productoEnCarrito = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"]`);
-        productoEnCarrito.remove(); // Eliminar el registro del carrito
+// Función para eliminar un producto del carrito
+function eliminarDelCarrito(productoId, precioProducto, cantidad) {
+    // Calcular el total por producto
+    const totalProducto = precioProducto * cantidad;
 
-        calcularTotal(); // Calcular y mostrar el total del carrito
-        actualizarTotalGeneral(); // Actualizar el total general mostrado
-    }
+    // Restar el total del producto del carrito
+    totalCarrito -= totalProducto;
+
+    // Restar el total general del producto
+    totalGeneral -= totalProducto;
+
+    // Seleccionar el producto en el carrito
+    const productoEnCarrito = document.querySelector(`#lista-carrito [data-producto-id="${productoId}"]`);
+
+    // Mostrar Sweet Alert para confirmar la eliminación del producto
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Deseas eliminar este producto del carrito?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma la eliminación, eliminar el producto del carrito
+            productoEnCarrito.remove(); // Eliminar el registro del carrito
+
+            // Actualizar el total mostrado en el carrito
+            calcularTotal(); // Calcular y mostrar el total del carrito
+            actualizarTotalGeneral(); // Actualizar el total general mostrado
+
+            // Mostrar un Sweet Alert para confirmar la eliminación
+            Swal.fire(
+                'Eliminado!',
+                'El producto ha sido eliminado del carrito.',
+                'success'
+            );
+        }
+    });
+}
 </script>
 
 
