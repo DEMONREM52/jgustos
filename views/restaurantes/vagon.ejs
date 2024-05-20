@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vagon</title>
-    <link rel="shortcut icon" href="https://i.ibb.co/pfmbFDd/vagon.jpg" type="image/x-icon">
+    <title>EL VAGÓN</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/hZ7b8P1/pixelcut-export-17.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -19,22 +19,32 @@
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../app.js"></script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LQNMD9R7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-        <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LQNMD9R7G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2LQNMD9R7G');
-</script>
+        gtag('config', 'G-2LQNMD9R7G');
+    </script>
 
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
+        html {
+            zoom: 0.8;
+        }
+
         body {
-            font-family: "EB Garamond", serif;
+            font-family: "Roboto Slab", serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
             font-optical-sizing: auto;
             font-weight: 800;
             font-style: normal;
@@ -149,7 +159,38 @@
             margin: 120px 0 120px 0;
         }
 
+        @media (max-width: 1400px) {
+            .container-image {
+                position: relative;
+                margin-top: 40px;
+                width: auto;
+                /* Ajusta el ancho según sea necesario */
+                height: auto;
+                /* Ajusta la altura según sea necesario */
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container-image {
+                position: relative;
+                margin-top: 40px;
+                width: auto;
+                /* Ajusta el ancho según sea necesario */
+                height: auto;
+                /* Ajusta la altura según sea necesario */
+            }
+        }
+
         @media (max-width: 800px) {
+            .container-image {
+                position: relative;
+                margin-top: 40px;
+                width: auto;
+                /* Ajusta el ancho según sea necesario */
+                height: auto;
+                /* Ajusta la altura según sea necesario */
+            }
+
             .text {
                 /* Tamaño de letra más pequeño */
                 position: absolute;
@@ -159,10 +200,10 @@
                 z-index: 1;
                 /* Coloca el texto encima de la imagen */
                 color: white;
-                font-family: "Rubik Doodle Shadow", system-ui;
                 font-weight: 400;
                 font-style: normal;
             }
+
 
             .buscador {
                 padding: 0 50px 0 50px;
@@ -251,7 +292,7 @@
             background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.521) 100%);
         }
 
-        
+
         #carrito-icon:hover {
             animation: tada 1s infinite;
             /* Aplicar animación al hacer hover */
@@ -307,6 +348,10 @@
             box-shadow: none;
             outline: none;
         }
+
+        a {
+            color: white;
+        }
     </style>
 
 </head>
@@ -320,7 +365,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0 navbar-custom">
         <div class="container">
             <a style="padding-left: 20px;" class="navbar-brand" href="#">
-                <img src="https://i.ibb.co/1dLVZ1k/pixelcut-export-23.png" alt="Logo" width="100" height="60">
+                <img src="https://i.ibb.co/hZ7b8P1/pixelcut-export-17.png" alt="Logo" width="70" height="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -333,7 +378,7 @@
                         <b><a class="nav-link" style="color: rgb(255, 255, 255); padding-right: 40px;"
                                 href="/">Inicio</a></b>
                     </li>
-                    <li class="nav-item">
+                    <li style="display: none;" class="nav-item">
                         <b><a class="nav-link" style="color: rgb(255, 255, 255); padding-right: 40px;"
                                 href="/registrar-cita" target="blank">Cotización</a></b>
                     </li>
@@ -353,7 +398,7 @@
 
 
     <div class="container mt-5">
-        <h1 style="color: #ffffff; text-align: center;">EL VAGON</h1>
+        <h1 style="color: #ffffff; text-align: center;">EL VAGÓN</h1>
 
         <!-- Div que representa el carrito -->
         <div>
@@ -362,14 +407,33 @@
                 <box-icon name='cart' id="carrito-icon"></box-icon>
             </button>
             <div id="carrito" style="display: none;">
-                <label for="nombre">Por favor dijite su nombre para realizar la compra:</label>
+                <label for="nombre">Por favor digite su nombre para realizar la compra:</label>
                 <input type="text" id="nombre" required>
+
+                <!-- Radiobuttons -->
+                <div>
+                    <input type="radio" id="opcion1" name="opcion" value="3000">
+                    <label for="opcion1">CHARCO</label><br>
+                    <input type="radio" id="opcion2" name="opcion" value="2000">
+                    <label for="opcion2">DENTRO DEL MUNICIPIO</label><br>
+                    <input type="radio" id="opcion3" name="opcion" value="1000">
+                    <label for="opcion3">FUERA DEL MUNICIPIO</label><br>
+                </div>
+
+                <!-- Textarea para la dirección -->
+                <label for="direccion">Detalles de la dirección: (SEA LO MAS ESPECÍFICO POSIBLE)</label><br>
+                <textarea id="direccion" rows="4" cols="50"></textarea><br>
+
                 <ol style="font-size: x-large;" id="lista-carrito"></ol>
+                <!-- Total a pagar -->
                 <p id="total-carrito" style="display: none; font-size: xx-large;">Total a pagar: </p>
-                <!-- Total del carrito -->
+
+                <!-- Botón para comprar -->
                 <button class="btn btn-primary" onclick="comprar()">Comprar</button>
             </div>
         </div>
+
+
 
 
 
@@ -396,13 +460,19 @@
                                 <h3 class="card-title">
                                     <%= catalogo.nombre %>
                                 </h3>
-                                <a style="display: flex; align-items: center; margin-left: 88%; width: 50px;" href="#" class="btn btn-primary ver-detalles" data-index="<%= index %>"><box-icon name='chevron-down' type='solid' animation='tada' ></box-icon></a>
-                                <a href="#" class="btn btn-secondary mostrar-menos" style="display: none; align-items: center; margin-left: 88%; width: 50px;"><box-icon name='chevron-down' type='solid' animation='tada' rotate='180' ></box-icon></a>
-                                <p class="card-text descripcion">
-                                    <%= catalogo.descripcion %>
-                                </p>
+                                <a style="display: flex; align-items: center; margin-left: 88%; width: 50px;" href="#"
+                                    class="btn btn-primary ver-detalles" data-index="<%= index %>"><box-icon
+                                        name='chevron-down' type='solid' animation='tada'></box-icon></a>
+                                <a href="#" class="btn btn-secondary mostrar-menos"
+                                    style="display: none; align-items: center; margin-left: 88%; width: 50px;"><box-icon
+                                        name='chevron-down' type='solid' animation='tada' rotate='180'></box-icon></a>
+                                <b>
+                                    <p class="card-text descripcion">
+                                        <%= catalogo.descripcion %>
+                                    </p>
+                                </b>
                                 <p class="card-text"
-                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">
+                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 25px;">
                                     Precio: $<%= catalogo.precio.toLocaleString('es-CO') %> COP</p>
                                 <form class="agregar-al-carrito" action="/agregar-al-carrito" method="POST">
                                     <!-- Campos ocultos para el ID, nombre y precio del producto -->
@@ -437,25 +507,26 @@
                             <i class="fas fa-gem "></i>NUESTROS RESTAURANTES
                         </h6>
                         <p>
-                            <a href="/gorras" class="text-reset">Gorras</a>
+                            <a style="display: none;" href="/gorras" class="text-reset">Gorras</a>
                         </p>
                         <p>
                             <a href="/vagon" class="text-reset">EL VAGON</a>
                         </p>
                         <p>
-                            <a href="/mascotas" class="text-reset">Mascotas</a>
+                            <a style="display: none;" href="/mascotas" class="text-reset">Mascotas</a>
                         </p>
                         <p>
-                            <a href="/chevrolet-nuevo" class="text-reset">Chevrolet</a>
+                            <a style="display: none;" href="/chevrolet-nuevo" class="text-reset">Chevrolet</a>
                         </p>
                         <p>
-                            <a href="/renault-nuevo" class="text-reset">Renault</a>
+                            <a style="display: none;" href="/renault-nuevo" class="text-reset">Renault</a>
                         </p>
                         <p>
-                            <a href="/nissan-nuevo" class="text-reset">Nissan</a>
+                            <a style="display: none;" href="/nissan-nuevo" class="text-reset">Nissan</a>
                         </p>
                         <p>
-                            <a href="#restaurantesUsadosCertificados" class="text-reset">Usados certificados</a>
+                            <a style="display: none;" href="#restaurantesUsadosCertificados" class="text-reset">Usados
+                                certificados</a>
                         </p>
 
 
@@ -469,11 +540,13 @@
                             CENTRO DE AYUDA
                         </h6>
                         <p>
-                            <a id="contactoFooter" href="" class="text-reset">Contactanos</a>
+                            <a id="contactoFooter"
+                                href="https://wa.me/573218846041?text=Hola,%20estoy%20interesado%20en%20contactarte"
+                                class="text-reset">Contactanos</a>
                         </p>
                         <p>
-                            <a href="https://publuu.com/flip-book/448547/1011621" target="blank"
-                                class="text-reset">Politicas y privacidad</a>
+                            <a href="../../public/politicas_de_privacidad.pdf" download="politicas_de_privacidad.pdf"
+                                class="text-reset">Políticas de privacidad</a>
                         </p>
 
                     </div>
@@ -483,10 +556,16 @@
                         <h6 class="text-uppercase fw-bold mb-4">¿Trabajamos juntos?</h6>
                         <p><i class="bi bi-house-door-fill"></i> Medellin, Colombia </p>
                         <p>
-                            <i class="bi bi-envelope-fill"></i>
-                            Tucarrosonado8@gmail.com
+                            <a href="mailto:atencionalcliente@jgustos.com">
+                                <i class="bi bi-envelope-fill">atencionalcliente@jgustos.com</i>
+                            </a>
                         </p>
-                        <p><i class="bi bi-telephone-fill"></i> + 57 123 456 7808</p>
+                        <p>
+                            <a class="whatsapp-link"
+                                href="https://wa.me/573218846041?text=Hola,%20estoy%20interesado%20en%20contactarte">
+                                <i class="bi bi-telephone-fill"></i> +57 3218846041
+                            </a>
+                        </p>
                     </div>
 
                     <section class="d-flex justify-content-center col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
@@ -503,7 +582,8 @@
                             <a href="" target="blank" class="me-4 text-reset social-link">
                                 <i class="bi bi-instagram" style="color: #9900ffd3;"></i>
                             </a>
-                            <a href="" target="blank" class="me-4 text-reset social-link">
+                            <a href="https://wa.me/573218846041?text=Hola,%20estoy%20interesado%20en%20contactarte"
+                                target="_blank" class="me-4 text-reset social-link">
                                 <i class="bi bi-whatsapp" style="color: #00ff00;"></i>
                             </a>
 
@@ -515,8 +595,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 mb-4 mx-auto text-center">
-                            <p>&copy; <%= new Date().getFullYear() %> Tu Empresa... Todos los derechos reservados...</p>
-                            <p>Política de privacidad | Términos y condiciones</p>
+                            <p>&copy; <%= new Date().getFullYear() %> Jgustos... Todos los derechos reservados...</p>
+                            <p>
+                                <a href="../../public/politicas_de_privacidad.pdf"
+                                    download="politicas_de_privacidad.pdf" class="text-reset">Política de privacidad |
+                                    Términos y condiciones</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -570,26 +654,47 @@
             totalCarrito += totalProducto;
         });
 
+        // Obtener el valor del radiobutton seleccionado y sumarlo al total del carrito
+        const opcionSeleccionada = parseFloat(document.querySelector('input[name="opcion"]:checked').value);
+        const totalAPagar = totalCarrito + opcionSeleccionada;
+
         // Formatea el total para mostrarlo completo
         const totalCarritoElement = document.getElementById('total-carrito');
-        totalCarritoElement.textContent = `Total a pagar: ${totalCarrito.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
+        totalCarritoElement.textContent = `Total a pagar: ${totalAPagar.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
         totalCarritoElement.style.display = 'block'; // Muestra el elemento
     }
+
+    // Adjuntar evento a los radio buttons
+    document.querySelectorAll('input[name="opcion"]').forEach(radio => {
+        radio.addEventListener('change', calcularTotal);
+    });
+
+
+
+
 
 
 
 
     // Función para agregar un producto al carrito
+    // Función para agregar un producto al carrito
     function agregarAlCarrito(productoId, nombreProducto, precioProducto, cantidad) {
         const totalProducto = precioProducto * cantidad; // Calcular el total por producto
         totalCarrito += totalProducto; // Actualizar el total del carrito
         totalGeneral += totalProducto; // Actualizar el total general
+
+        // Crear la cadena de texto para mostrar el total en el elemento total-carrito
+        const totalCarritoElement = document.getElementById('total-carrito');
+        totalCarritoElement.textContent = `Total a pagar: ${totalCarrito.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}`;
+        totalCarritoElement.style.display = 'block'; // Muestra el elemento
+
         const itemCarrito = `
-        <li data-producto-id="${productoId}">
-            ${nombreProducto} - Precio: <span class="precio">${precioProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span> - Cantidad: <input type="number" class="cantidad" style="width: 7ch;" value="${cantidad}" min="1" onchange="actualizarCantidad(${productoId}, ${precioProducto})"> - Total: <span class="total">${totalProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
-            <button class="boton-eliminar-lista" onclick="eliminarDelCarrito(${productoId}, ${precioProducto}, ${cantidad})">Eliminar</button>
-        </li>
+    <li data-producto-id="${productoId}">
+        ${nombreProducto} - Precio: <span class="precio">${precioProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span> - Cantidad: <input type="number" class="cantidad" style="width: 7ch;" value="${cantidad}" min="1" onchange="actualizarCantidad(${productoId}, ${precioProducto})"> - Total: <span class="total">${totalProducto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
+        <button class="boton-eliminar-lista" onclick="eliminarDelCarrito(${productoId}, ${precioProducto}, ${cantidad})">Eliminar</button>
+    </li>
     `;
+
         const listaCarrito = document.getElementById('lista-carrito');
         listaCarrito.insertAdjacentHTML('beforeend', itemCarrito);
 
@@ -660,41 +765,86 @@
 
 
 
-    // Función para enviar un mensaje de compra por WhatsApp
     function comprar() {
-        // Verificar si se ha ingresado un nombre
-        const nombre = document.getElementById('nombre').value;
-        if (!nombre) {
-            alert('Por favor, ingrese su nombre antes de continuar.');
-            return; // Detener la ejecución si no se ha ingresado un nombre
-        }
-
-        // Número de WhatsApp al que enviar el mensaje
-        const numeroWhatsApp = '3218846041'; // Reemplazar con el número de WhatsApp al que quieras enviar el mensaje
-
-        // Obtener los elementos de la lista del carrito
-        const listaCarrito = document.getElementById('lista-carrito');
-        const itemsCarrito = Array.from(listaCarrito.children);
-
-        // Construir el mensaje con los detalles de la compra
-        let mensaje = `¡Hola ${nombre}!\n Quieres realizar una compra?\n Tu pedido es:\n\n`;
-        itemsCarrito.forEach(item => {
-            const nombreProducto = item.textContent.split(' - ')[0].trim(); // Extraer el nombre del producto del texto
-            const cantidad = item.querySelector('.cantidad').value; // Obtener la cantidad del producto
-            const total = item.querySelector('.total').textContent; // Obtener el total del producto
-            mensaje += `${nombreProducto}\n Cantidad: ${cantidad}\n Total: ${total}\n\n`;
+    // Verificar si el carrito está vacío
+    const listaCarrito = document.getElementById('lista-carrito');
+    if (listaCarrito.children.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Carrito vacío',
+            text: 'El carrito está vacío. Por favor, agregue productos antes de continuar.'
         });
-        mensaje += `\n ${document.getElementById('total-carrito').textContent}\n Tu pedido esta correcto?\n SI/NO\n`;
-
-        // Codificar el mensaje para que sea compatible con la URL
-        const mensajeCodificado = encodeURIComponent(mensaje);
-
-        // Construir la URL de WhatsApp
-        const url = `https://wa.me/${numeroWhatsApp}/?text=${mensajeCodificado}`;
-
-        // Abrir la URL en una nueva pestaña
-        window.open(url, '_blank');
+        return;
     }
+
+    // Verificar si se ha ingresado un nombre
+    const nombre = document.getElementById('nombre').value;
+    if (!nombre) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Nombre requerido',
+            text: 'Por favor, ingrese su nombre antes de continuar.'
+        });
+        return;
+    }
+
+    // Obtener el valor del radio button seleccionado
+    const opcionSeleccionada = document.querySelector('input[name="opcion"]:checked');
+    if (!opcionSeleccionada) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Tarifa de envio requerida',
+            text: 'Por favor, seleccione una opción antes de continuar.'
+        });
+        return;
+    }
+    const valorRadio = opcionSeleccionada.value;
+
+    // Obtener el contenido del textarea
+    const direccion = document.getElementById('direccion').value;
+
+    // Verificar si se ha ingresado la dirección
+    if (!direccion.trim()) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Dirección requerida',
+            text: 'Por favor, ingrese su dirección antes de continuar.'
+        });
+        return;
+    }
+
+    // Número de WhatsApp al que enviar el mensaje
+    const numeroWhatsApp = '3218846041'; // Reemplazar con el número de WhatsApp al que quieras enviar el mensaje
+
+    // Construir el mensaje con los detalles de la compra
+    let mensaje = `¡Hola ${nombre}!\nQuieres realizar una compra?\nTu pedido es:\n\n`;
+    Array.from(listaCarrito.children).forEach(item => {
+        const nombreProducto = item.textContent.split(' - ')[0].trim(); // Extraer el nombre del producto del texto
+        const cantidad = item.querySelector('.cantidad').value; // Obtener la cantidad del producto
+        const total = item.querySelector('.total').textContent; // Obtener el total del producto
+        mensaje += `${nombreProducto}\nCantidad: ${cantidad}\nTotal: ${total}\n\n`;
+    });
+
+    // Agregar la opción seleccionada del radio button al mensaje
+    mensaje += `Tarifa de envio: ${valorRadio}\n\n`;
+
+    // Agregar el contenido del textarea al mensaje
+    mensaje += `Tu dirección es: ${direccion}\n`;
+
+    // Agregar el total a pagar al mensaje
+    const totalAPagar = document.getElementById('total-carrito').textContent;
+    mensaje += `\n${totalAPagar}\nTu pedido está correcto?\nSI/NO\n`;
+
+    // Codificar el mensaje para que sea compatible con la URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    // Construir la URL de WhatsApp
+    const url = `https://wa.me/${numeroWhatsApp}/?text=${mensajeCodificado}`;
+
+    // Abrir la URL en una nueva pestaña
+    window.open(url, '_blank');
+}
+
 
 
 </script>
@@ -710,9 +860,12 @@
         var currentScrollPos = window.pageYOffset;
         if (prevScrollpos > currentScrollPos) {
             document.getElementById("navbar").style.top = "0";
+            document.getElementById("navbar").style.opacity = "1"; // Restablece la opacidad al hacer scroll hacia arriba
         } else {
-            document.getElementById("navbar").style.top = "-54px"; /* Ajusta esto según la altura de tu barra de navegación */
+            document.getElementById("navbar").style.top = "-65px";
+            document.getElementById("navbar").style.opacity = "0.5"; // Cambia la opacidad al hacer scroll hacia abajo
         }
+        document.getElementById("navbar").style.transition = "top 0.6s, opacity 0.6s"; // Aplica transición suave
         prevScrollpos = currentScrollPos;
     }
 </script>

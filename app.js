@@ -1,4 +1,5 @@
 // Importar dependencias
+const Swal = require('sweetalert2')
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -7,21 +8,23 @@ const mysql = require("mysql2");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const { render } = require("ejs");
+
+
 // Configuración de Express
 const app = express();
-// const port = process.env.PORT || 3000;
-// const DB_HOST = process.env.DB_HOST || "localhost";
-// const DB_USER = process.env.DB_USER || "root";
-// const DB_PASSWORD = process.env.DB_PASSWORD || "";
-// const DB_NAME = process.env.DB_NAME || "gustos";
-// const DB_PORT = process.env.DB_PORT || "3306";
-
-const port = process.env.PORT || 80;
-const DB_HOST = process.env.DB_HOST || "gustos_dbgustos";
-const DB_USER = process.env.DB_USER || "mysql";
-const DB_PASSWORD = process.env.DB_PASSWORD || "6960bde9b53598e7a62c";
+const port = process.env.PORT || 8000;
+const DB_HOST = process.env.DB_HOST || "localhost";
+const DB_USER = process.env.DB_USER || "root";
+const DB_PASSWORD = process.env.DB_PASSWORD || "";
 const DB_NAME = process.env.DB_NAME || "gustos";
 const DB_PORT = process.env.DB_PORT || "3306";
+
+// const port = process.env.PORT || 80;
+// const DB_HOST = process.env.DB_HOST || "gustos_dbgustos";
+// const DB_USER = process.env.DB_USER || "mysql";
+// const DB_PASSWORD = process.env.DB_PASSWORD || "6960bde9b53598e7a62c";
+// const DB_NAME = process.env.DB_NAME || "gustos";
+// const DB_PORT = process.env.DB_PORT || "3306";
 
 
 app.use(
@@ -75,6 +78,21 @@ app.get("/", (req, res) => {
 
     // Renderizar la vista index.ejs y pasar los datos de los vehículos y el usuario
     res.render("index", { usuario: usuario, restaurantes: results });
+  });
+});
+
+app.get('*', (req, res) => {
+  // Mostrar SweetAlert para informar al usuario sobre la redirección
+  Swal.fire({
+    title: 'Página no encontrada',
+    text: 'Serás redirigido a la página principal',
+    icon: 'warning',
+    confirmButtonText: 'OK'
+  }).then((result) => {
+    // Redirigir al usuario a la página principal
+    if (result.isConfirmed || result.dismiss === Swal.DismissReason.backdrop) {
+      res.redirect('/index');
+    }
   });
 });
 
@@ -155,11 +173,19 @@ app.post("/editar-usuario/:id", (req, res) => {
               if (count > 0) {
                 // Si el nombre ya está en uso, mostrar un mensaje de alerta
                 res.send(`
-                                  <script>
-                                      alert("El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
-                                      window.location.href = "/editar-usuario/${usuarioId}";
-                                  </script>
-                              `);
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    Swal.fire({
+      title: 'Nombre de usuario en uso',
+      text: 'El nombre de usuario ya está en uso. Por favor, elige otro nombre.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      window.location.href = "/editar-usuario/${usuarioId}";
+    });
+  </script>
+`);
+
               } else {
                 // Actualizar el nombre del usuario en la tabla de usuarios
                 db.query(
@@ -311,46 +337,70 @@ app.post("/registro", async (req, res) => {
   if (rol === "admin") {
     const contraseñaAdminCorrecta = "z;Jpe[W*3Mqsc-TEAT6C"; // Contraseña del administrador correcta
     if (passwordAdmin !== contraseñaAdminCorrecta) {
-      return res.status(400).send(
-        // Contraseña de administrador incorrecta
-        `<script>
-        alert("Contraseña de administrador incorrecta");
-        window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
-      </script>
-    `
-      );
-    }
+      return res.status(400).send(`
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          Swal.fire({
+            title: 'Contraseña de administrador incorrecta',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+          });
+        </script>
+      `);
+    }    
   } else if (rol === "superadmin") {
     const contraseñaSuperAdminCorrecta = "BSdEGPAjxJwhv3onUX:a"; // Contraseña del SuperAdmin correcta
     if (passwordSuperAdmin !== contraseñaSuperAdminCorrecta) {
-      return res.status(400).send(
-        // Contraseña de SuperAdmin incorrecta
-        `<script>
-        alert("Contraseña de SuperAdmin incorrecta");
-        window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
-      </script>
-    `
-      );
+      return res.status(400).send(`
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          Swal.fire({
+            title: 'Contraseña de SuperAdmin incorrecta',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+          });
+        </script>
+      `);
     }
+    
   } else if (rol === "vendedor") {
     const costoVendedor = "30000";
     if (!montoVendedorInput || montoVendedorInput < costoVendedor) {
-      return res.status(400).send(
-        //
-        `<script>
-          alert("El monto ingresado debe ser mayor a ${costoVendedor}");
-          window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
-        </script> ${costoVendedor}`
-      );
+      return res.status(400).send(`
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          Swal.fire({
+            title: 'Monto incorrecto',
+            text: 'El monto ingresado debe ser mayor a ${costoVendedor}',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+          });
+        </script>
+      `);
     }
+    
   } else if (!aceptarTerminos) {
     return res.status(400).send(`
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
-        alert("Debe aceptar los términos y condiciones para registrarse");
-        window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+        Swal.fire({
+          title: 'Términos y Condiciones',
+          text: 'Debe aceptar los términos y condiciones para registrarse',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+        });
       </script>
     `);
   }
+  
   try {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(contraseña, 10);
@@ -363,11 +413,18 @@ app.post("/registro", async (req, res) => {
         if (error) {
           res.status(500).send("Error interno del servidor");
         } else if (resultados.length > 0) {
-          res.status(400).send(`
-  <script>
-    alert("El correo electrónico o el nombre de usuario ya están en uso");
-    window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
-  </script>
+  return res.status(400).send(`
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+        title: 'Error de Registro',
+        text: 'El correo electrónico o el nombre de usuario ya están en uso',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.location.href = "/registro"; // Redirige al usuario de nuevo a la página de registro
+      });
+    </script>
   `);
         } else {
           // Guardar el nuevo usuario en la base de datos con la contraseña hasheada
@@ -432,13 +489,21 @@ app.post("/inicio-sesion", (req, res) => {
       if (error) {
         res.status(500).send("Error interno del servidor");
       } else if (resultados.length === 0) {
-        res.status(401).send(`
-              <script>
-                  alert("El correo electrónico o la contraseña son incorrectas, por favor vuelve a intentarlo");
-                  window.location.href = "/inicio-sesion"; // Redirige al usuario de nuevo a la página de inicio de sesion
-              </script>
-              `);
-      } else {
+        return res.status(401).send(`
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script>
+            Swal.fire({
+              title: 'Error de Inicio de Sesión',
+              text: 'El correo electrónico o la contraseña son incorrectas, por favor vuelve a intentarlo',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              window.location.href = "/inicio-sesion"; // Redirige al usuario de nuevo a la página de inicio de sesión
+            });
+          </script>
+        `);
+      }
+       else {
         // Verificar la contraseña utilizando bcrypt
         const contraseñaHash = resultados[0].contraseña;
         const contraseñaValida = await bcrypt.compare(
@@ -446,13 +511,21 @@ app.post("/inicio-sesion", (req, res) => {
           contraseñaHash
         );
         if (!contraseñaValida) {
-          res.status(401).send(`
-                  <script>
-                      alert("El correo electrónico o la contraseña son incorrectas, por favor vuelve a intentarlo");
-                      window.location.href = "/inicio-sesion"; // Redirige al usuario de nuevo a la página de inicio de sesion
-                  </script>
-                  `);
-        } else {
+          return res.status(401).send(`
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+              Swal.fire({
+                title: 'Error de Inicio de Sesión',
+                text: 'El correo electrónico o la contraseña son incorrectas, por favor vuelve a intentarlo',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                window.location.href = "/inicio-sesion"; // Redirige al usuario de nuevo a la página de inicio de sesión
+              });
+            </script>
+          `);
+        }
+         else {
           // Obtener el rol del usuario
           const rol = resultados[0].rol;
           // Iniciar sesión y guardar el nombre de usuario y el rol en la sesión
@@ -464,7 +537,17 @@ app.post("/inicio-sesion", (req, res) => {
   );
 });
 
-app.post("/inicio-sesion", (req, res) => {
+function verificarSesion(req, res, next) {
+  const usuarioAutenticado = req.session.usuario; // Por ejemplo, si estás utilizando sesiones
+  
+  if (usuarioAutenticado) {
+    res.redirect('/catalogo'); // Redirigir al usuario a la página de catálogo si ya ha iniciado sesión
+  } else {
+    next(); // Permitir que continúe con la solicitud si el usuario no ha iniciado sesión
+  }
+}
+
+app.post("/inicio-sesion", verificarSesion, (req, res) => {
   // Verificar las credenciales del usuario y obtener el nombre de usuario
   const nombreDeUsuario = obtenerNombreDeUsuarioAlAutenticar(
     req.body.email,
@@ -497,12 +580,22 @@ app.post("/registrar-cita", (req, res) => {
     }
 
     if (checkResults[0].count > 0) {
-      // Si la hora está ocupada, mostrar un alert
-      res.send(
-        '<script>alert("Esta hora ya está ocupada."); window.location.href = "/registrar-cita";</script>'
-      );
-      return;
+      // Si la hora está ocupada, mostrar un alert con SweetAlert
+      return res.send(`
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          Swal.fire({
+            title: 'Hora Ocupada',
+            text: 'Esta hora ya está ocupada.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = "/registrar-cita";
+          });
+        </script>
+      `);
     }
+    
 
     // Si la hora no está ocupada, proceder a insertar la cita en la base de datos
     const insertQuery =
@@ -518,9 +611,20 @@ app.post("/registrar-cita", (req, res) => {
         }
 
         // Si la inserción es exitosa, mostrar un alert y redirigir al usuario al índice
-        res.send(
-          '<script>alert("Cita registrada exitosamente."); window.location.href = "/";</script>'
-        );
+         res.send(`
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    Swal.fire({
+      title: 'Cita Registrada',
+      text: 'La cita se ha registrado exitosamente.',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      window.location.href = "/";
+    });
+  </script>
+`);
+
       }
     );
   });
@@ -680,30 +784,44 @@ app.post("/borrar-catalogo/:id", (req, res) => {
   const catalogoId = req.params.id;
 
   // Mostrar un mensaje de confirmación al usuario antes de eliminar el vehículo
-  res.send(
-    `<script>
-      if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+  res.send(`
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que deseas eliminar este producto?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
         fetch('/borrar-catalogo-confirmado/${catalogoId}', {
           method: 'DELETE'
         })
         .then(response => {
           if (response.ok) {
-            alert('Producto eliminado correctamente');
-            window.location.href = '/catalogo'; // Redirigir a la página de vehículos después de borrar
+            Swal.fire('¡Producto eliminado!', 'El producto ha sido eliminado correctamente', 'success')
+              .then(() => {
+                window.location.href = '/catalogo'; // Redirigir a la página de vehículos después de borrar
+              });
           } else {
-            throw new Error('Error al intentar eliminar el vehículo');
+            throw new Error('Error al intentar eliminar el producto');
           }
         })
         .catch(error => {
-          console.error('Error al intentar eliminar el item:', error);
-          alert('Hubo un error al intentar eliminar el item');
-          window.location.href = '/catalogo'; // Redirigir a la página de vehículos en caso de error
+          console.error('Error al intentar eliminar el producto:', error);
+          Swal.fire('¡Error!', 'Hubo un error al intentar eliminar el producto', 'error')
+            .then(() => {
+              window.location.href = '/catalogo'; // Redirigir a la página de vehículos en caso de error
+            });
         });
       } else {
         window.location.href = '/catalogo'; // Redirigir a la página de vehículos si el usuario cancela
       }
-    </script>`
-  );
+    });
+  </script>
+`);
 });
 
 // Ruta para confirmar la eliminación del vehículo
