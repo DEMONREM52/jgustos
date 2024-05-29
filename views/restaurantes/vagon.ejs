@@ -413,6 +413,9 @@
                 <!-- Radiobuttons -->
                 <div>
                     <label for="tarifa">Tarifa de envio:</label>
+                </div>
+                
+                <div>
                     <input type="radio" id="opcion1" name="opcion" value="10000">
                     <label for="opcion1">CHARCO $10.000 COP</label><br>
                     <input type="radio" id="opcion2" name="opcion" value="5000">
@@ -473,7 +476,7 @@
                                     </p>
                                 </b>
                                 <p class="card-text"
-                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 25px;">
+                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;">
                                     Precio: $<%= catalogo.precio.toLocaleString('es-CO') %> COP</p>
                                 <form class="agregar-al-carrito" action="/agregar-al-carrito" method="POST">
                                     <!-- Campos ocultos para el ID, nombre y precio del producto -->
@@ -598,9 +601,7 @@
                         <div class="col-md-6 mb-4 mx-auto text-center">
                             <p>&copy; <%= new Date().getFullYear() %> Jgustos... Todos los derechos reservados...</p>
                             <p>
-                                <a href="../../public/politicas_de_privacidad.pdf"
-                                    download="politicas_de_privacidad.pdf" class="text-reset">Política de privacidad |
-                                    Términos y condiciones</a>
+                                <a href="/politicas" class="text-reset" target="_blank">Política de privacidad | Términos y condiciones</a>
                             </p>
                         </div>
                     </div>

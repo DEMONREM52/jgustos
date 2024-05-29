@@ -313,6 +313,13 @@ app.get("/registro", (req, res) => {
   res.render("registro"); // Renderizar la vista de registro
 });
 
+// Ruta para la página de politicas de privacidad
+app.get("/politicas", (req, res) => {
+  res.render("politicas"); // Renderizar la vista de políticas
+});
+
+
+
 // Ruta para el registro de usuarios
 app.post("/registro", async (req, res) => {
   const {
