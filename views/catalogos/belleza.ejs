@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EL VAGÓN</title>
+    <title>CATALOGO - BELLEZA</title>
     <link rel="shortcut icon" href="https://i.ibb.co/hZ7b8P1/pixelcut-export-17.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -21,16 +21,6 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../app.js"></script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LQNMD9R7G"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-2LQNMD9R7G');
-    </script>
 
 
     <style>
@@ -398,7 +388,7 @@
 
 
     <div class="container mt-5">
-        <h1 style="color: #ffffff; text-align: center;">EL VAGÓN</h1>
+        <h1 style="color: #ffffff; text-align: center;">CATALOGO DE BELLEZA</h1>
 
         <!-- Div que representa el carrito -->
         <div>
@@ -442,7 +432,7 @@
 
 
 
-        <div class="row buscador" id="restaurantes">
+        <div class="row buscador" id="catalogos">
             <div class="col-md-12">
                 <input type="text" id="buscador" class="form-control" style="border-color: #000000; color: #000000;"
                     placeholder="Buscar por nombre...">
@@ -451,15 +441,15 @@
 
 
 
-        <div class="row mt-3" id="restaurantes">
-            <% restaurantes.forEach((catalogo, index)=> { %>
-                <% if (catalogo.marca==='el vagon' && catalogo.certificacion==='siHay' ) { %>
+        <div class="row mt-3" id="catalogos">
+            <% catalogos.forEach((catalogo, index)=> { %>
+                <% if (catalogo.catalogo==='belleza' && catalogo.certificacion==='siHay' ) { %>
                     <div class="col-md-4 mb-4 contenedor-autos" data-nombre="<%= catalogo.nombre %>">
                         <div class="card">
-                            <img src="<%= catalogo.imagen %>" class="card-img-top" alt="<%= catalogo.marca %>">
+                            <img src="<%= catalogo.imagen %>" class="card-img-top" alt="<%= catalogo.nombre %>">
                             <div class="card-body">
                                 <h3 class="card-title" style="display: none;">
-                                    <%= catalogo.marca %>
+                                    <%= catalogo.catalogo %>
                                 </h3>
                                 <h3 class="card-title">
                                     <%= catalogo.nombre %>
@@ -508,13 +498,13 @@
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem "></i>NUESTROS RESTAURANTES
+                            <i class="fas fa-gem "></i>NUESTROS catalogos
                         </h6>
                         <p>
                             <a style="display: none;" href="/gorras" class="text-reset">Gorras</a>
                         </p>
                         <p>
-                            <a href="/vagon" class="text-reset">EL VAGON</a>
+                            <a href="/belleza" class="text-reset">EL VAGON</a>
                         </p>
                         <p>
                             <a style="display: none;" href="/mascotas" class="text-reset">Mascotas</a>
@@ -529,7 +519,7 @@
                             <a style="display: none;" href="/nissan-nuevo" class="text-reset">Nissan</a>
                         </p>
                         <p>
-                            <a style="display: none;" href="#restaurantesUsadosCertificados" class="text-reset">Usados
+                            <a style="display: none;" href="#catalogosUsadosCertificados" class="text-reset">Usados
                                 certificados</a>
                         </p>
 
@@ -571,7 +561,7 @@
                             </a>
                         </p>
                     </div>
-
+                    <button id="mayoristas-btn" class="btn btn-primary">Ingresar Código de Mayorista</button>
                     <section class="d-flex justify-content-center col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 
                         <div>
@@ -614,7 +604,47 @@
 
 </body>
 
-
+<script>
+    document.getElementById('mayoristas-btn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Ingresa el código de acceso',
+            input: 'text',
+            inputPlaceholder: 'Código de acceso',
+            showCancelButton: true,
+            confirmButtonText: 'Enviar',
+            preConfirm: (code) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (code === 'tu_codigo_secreto') {
+                            resolve(true);
+                        } else {
+                            Swal.showValidationMessage('Código incorrecto');
+                            resolve(false);
+                        }
+                    }, 1000);
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/guardar_sesion', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ acceso: 'mayoristas' })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Recarga la página para aplicar los cambios de sesión
+                        location.reload();
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    
 
 <script>
     let totalCarrito = 0; // Variable para almacenar el total del carrito
